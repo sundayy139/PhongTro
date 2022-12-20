@@ -6,6 +6,8 @@
 .pnp.js
 /.env
 
+/scapedata
+
 # testing
 /coverage
 

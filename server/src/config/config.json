@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "sundayy1309",
+    "password": "quaduadiec",
+    "database": "da_phongtro",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "test": {
+    "username": "sundayy1309",
+    "password": "quaduadiec",
+    "database": "da_phongtro",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sundayy1309",
+    "password": "quaduadiec",
+    "database": "da_phongtro",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
