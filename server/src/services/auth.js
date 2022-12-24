@@ -18,21 +18,21 @@ export const registerService = (body) => {
             if (user) {
                 resolve({
                     err: 1,
-                    msg: 'Phone already exists'
+                    msg: 'Số điện thoại đã được sử dụng'
                 })
             } else {
                 const respone = await db.User.create({
                     id: v4(),
                     phone: body.phone,
                     name: body.name,
-                    role: 'user',
+                    role: body.role,
                     password: hashPassword(body.password)
                 })
 
-                const token = jwt.sign({ id: respone.id, phone: respone.phone }, process.env.SECRET_KEY, { expiresIn: "2d" })
+                const token = jwt.sign({ id: respone.id, phone: respone.phone, role: respone.role }, process.env.SECRET_KEY, { expiresIn: "2d" })
                 resolve({
                     err: 0,
-                    msg: "Register is successfully",
+                    msg: "Đăng ký tài khoản thành công",
                     token
                 })
             }
@@ -57,19 +57,19 @@ export const loginService = (body) => {
                     const token = jwt.sign({ id: user.id, phone: user.phone, role: user.role }, process.env.SECRET_KEY, { expiresIn: "2d" })
                     resolve({
                         err: 0,
-                        msg: 'Login success',
+                        msg: 'Đăng nhập thành công',
                         token
                     })
                 } else {
                     resolve({
                         err: 2,
-                        msg: 'Wrong password'
+                        msg: 'Sai số điện thoại hoặc mật khẩu'
                     })
                 }
             } else {
                 resolve({
                     err: 1,
-                    msg: 'User not found'
+                    msg: 'Người dùng không tồn tại'
                 })
             }
         } catch (e) {
@@ -77,4 +77,6 @@ export const loginService = (body) => {
         }
     })
 }
+
+
 

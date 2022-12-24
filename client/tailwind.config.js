@@ -17,9 +17,12 @@ module.exports = {
         "orange": "#f60"
       },
       maxWidth: {
-        "600": "600px"
+        "600": "600px",
+        "1100": "1100px",
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }

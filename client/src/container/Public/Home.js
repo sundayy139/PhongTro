@@ -1,13 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom';
-import { Header, TopBar } from '../../components/index';
+import { Header, Search, TopBar } from '../../components/index';
+import { Helmet } from 'react-helmet'
+import { useDispatch } from 'react-redux';
+import *  as actions from '../../store/actions'
+
+const title = 'Trang chủ - Phòng trọ';
 
 const Home = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(actions.getCategories());
+        dispatch(actions.getAcreages());
+        dispatch(actions.getPrices());
+    }, [])
+
     return (
-        <div className='w-full border border-red-300 mx-auto bg-primary h-screen'>
+        <div className=' bg-primary'>
+            <Helmet>
+                <title>{title}</title>
+            </Helmet>
             <TopBar />
             <Header />
-            <div className='w-1100 mx-auto flex flex-col items-center justify-center'>
+            <div className='max-w-1100 mx-auto mt-[10px] flex flex-col gap-4'>
+                <Search />
                 <Outlet />
             </div>
         </div>

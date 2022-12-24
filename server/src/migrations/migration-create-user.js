@@ -14,6 +14,12 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
+      email: {
+        type: Sequelize.STRING
+      },
+      fbUrl: {
+        type: Sequelize.STRING
+      },
       phone: {
         type: Sequelize.STRING
       },
@@ -21,7 +27,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.STRING
+        type: Sequelize.BLOB('long')
       },
       role: {
         type: Sequelize.STRING

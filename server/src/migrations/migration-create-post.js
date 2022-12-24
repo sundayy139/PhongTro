@@ -39,6 +39,12 @@ module.exports = {
             imageId: {
                 type: Sequelize.STRING
             },
+            priceCode: {
+                type: Sequelize.STRING
+            },
+            acreageCode: {
+                type: Sequelize.STRING
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
