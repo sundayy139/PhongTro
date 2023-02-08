@@ -1,13 +1,15 @@
 import React, { memo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { formatVietnameseToString } from '../utils/fn'
-import icons from '../utils/icons'
-import Button from './Button'
+import { formatVietnameseToString } from '../../utils/fn'
+import icons from '../../utils/icons'
+import { Button } from './index'
+import moment from 'moment'
+import 'moment/locale/vi';
 
 
-const { BsStar, BsStarFill, BsTelephone, BsMessenger, BsSuitHeart, BsSuitHeartFill } = icons
+const { BsStarFill, BsTelephone, BsMessenger, BsSuitHeart, BsSuitHeartFill } = icons
 
-const Item = ({ images, attributes, description, star, id, address, user, title }) => {
+const Item = ({ images, attributes, description, star, id, address, user, title, createdAt }) => {
     const [isHoverHeart, setIsHoverHeart] = useState()
     const navigate = useNavigate()
 
@@ -50,7 +52,7 @@ const Item = ({ images, attributes, description, star, id, address, user, title 
                     </span>
                 </span>
             </Link>
-            <div className='w-[calc(100%-256px)] h-[240px] ml-4 flex flex-col justify-between'>
+            <div className='flex-auto max-w-[calc(100%-256px)] h-[240px] ml-4 flex flex-col justify-between'>
                 <h3 className='text-[#E13427] font-bold text-sm uppercase hover:underline cursor-pointer'>
                     {
                         handleStar(+star)?.length > 0 && handleStar(+star).map((item, index) => (
@@ -73,7 +75,9 @@ const Item = ({ images, attributes, description, star, id, address, user, title 
                             {`${address.split(',')[address.split(',').length - 2]}, ${address.split(',')[address.split(',').length - 1]}`}
                         </span>
                     </div>
-                    <span className='min-w-[80px] text-right text-[12px] text-gray-400'>3 giờ trước</span>
+                    <span className='min-w-[80px] text-right text-[12px] text-gray-400'>
+                        {moment(createdAt).locale('vi').fromNow()}
+                    </span>
                 </div>
                 <p className='text-[12px] w-full line-clamp-3'>
                     {description}
@@ -103,6 +107,7 @@ const Item = ({ images, attributes, description, star, id, address, user, title 
                                 bgColor={"bg-primary"}
                                 textStyle={"text-[#333333] text-sm"}
                                 hover={'hover:bg-secondary1 hover:text-white'}
+                                onClick={() => window.open(`https://zalo.me/${user?.phone}`)}
                             />
                         </span>
                     </span>

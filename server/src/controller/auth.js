@@ -1,9 +1,9 @@
 import * as authService from '../services/auth';
 
 export const register = async (req, res) => {
-    const { name, phone, password } = req.body
+    const { name, phone, email, password } = req.body
     try {
-        if (!name || !phone || !password) {
+        if (!name || !phone || !email || !password) {
             return res.status(400).json({
                 err: 1,
                 msg: 'Missing required parameters'
@@ -39,3 +39,25 @@ export const login = async (req, res) => {
         })
     }
 }
+
+
+export const forgotPassword = async (req, res) => {
+    const { email, phone } = req.body
+    try {
+        if (!email || !phone) {
+            return res.status(400).json({
+                err: 1,
+                msg: 'Missing required parameters'
+            })
+        } else {
+            const response = await authService.forgotPasswordService(req.body)
+            return res.status(200).json(response)
+        }
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at auth controller' + error
+        })
+    }
+}
+

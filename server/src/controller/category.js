@@ -7,7 +7,7 @@ export const getCategories = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             err: -1,
-            msg: 'Fail at auth controller' + error
+            msg: 'Fail at category controller' + error
         })
     }
 }

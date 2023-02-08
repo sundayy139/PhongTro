@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { ProvinceButton } from './index'
-import { location } from '../utils/constant'
+import { location } from '../../utils/constant'
 
 
 const Province = () => {

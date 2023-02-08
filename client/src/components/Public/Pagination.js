@@ -1,25 +1,35 @@
 import React, { memo, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { PageNumber } from './index'
-import icons from '../utils/icons'
+import icons from '../../utils/icons'
 
-const { MdLastPage, MdFirstPage } = icons
+const { MdLastPage } = icons
 
-const Pagination = ({ number }) => {
+const Pagination = () => {
     const { count, posts } = useSelector(state => state.post)
 
     const [arrPage, setArrPage] = useState()
     const [isHideEnd, setIsHideEnd] = useState(false)
     const [isHideStart, setIsHideStart] = useState(false)
-    const [currentPage, setCurrentPage] = useState(+number || 1)
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const [params] = useSearchParams()
 
     useEffect(() => {
-        let length = posts.length || 1
-        let maxPage = Math.floor(count / length)
+        const page = params.get('page')
+        page && +page !== currentPage && setCurrentPage(+page)
+        !page && setCurrentPage(1)
+    }, [params])
+
+    useEffect(() => {
+
+        let length = posts.length < process.env.REACT_APP_POSTS_LIMIT ? process.env.REACT_APP_POSTS_LIMIT : posts.length
+        let maxPage = Math.ceil(count / length)
         let minPage = 1
 
-        let start = (currentPage - 3) < minPage ? minPage : (currentPage - 3)
-        let end = (currentPage + 3) > maxPage ? maxPage : (currentPage + 3)
+        let start = (currentPage - 2) < minPage ? minPage : (currentPage - 2)
+        let end = (currentPage + 2) > maxPage ? maxPage : (currentPage + 2)
 
         let temp = []
         for (let i = start; i <= end; i++) {
@@ -27,10 +37,12 @@ const Pagination = ({ number }) => {
         }
         setArrPage(temp)
 
-        currentPage > minPage + 3 ? setIsHideStart(true) : setIsHideStart(false)
-        currentPage >= maxPage - 3 ? setIsHideEnd(true) : setIsHideEnd(false)
+        currentPage > minPage + 2 ? setIsHideStart(true) : setIsHideStart(false)
+        currentPage >= maxPage - 2 ? setIsHideEnd(true) : setIsHideEnd(false)
 
-    }, [count, posts, currentPage, number])
+
+    }, [count, posts, currentPage])
+
 
     return (
         <div className='flex items-center justify-center gap-2'>
@@ -38,7 +50,6 @@ const Pagination = ({ number }) => {
                 isHideStart && (
                     <>
                         <PageNumber
-                            icons={<MdFirstPage size={20} />}
                             setCurrentPage={setCurrentPage}
                             number={1}
                         />
@@ -67,7 +78,7 @@ const Pagination = ({ number }) => {
                         <PageNumber
                             icons={<MdLastPage size={20} />}
                             setCurrentPage={setCurrentPage}
-                            number={Math.floor(count / posts.length)}
+                            number={Math.ceil(count / posts.length)}
                         />
                     </>
                 )

@@ -42,6 +42,21 @@ export const apiGetAcreages = () => {
     })
 }
 
+export const apiGetProvinces = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/province/all",
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 
 
 

@@ -42,8 +42,20 @@ module.exports = {
             priceCode: {
                 type: Sequelize.STRING
             },
+            provinceCode: {
+                type: Sequelize.STRING
+            },
             acreageCode: {
                 type: Sequelize.STRING
+            },
+            statusCode: {
+                type: Sequelize.STRING
+            },
+            priceNumber: {
+                type: Sequelize.FLOAT
+            },
+            acreageNumber: {
+                type: Sequelize.FLOAT
             },
             createdAt: {
                 allowNull: false,

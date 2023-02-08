@@ -17,7 +17,15 @@ const authConfig = {
     key: 'auth',
     whitelist: [
         'isLoggedIn',
-        'token'
+        'token',
+    ]
+}
+
+const appConfig = {
+    ...commonConfig,
+    key: 'app',
+    whitelist: [
+        'curCategoryCode',
     ]
 }
 
@@ -25,7 +33,7 @@ const rootReducer = combineReducers({
     auth: persistReducer(authConfig, authReducer),
     user: userReducer,
     post: postReducer,
-    app: appReducer,
+    app: persistReducer(appConfig, appReducer),
 })
 
 

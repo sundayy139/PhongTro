@@ -1,13 +1,16 @@
-import React from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { List, Pagination, Province, Sidebar } from '../../components/index'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { ListPost, Pagination, Province, Sidebar } from '../../components/Public/index'
 import { text } from '../../utils/constant'
+import * as actions from '../../store/actions'
 
 
 const HomePage = () => {
-    const [params] = useSearchParams()
-    const page = params.get('page') || 1
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(actions.getNewPosts())
+    }, [])
     return (
         <div className='w-full flex flex-col gap-4'>
             <div>
@@ -16,9 +19,9 @@ const HomePage = () => {
             </div>
             <Province />
             <div className=' w-full flex gap-5'>
-                <div className='w-[70%] flex flex-col gap-5'>
-                    <List page={page} />
-                    <Pagination number={page} />
+                <div className='w-[70%] flex flex-col gap-5 mb-[50px]'>
+                    <ListPost />
+                    <Pagination />
                 </div>
                 <div className='w-[30%] flex flex-col justify-start'>
                     <Sidebar />

@@ -4,6 +4,8 @@ const initialState = {
     categories: [],
     prices: [],
     acreages: [],
+    provinces: [],
+    curCategoryCode: null,
     msg: ''
 }
 
@@ -26,6 +28,17 @@ const appReducer = (state = initialState, action) => {
                 ...state,
                 acreages: action.acreages || [],
                 msg: actionsType.msg || ''
+            }
+        case actionsType.GET_PROVINCES:
+            return {
+                ...state,
+                provinces: action.provinces || [],
+                msg: actionsType.msg || ''
+            }
+        case actionsType.SET_CURRENT_CATEGORY_CODE:
+            return {
+                ...state,
+                curCategoryCode: action.curCategoryCode || null
             }
         default:
             return state;

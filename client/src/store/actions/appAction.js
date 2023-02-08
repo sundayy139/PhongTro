@@ -23,6 +23,11 @@ export const getCategories = () => async (dispatch) => {
     }
 }
 
+export const setCurCategoryCode = (curCategoryCode) => ({
+    type: actionsType.SET_CURRENT_CATEGORY_CODE,
+    curCategoryCode
+})
+
 export const getPrices = () => async (dispatch) => {
     try {
         const res = await apis.apiGetPrices()
@@ -63,6 +68,28 @@ export const getAcreages = () => async (dispatch) => {
         dispatch({
             type: actionsType.GET_ACREAGES,
             acreages: null
+        })
+    }
+}
+
+export const getProvinces = () => async (dispatch) => {
+    try {
+        const res = await apis.apiGetProvinces()
+        if (res.data.err === 0) {
+            dispatch({
+                type: actionsType.GET_PROVINCES,
+                provinces: res.data.provinces
+            })
+        } else {
+            dispatch({
+                type: actionsType.GET_PROVINCES,
+                msg: res.data.msg
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionsType.GET_PROVINCES,
+            provinces: null
         })
     }
 }

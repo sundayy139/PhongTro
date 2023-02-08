@@ -1,16 +1,32 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Item } from './index'
-import * as actions from '../store/actions'
+import { Button, ListPostItem } from './index'
+import * as actions from '../../store/actions'
+import { useSearchParams } from 'react-router-dom'
 
-const List = ({ page }) => {
+const List = ({ categoryCode }) => {
     const dispatch = useDispatch();
+    const [paramsSearch] = useSearchParams()
     const { posts } = useSelector(state => state.post)
     useEffect(() => {
-        let offset = page ? +page : 1
-        dispatch(actions.getPostsLimit(offset))
-    }, [page])
+        let params = []
+        for (let entry of paramsSearch.entries()) {
+            params.push(entry)
+        }
 
+        let searchParamsQuery = {}
+        params.forEach(i => {
+            if (Object.keys(searchParamsQuery)?.some(item => item === i[0])) {
+                searchParamsQuery[i[0]] = [...searchParamsQuery[i[0]], i[1]]
+            } else {
+                searchParamsQuery = { ...searchParamsQuery, [i[0]]: [i[1]] }
+            }
+        })
+
+        if (categoryCode) searchParamsQuery.categoryCode = categoryCode
+
+        dispatch(actions.getPostsLimit(searchParamsQuery))
+    }, [paramsSearch, categoryCode])
 
     return (
         <div className='w-full border border-[#dedede] bg-white rounded-[10px]' >
@@ -42,7 +58,7 @@ const List = ({ page }) => {
             <div className='flex flex-col w-full'>
                 {
                     posts && posts?.length > 0 && posts.map(item => (
-                        <Item
+                        <ListPostItem
                             key={item.id}
                             images={JSON.parse(item?.imagesData?.images)}
                             attributes={item?.attributesData}
@@ -51,6 +67,7 @@ const List = ({ page }) => {
                             star={+item?.star}
                             user={item?.userData}
                             title={item?.title}
+                            createdAt={item?.createdAt}
                             id={item?.id}
                         />
                     ))

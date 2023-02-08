@@ -1,11 +1,21 @@
 import React, { memo } from 'react'
-import { Link } from 'react-router-dom'
-import { formatVietnameseToString } from '../utils/fn'
-import icons from '../utils/icons'
+import icons from '../../utils/icons'
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 const { GrNext } = icons
 
-const SidebarItem = ({ content, title, double }) => {
+const SidebarItem = ({ content, title, double, type }) => {
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const handleFilter = (code) => {
+        navigate({
+            pathname: location?.pathname,
+            search: createSearchParams({
+                [type]: code,
+            }).toString()
+        })
+    }
     return (
         <div className='p-5 border border-[#dedede] rounded-[10px] bg-white w-full text-[#333333]'>
             <h3 className='text-lg font-bold mb-2'>
@@ -16,10 +26,10 @@ const SidebarItem = ({ content, title, double }) => {
                     <div className='flex flex-col gap-2'>
                         {
                             content?.map((item, index) => (
-                                <Link
-                                    to={`${formatVietnameseToString(item.value)}`}
+                                <div
                                     key={index}
-                                    className=' p-[5px] flex items-center gap-2 border-b border-b-[#dedede] border-dashed hover:text-orange'
+                                    onClick={() => handleFilter(item.code)}
+                                    className=' p-[5px] flex items-center gap-2 border-b border-b-[#dedede] border-dashed hover:text-orange cursor-pointer'
                                 >
                                     <span className='mb-[2px]'>
                                         <GrNext size={8} color="#dedede" />
@@ -27,7 +37,7 @@ const SidebarItem = ({ content, title, double }) => {
                                     <span className='text-sm '>
                                         {item.value}
                                     </span>
-                                </Link>
+                                </div>
                             ))
                         }
                     </div>
@@ -38,10 +48,10 @@ const SidebarItem = ({ content, title, double }) => {
                     <div className='flex gap-2 w-full flex-wrap'>
                         {
                             content?.map((item, index) => (
-                                <Link
-                                    to={'/'}
+                                <div
                                     key={index}
-                                    className=' w-[calc((100%-8px)/2)] p-[5px] flex items-center gap-2 border-b border-b-[#dedede] border-dashed hover:text-orange'
+                                    onClick={() => handleFilter(item.code)}
+                                    className=' w-[calc((100%-8px)/2)] p-[5px] flex items-center gap-2 border-b border-b-[#dedede] border-dashed hover:text-orange cursor-pointer'
                                 >
                                     <span className='mb-[2px]'>
                                         <GrNext size={8} color="#dedede" />
@@ -49,7 +59,7 @@ const SidebarItem = ({ content, title, double }) => {
                                     <span className='text-sm '>
                                         {item.value}
                                     </span>
-                                </Link>
+                                </div>
                             ))
                         }
                     </div>

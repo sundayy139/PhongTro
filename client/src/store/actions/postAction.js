@@ -27,9 +27,9 @@ export const getPosts = () => async (dispatch) => {
 }
 
 
-export const getPostsLimit = (page) => async (dispatch) => {
+export const getPostsLimit = (query) => async (dispatch) => {
     try {
-        const res = await apis.apiGetPostsLimit(page)
+        const res = await apis.apiGetPostsLimit(query)
         if (res.data.err === 0) {
             dispatch({
                 type: actionsType.GET_POSTS_LIMIT,
@@ -47,6 +47,29 @@ export const getPostsLimit = (page) => async (dispatch) => {
         dispatch({
             type: actionsType.GET_POSTS_LIMIT,
             posts: null
+        })
+    }
+}
+
+export const getNewPosts = (query) => async (dispatch) => {
+    try {
+        const res = await apis.apiGetNewPosts(query)
+        if (res.data.err === 0) {
+            dispatch({
+                type: actionsType.GET_NEW_POSTS,
+                newPosts: res.data.newposts
+            })
+        } else {
+            dispatch({
+                type: actionsType.GET_NEW_POSTS,
+                newPosts: null,
+                msg: res.data.msg
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionsType.GET_NEW_POSTS,
+            newPosts: null
         })
     }
 }

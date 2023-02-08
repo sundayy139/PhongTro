@@ -30,6 +30,29 @@ const generateCode = (value) => {
 
 export default generateCode
 
+export const getNumberFromStringPrice = (string) => {
+    let number = 0
+    if (string.search("đồng/tháng") !== -1) {
+        number = +string.match(/\d+/)[0] / Math.pow(10, 3)
+    } else if (string.search("triệu/tháng") !== -1) {
+        number = +string.match(/\d+/)[0]
+    }
+    return number
+}
+
+
 export const getNumberFromString = (string) => {
-    return string.replace(/^\D+/g, '').match(/\d+/)[0]
+    let number = 0
+    if (string.search("đồng/tháng") !== -1) {
+        number = +string.match(/\d+/)[0] / Math.pow(10, 3)
+    } else if (string.search("triệu/tháng") !== -1) {
+        number = +string.split(' ')[0]
+    }
+    return number
+}
+
+
+
+export const getNumberFromStringAcreage = (string) => {
+    return string = +string.replace(/^\D+/g, '').match(/\d+/)[0]
 }

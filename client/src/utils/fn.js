@@ -23,3 +23,59 @@ export const formatVietnameseToString = (string) => {
         .replace(/^-+/, '')
         .replace(/-+$/, '')
 }
+
+export const getNumberPrice = (string) => {
+    let arr = string.split(' ')
+    return arr.map(item => +item).filter(item => !item === false)
+}
+
+export const getNumberAcreage = (string) => {
+    let arr = string.split(' ')
+    return arr.map(item => +item.match(/\d+/)).filter(item => !+item === false)
+}
+
+export const getCodePrice = (totals) => {
+    let arr = []
+    return totals.map(item => {
+        let arrMaxMin = getNumberPrice(item.value)
+        if (arrMaxMin.length === 1) arr.push(arrMaxMin[0])
+        let sortArr = arr.sort()
+
+        return ({
+            ...item,
+            min: sortArr.indexOf(arrMaxMin[0]) === 0 ? 0 : arrMaxMin[0],
+            max: sortArr.indexOf(arrMaxMin[0]) === 0 ? arrMaxMin[0] : sortArr.indexOf(arrMaxMin[0]) === 1 ? 9999 : arrMaxMin[1],
+        })
+    })
+}
+
+export const getCodeArea = (totals) => {
+    let arr = []
+    return totals.map(item => {
+        let arrMaxMin = getNumberAcreage(item.value)
+        if (arrMaxMin.length === 1) arr.push(arrMaxMin[0])
+        let sortArr = arr.sort()
+
+        return ({
+            ...item,
+            min: sortArr.indexOf(arrMaxMin[0]) === 0 ? 0 : arrMaxMin[0],
+            max: sortArr.indexOf(arrMaxMin[0]) === 0 ? arrMaxMin[0] : sortArr.indexOf(arrMaxMin[0]) === 1 ? 9999 : arrMaxMin[1],
+        })
+    })
+}
+
+
+export const getRangePrice = (arrMaxMin, prices) => {
+    const pricesWithMinMax = getCodePrice(prices)
+    return pricesWithMinMax.filter(item => ((item.min >= arrMaxMin[0] && item.min <= arrMaxMin[1]) || (item.max >= arrMaxMin[0] && item.max <= arrMaxMin[1])))
+}
+
+export const getRangeAcreage = (arrMaxMin, acreages) => {
+    const acreagesWithMinMax = getCodeArea(acreages)
+    return acreagesWithMinMax.filter(item => ((item.min >= arrMaxMin[0] && item.min <= arrMaxMin[1]) || (item.max >= arrMaxMin[0] && item.max <= arrMaxMin[1])))
+}
+
+export const validateEmail = (email) => {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+};

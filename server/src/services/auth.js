@@ -11,7 +11,7 @@ export const registerService = (body) => {
         try {
             const user = await db.User.findOne({
                 where: {
-                    phone: body.phone
+                    phone: body.phone,
                 },
                 raw: true
             })
@@ -21,19 +21,17 @@ export const registerService = (body) => {
                     msg: 'Số điện thoại đã được sử dụng'
                 })
             } else {
-                const respone = await db.User.create({
+                await db.User.create({
                     id: v4(),
-                    phone: body.phone,
                     name: body.name,
+                    phone: body.phone,
+                    email: body.email,
                     role: body.role,
                     password: hashPassword(body.password)
                 })
-
-                const token = jwt.sign({ id: respone.id, phone: respone.phone, role: respone.role }, process.env.SECRET_KEY, { expiresIn: "2d" })
                 resolve({
                     err: 0,
                     msg: "Đăng ký tài khoản thành công",
-                    token
                 })
             }
         } catch (e) {
@@ -49,7 +47,7 @@ export const loginService = (body) => {
                 where: {
                     phone: body.phone
                 },
-                raw: true
+                raw: true,
             })
             if (user) {
                 let check = bcrypt.compareSync(body.password, user.password);
@@ -67,6 +65,34 @@ export const loginService = (body) => {
                     })
                 }
             } else {
+                resolve({
+                    err: 1,
+                    msg: 'Người dùng không tồn tại'
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+export const forgotPasswordService = (body) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const user = await db.User.findOne({
+                where: {
+                    phone: body.phone,
+                    email: body.email,
+                },
+                raw: true
+            })
+            if (!user) {
+                resolve({
+                    err: 1,
+                    msg: "Không tìm thấy người dùng"
+                })
+            } else {
+                const token = jwt.sign({ id: user.id, phone: user.phone, email: user.email }, process.env.SECRET_KEY, { expiresIn: "20m" })
                 resolve({
                     err: 1,
                     msg: 'Người dùng không tồn tại'

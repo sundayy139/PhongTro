@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, InputForm } from '../../components/index'
+import { Button, InputForm } from '../../components/Public/index'
 import * as actions from '../../store/actions';
 import { Helmet } from 'react-helmet'
 import Swal from 'sweetalert2'
@@ -59,6 +59,7 @@ const Login = () => {
             <div className='flex flex-col gap-5'>
                 <InputForm
                     label={'SỐ ĐIỆN THOẠI'}
+                    id='phone'
                     value={payload.phone}
                     setValue={setPayload}
                     type={"phone"}
@@ -67,6 +68,7 @@ const Login = () => {
                 />
                 <InputForm
                     label={'MẬT KHẨU'}
+                    id='password'
                     value={payload.password}
                     setValue={setPayload}
                     type={"password"}
@@ -83,7 +85,9 @@ const Login = () => {
                 />
             </div>
             <div className='flex items-center justify-between text-sm text mb-[20px] mt-[30px]'>
-                <span className='hover:text-orange cursor-pointer'>
+                <span
+                    className='hover:text-orange cursor-pointer'
+                >
                     Bạn quên mật khẩu?
                 </span>
                 <span

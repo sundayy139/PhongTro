@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { formatVietnameseToString } from '../utils/fn';
+import { formatVietnameseToString } from '../../utils/fn';
 import { useSelector } from 'react-redux';
 
 const isActiveStyle = 'h-full  bg-secondary2 flex items-center px-3'

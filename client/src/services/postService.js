@@ -14,12 +14,13 @@ export const apiGetPosts = () => {
     })
 }
 
-export const apiGetPostsLimit = (page) => {
+export const apiGetPostsLimit = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
                 method: "get",
-                url: `/api/v1/post/limit?page=${page}`,
+                url: '/api/v1/post/limit',
+                params: query
             })
             resolve(res)
         } catch (error) {
@@ -28,3 +29,17 @@ export const apiGetPostsLimit = (page) => {
     })
 }
 
+export const apiGetNewPosts = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/post/newpost",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}

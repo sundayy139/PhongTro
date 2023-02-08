@@ -1,3 +1,5 @@
 export * from './appService'
 export * from './authService'
 export * from './postService'
+export * from './emailService'
+export * from './userService'

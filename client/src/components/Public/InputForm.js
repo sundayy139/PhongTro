@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import icons from '../utils/icons';
+import icons from '../../utils/icons';
 
 const {
     BsEyeSlash,
     BsEye
 } = icons
 
-const InputForm = ({ label, value, setValue, type, invalidFileds, setInvalidFileds }) => {
+const InputForm = ({ id, label, value, setValue, type, invalidFileds, setInvalidFileds }) => {
     const [isShow, setIsShow] = useState(false)
     return (
         <div>
             <label
-                htmlFor='phone'
+                htmlFor={id}
                 className='text-xs uppercase'
             >
                 {label}
@@ -20,7 +20,7 @@ const InputForm = ({ label, value, setValue, type, invalidFileds, setInvalidFile
                 <input
                     type={type === 'password' && !isShow ? 'password' : 'text'}
                     value={value}
-                    id='phone'
+                    id={id}
                     className='outline-none bg-[#e8f0fe] w-full h-[45px] p-[10px] rounded-md font-semibold text-[16px]'
                     onChange={(e) => setValue(prev => ({ ...prev, [type]: e.target.value }))}
                     onFocus={() => setInvalidFileds([])}
@@ -42,9 +42,9 @@ const InputForm = ({ label, value, setValue, type, invalidFileds, setInvalidFile
                         >
                             {
                                 isShow ? (
-                                    <BsEye size={15} />
-                                ) : (
                                     <BsEyeSlash size={15} />
+                                ) : (
+                                    <BsEye size={15} />
                                 )
                             }
                         </span>
