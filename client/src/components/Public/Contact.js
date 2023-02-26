@@ -42,7 +42,7 @@ const Contact = () => {
                             text={"Gửi liên hệ"}
                             textStyle={'text-white text-sm font-semibold'}
                             bgColor={"bg-secondary1"}
-                            fulWidth
+                            fullWidth
                         />
                     </div>
                 </div>

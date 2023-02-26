@@ -1,37 +1,30 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet';
 import { Outlet } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
 import { Header, Sidebar } from '../../components/System/index'
-import *  as actions from '../../store/actions'
+import { Contact } from '../../components/System/index'
 
 const System = () => {
     const title = 'Quản lý - Phòng trọ';
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(actions.getCategories());
-        dispatch(actions.getAcreages());
-        dispatch(actions.getPrices());
-        dispatch(actions.getProvinces());
-    }, [])
-
-
     return (
-        <div className=' bg-primary min-h-screen'>
+        <div className='w-screen h-screen bg-primary overflow-hidden relative '>
             <Helmet>
                 <title>{title}</title>
             </Helmet>
             <Header />
-            <div className='w-full flex'>
-                <div className='w-[256px] h-screen flex-none'>
+            <div className='w-full h-full flex'>
+                <div className='w-[256px] h-full flex-none'>
                     <Sidebar />
                 </div>
-                <div className='flex-auto bg-white'>
+                <div className='flex-auto bg-white h-[calc(100%-56px)] overflow-y-auto'>
                     <Outlet />
+                    <div className='w-full px-8 mb-[50px] mt-[100px]'>
+                        <Contact />
+                    </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

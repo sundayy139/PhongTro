@@ -18,3 +18,5 @@ export { default as ReleasePost } from './ReleasePost';
 export { default as ReleasePostItem } from './ReleasePostItem';
 export { default as SearchModal } from './SearchModal';
 export { default as User } from './User';
+export { default as Slick } from './Slick';
+export { default as Map } from './Map';

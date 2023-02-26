@@ -10,17 +10,26 @@ import {
     BsSuitHeart,
     BsSuitHeartFill,
     BsArrowLeft,
-    BsFillPenFill
+    BsFillPenFill,
+    BsFillChatFill,
+    BsTrashFill,
+    BsClock,
+    BsDot,
+    BsFlagFill,
+    BsFillInfoCircleFill
 }
     from 'react-icons/bs';
 import { GrNext } from 'react-icons/gr';
+import { BiNotepad } from 'react-icons/bi';
+import { TiTick } from 'react-icons/ti';
+import { GiPriceTag } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GiMoneyStack, GiNotebook } from 'react-icons/gi';
 import { TbVectorOff } from 'react-icons/tb';
-import { HiOutlineBuildingOffice } from 'react-icons/hi2';
+import { HiOutlineBuildingOffice, HiOutlineHashtag } from 'react-icons/hi2';
 import { FiDelete } from 'react-icons/fi';
-import { FaUserCircle } from 'react-icons/fa';
-import { MdLastPage, MdFirstPage, MdLogout, MdOutlineKeyboardArrowDown, MdAdminPanelSettings } from 'react-icons/md';
+import { FaUserCircle, FaLock } from 'react-icons/fa';
+import { MdLastPage, MdInfo, MdFirstPage, MdLocationOn, MdLogout, MdOutlineKeyboardArrowDown, MdAdminPanelSettings } from 'react-icons/md';
 
 const icons = {
     BsPlusCircle,
@@ -47,7 +56,20 @@ const icons = {
     FaUserCircle,
     GiNotebook,
     MdOutlineKeyboardArrowDown,
-    MdAdminPanelSettings
+    MdAdminPanelSettings,
+    BsFillChatFill,
+    BsTrashFill,
+    MdLocationOn,
+    BsClock,
+    GiPriceTag,
+    HiOutlineHashtag,
+    BsDot,
+    BsFlagFill,
+    TiTick,
+    MdInfo,
+    BiNotepad,
+    BsFillInfoCircleFill,
+    FaLock
 }
 
 export default icons

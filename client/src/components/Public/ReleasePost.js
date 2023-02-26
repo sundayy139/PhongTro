@@ -11,6 +11,7 @@ const ReleasePost = ({ title, data }) => {
                 {data && data?.map(item => (
                     <ReleasePostItem
                         key={item.id}
+                        id={item.id}
                         img={JSON.parse(item?.imagesData?.images)[0]}
                         title={item.title}
                         price={item?.attributesData?.price}

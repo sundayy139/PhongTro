@@ -13,3 +13,19 @@ export const apiGetCurrentUser = () => {
         }
     })
 }
+
+
+export const apiUpdateUserProfile = (payload) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "put",
+                url: "/api/v1/user/update-profile",
+                data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}

@@ -4,7 +4,11 @@ const {
     BsFillPenFill,
     FaUserCircle,
     GiNotebook,
-    MdAdminPanelSettings
+    MdAdminPanelSettings,
+    BsFillChatFill,
+    BsFillInfoCircleFill,
+    BiNotepad,
+    FaLock
 } = icons
 
 export const text = {
@@ -17,17 +21,23 @@ export const location = [
     {
         id: 'hcm',
         name: "Phòng trọ Hồ Chí Minh",
-        image: 'https://phongtro123.com/images/location_hcm.jpg'
+        image: 'https://phongtro123.com/images/location_hcm.jpg',
+        provinceCode: 'CHNCT',
+        categoryCode: 'CTPT'
     },
     {
         id: 'hn',
         name: "Phòng trọ Hà Nội",
-        image: 'https://phongtro123.com/images/location_hn.jpg'
+        image: 'https://phongtro123.com/images/location_hn.jpg',
+        provinceCode: 'NOPFU',
+        categoryCode: 'CTPT'
     },
     {
         id: 'dn',
         name: "Phòng trọ Đà Nẵng",
-        image: 'https://phongtro123.com/images/location_dn.jpg'
+        image: 'https://phongtro123.com/images/location_dn.jpg',
+        provinceCode: 'NAPEU',
+        categoryCode: 'CTPT'
     }
 ]
 
@@ -94,7 +104,7 @@ export const menuManage = [
     {
         id: 3,
         text: "Thông tin tài khoản",
-        path: '/he-thong/thong-tin-tai-khoan',
+        path: '/he-thong/sua-thong-tin',
         icons: <FaUserCircle size={16} />
     },
 ]
@@ -122,7 +132,109 @@ export const menuAdmin = [
     {
         id: 4,
         text: "Thông tin tài khoản",
-        path: '/he-thong/thong-tin-tai-khoan',
+        path: '/he-thong/sua-thong-tin',
+        icons: <BsFillInfoCircleFill size={16} />
+    },
+]
+
+
+export const menuManageSystem = [
+    {
+        id: 1,
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tin-dang',
+        icons: <GiNotebook size={16} />
+
+    },
+    {
+        id: 2,
+        text: "Thông tin tài khoản",
+        path: '/he-thong/sua-thong-tin',
+        icons: <BsFillInfoCircleFill size={16} />
+    },
+    {
+        id: 3,
+        text: "Đổi mật khẩu",
+        path: '/he-thong/doi-mat-khau',
+        icons: <FaLock size={16} />
+    },
+    {
+        id: 4,
+        text: "Liên hệ",
+        path: '/lien-he',
+        icons: <BsFillChatFill size={16} />
+    },
+]
+
+export const menuManageSidebar = [
+    {
+        id: 1,
+        text: "Đăng tin cho thuê",
+        path: '/he-thong/dang-tin-moi',
+        icons: <BsFillPenFill size={16} />
+    },
+    {
+        id: 2,
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tin-dang',
+        icons: <GiNotebook size={16} />
+
+    },
+    {
+        id: 3,
+        text: "Sửa thông tin cá nhân",
+        path: '/he-thong/sua-thong-tin',
+        icons: <BsFillInfoCircleFill size={16} />
+    },
+    {
+        id: 4,
+        text: "Liên hệ",
+        path: '/lien-he',
+        icons: <BsFillChatFill size={16} />
+    }
+]
+
+export const menuManageSidebarAdmin = [
+    {
+        id: 1,
+        text: "Quản lý người dùng",
+        path: '/he-thong/quan-ly-nguoi-dung',
         icons: <FaUserCircle size={16} />
     },
+    {
+        id: 2,
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tat-ca-tin-dang',
+        icons: <BiNotepad size={16} />
+    },
+]
+
+
+export const contactInfo = [
+    {
+        id: 1,
+        name: 'Điện thoại: ',
+        info: '0917 686 101',
+    },
+    {
+        id: 2,
+        name: 'Email: ',
+        info: 'cskh.phongtro123@gmail.com',
+    },
+    {
+        id: 3,
+        name: 'Zalo: ',
+        info: ':0917 686 101',
+    },
+    {
+        id: 4,
+        name: 'Viber: ',
+        info: ':0917 686 101',
+    },
+    {
+        id: 5,
+        name: 'Địa chỉ: ',
+        info: 'LD-06.04, Toà nhà Lexington Residence, Số 67 Mai Chí Thọ, Phường An Phú, Quận 2, Tp. Hồ Chí Minh.',
+    },
+
 ]

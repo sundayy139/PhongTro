@@ -11,28 +11,29 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Post.belongsTo(models.Attribute, { foreignKey: 'attributeId', targetKey: 'id', as: 'attributesData' });
             Post.belongsTo(models.Image, { foreignKey: 'imageId', targetKey: 'id', as: 'imagesData' });
             Post.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id', as: 'userData' });
+            Post.belongsTo(models.Province, { foreignKey: 'provinceCode', targetKey: 'code', as: 'provinceData' });
+            Post.belongsTo(models.Category, { foreignKey: 'categoryCode', targetKey: 'code', as: 'categoryData' });
+            Post.belongsTo(models.Label, { foreignKey: 'labelCode', targetKey: 'code', as: 'labelData' });
         }
     }
     Post.init({
         title: DataTypes.STRING,
-        star: DataTypes.STRING,
         labelCode: DataTypes.STRING,
         address: DataTypes.STRING,
-        attributeId: DataTypes.STRING,
         categoryCode: DataTypes.STRING,
         description: DataTypes.TEXT,
         userId: DataTypes.STRING,
-        overviewId: DataTypes.STRING,
         imageId: DataTypes.STRING,
         priceCode: DataTypes.STRING,
         acreageCode: DataTypes.STRING,
         provinceCode: DataTypes.STRING,
+        target: DataTypes.STRING,
         statusCode: DataTypes.STRING,
         priceNumber: DataTypes.FLOAT,
         acreageNumber: DataTypes.FLOAT,
+        expiredAt: DataTypes.DATE,
     }, {
         sequelize,
         modelName: 'Post',

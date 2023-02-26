@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom'
 import { ListPost, Pagination, Province, Sidebar } from '../../components/Public/index'
 import { formatVietnameseToString } from '../../utils/fn'
 import * as actions from '../../store/actions'
-
+import logo from '../../assets/image/homestay.png';
+import { Helmet } from 'react-helmet'
 
 const LeasePage = () => {
     const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const LeasePage = () => {
     const location = useLocation()
     const [categoryCode, setCategoryCode] = useState('')
     const [categoryInfo, setCategoryInfo] = useState(null)
+    const [title, setTitle] = useState('')
 
     useEffect(() => {
         const category = categories?.find(item => `/${formatVietnameseToString(item.value)}` === location?.pathname)
@@ -20,14 +22,22 @@ const LeasePage = () => {
             setCategoryInfo(category)
             dispatch(actions.setCurCategoryCode(category.code))
         }
-    }, [location])
+    }, [location, categories])
 
     useEffect(() => {
-        dispatch(actions.getNewPosts({ categoryCode: curCategoryCode }))
-    }, [curCategoryCode])
+        setTitle(`${categoryInfo?.value} - Phòng trọ`)
+    }, [categoryInfo])
+
+    useEffect(() => {
+        dispatch(actions.getNewPosts())
+    }, [])
 
     return (
         <div className='w-full flex flex-col gap-4'>
+            <Helmet>
+                <title>{title}</title>
+                <link rel="icon" href={logo} />
+            </Helmet>
             <div>
                 <h1 className='text-[28px] font-bold'>{categoryInfo?.title}</h1>
                 <p className='text-sm text-gray-700'>{categoryInfo?.subtitle}</p>

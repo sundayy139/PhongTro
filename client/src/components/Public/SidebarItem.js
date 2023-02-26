@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import icons from '../../utils/icons'
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
+import { formatVietnameseToString } from '../../utils/fn'
 
 const { GrNext } = icons
 
@@ -16,6 +17,11 @@ const SidebarItem = ({ content, title, double, type }) => {
             }).toString()
         })
     }
+
+    const handleNavigate = (value) => {
+        navigate(`/${formatVietnameseToString(value)}`)
+    }
+
     return (
         <div className='p-5 border border-[#dedede] rounded-[10px] bg-white w-full text-[#333333]'>
             <h3 className='text-lg font-bold mb-2'>
@@ -28,7 +34,9 @@ const SidebarItem = ({ content, title, double, type }) => {
                             content?.map((item, index) => (
                                 <div
                                     key={index}
-                                    onClick={() => handleFilter(item.code)}
+                                    onClick={() => {
+                                        type === 'categoryCode' ? handleNavigate(item.value) : handleFilter(item.code)
+                                    }}
                                     className=' p-[5px] flex items-center gap-2 border-b border-b-[#dedede] border-dashed hover:text-orange cursor-pointer'
                                 >
                                     <span className='mb-[2px]'>

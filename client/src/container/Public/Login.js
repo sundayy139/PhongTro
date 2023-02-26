@@ -29,25 +29,7 @@ const Login = () => {
 
 
     const handleLogin = () => {
-        let invalid = validate(payload)
-        if (invalid === 0) {
-            dispatch(actions.login(payload))
-        }
-    }
-
-    const validate = (payload) => {
-        let invalid = 0;
-        let fields = Object.entries(payload);
-        fields.forEach(item => {
-            if (item[1] === '') {
-                setInvalidFileds(prev => [...prev, {
-                    name: item[0],
-                    message: 'Bạn không được để trống trường này'
-                }])
-                invalid++
-            }
-        })
-        return invalid
+        dispatch(actions.login(payload))
     }
 
     return (
@@ -79,7 +61,7 @@ const Login = () => {
                     text={'Đăng nhập'}
                     bgColor={'bg-secondary1'}
                     textStyle={'text-white font-semibold'}
-                    fulWidth
+                    fullWidth
                     onClick={handleLogin}
                     hover={'hover:bg-orange'}
                 />

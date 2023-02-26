@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 require('dotenv').config()
 
-const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
     let accessToken = req.headers.authorization?.split(' ')[1]
     if (!accessToken) return res.status(401).json({
         err: 1,
@@ -19,4 +19,13 @@ const verifyToken = (req, res, next) => {
     })
 }
 
-export default verifyToken
+export const verifyAdmin = (req, res, next) => {
+    const { role } = req.user
+    if (role !== 'admin') {
+        return res.status(401).json({
+            err: 3,
+            msg: "Access denied"
+        })
+    }
+    next();
+}

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import logo from '../../assets/image/logo-phongtro.svg'
 import { Button, User } from './index';
 import icons from '../../utils/icons';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { path } from '../../utils/path';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions'
@@ -13,12 +13,12 @@ const { BsPlusCircle, MdLogout, MdOutlineKeyboardArrowDown } = icons
 const TopBar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [searchParams] = useSearchParams();
-    let page = searchParams.get('page')
+    const location = useLocation()
     const { isLoggedIn } = useSelector(state => state.auth)
     const { currentUserData } = useSelector(state => state.user)
     const [isShow, setIsShow] = useState(false)
     const ref = useRef()
+
     const goLogin = useCallback(() => {
         navigate(path.LOGIN)
     })
@@ -38,7 +38,15 @@ const TopBar = () => {
             behavior: 'smooth',
             block: "start"
         })
-    }, [page])
+    }, [location])
+
+    const handleClick = () => {
+        if (isLoggedIn) {
+            navigate(`he-thong/${path.CREATE_POST}`)
+        } else {
+            navigate(path.LOGIN)
+        }
+    }
 
     return (
         <div ref={ref} className='max-w-1100 mx-auto flex items-center justify-between'>
@@ -141,6 +149,7 @@ const TopBar = () => {
                     bgColor={'bg-secondary2'}
                     icAfter={<BsPlusCircle />}
                     hover={'hover:shadow-md'}
+                    onClick={handleClick}
                 />
             </div>
         </div>

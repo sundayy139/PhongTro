@@ -19,3 +19,16 @@ export const getCurrentUser = async (req, res) => {
         })
     }
 }
+
+export const updateProfile = async (req, res) => {
+    try {
+        const response = await userService.updateUserProfileService(req.body)
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at auth controller' + error
+        })
+    }
+}
+

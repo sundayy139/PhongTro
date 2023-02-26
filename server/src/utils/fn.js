@@ -20,7 +20,7 @@ const generateCode = (value) => {
     let merge = value + process.env.SECRET_GENERATE
 
     let length = merge.length
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         let index = i === 2 ? Math.floor(merge.length / 2 + length / 2) : Math.floor(length / 2)
         output += merge.charAt(index)
         length = index

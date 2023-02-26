@@ -6,6 +6,7 @@ const initialState = {
     acreages: [],
     provinces: [],
     curCategoryCode: null,
+    flag: false,
     msg: ''
 }
 
@@ -39,6 +40,11 @@ const appReducer = (state = initialState, action) => {
             return {
                 ...state,
                 curCategoryCode: action.curCategoryCode || null
+            }
+        case actionsType.SET_FLAG:
+            return {
+                ...state,
+                flag: action.flag
             }
         default:
             return state;

@@ -22,3 +22,45 @@ export const getUserService = (uId) => {
         }
     })
 }
+
+
+export const updateUserProfileService = (payload) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!payload.id) {
+                resolve({
+                    err: 1,
+                    msg: "Thiếu mất gì đó rồi",
+                })
+            } else {
+                const user = await db.User.findOne({
+                    where: {
+                        id: payload.id
+                    }
+                })
+                if (!user) {
+                    resolve({
+                        err: 2,
+                        msg: "Không tìm thấy người dùng",
+                    })
+                } else {
+                    user.name = payload.name
+                    user.email = payload.email
+                    user.fbUrl = payload.fbUrl
+                    user.zalo = payload.zalo
+                    user.role = payload.role
+                    user.avatar = payload.avatar
+                    user.status = payload.status
+
+                    await user.save()
+                    resolve({
+                        err: 0,
+                        msg: "Cập nhật thông tin thành công",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}

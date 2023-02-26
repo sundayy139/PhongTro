@@ -52,7 +52,7 @@ const Search = () => {
         queriesCode.forEach(item => {
             queriesCodeObj[item[0]] = item[1]
         })
-        console.log(queriesCodeObj);
+
         const queriesText = Object.entries(queries).filter(item => !item[0].includes('Number') || !item[0].includes('Code'))
         let queriesTextObj = {}
         queriesText.forEach(item => {
@@ -60,7 +60,7 @@ const Search = () => {
         })
 
         let titleSearch = `${queriesTextObj.category
-            ? queriesTextObj.category
+            ? `${queriesTextObj.category}`
             : ''} ${queriesTextObj.province
                 ? `Khu vực ${queriesTextObj.province}`
                 : ''} ${queriesTextObj.price
@@ -124,7 +124,7 @@ const Search = () => {
                         icBefore={<BsSearch />}
                         bgColor={"bg-secondary1"}
                         textStyle={'text-white text-sm font-semibold'}
-                        fulWidth
+                        fullWidth
                         hover={'hover:shadow-md'}
                         onClick={handleSearch}
                     />

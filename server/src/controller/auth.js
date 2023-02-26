@@ -40,6 +40,20 @@ export const login = async (req, res) => {
     }
 }
 
+export const changePassword = async (req, res) => {
+    const { id } = req.user
+    try {
+        const response = await authService.changePasswordService(id, req.body)
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at auth controller' + error
+        })
+    }
+}
+
+
 
 export const forgotPassword = async (req, res) => {
     const { email, phone } = req.body

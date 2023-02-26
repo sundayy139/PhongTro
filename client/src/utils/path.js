@@ -9,10 +9,18 @@ export const path = {
     CHO_THUE_MAT_BANG: 'cho-thue-mat-bang',
     CHO_THUE_PHONG_TRO: 'cho-thue-phong-tro',
     NHA_CHO_THUE: 'nha-cho-thue',
+    TIM_NGUOI_O_GHEP: 'tim-nguoi-o-ghep',
+    LIEN_HE: 'lien-he',
     SEARCH: 'tim-kiem',
-    DETAIL_POST: "chi-tiet/*",
-    DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
+    DETAIL_POST: 'chi-tiet/*',
+    DETAIL_POST__POSTID: "chi-tiet/:postId",
 
     SYSTEM: '/he-thong/*',
     CREATE_POST: 'dang-tin-moi',
+    MANAGE_POST: 'quan-ly-tin-dang',
+    MANAGE_PROFILE: 'sua-thong-tin',
+    CHANGE_PASSWORD: 'doi-mat-khau',
+
+    MANAGE_USERS: 'quan-ly-nguoi-dung',
+    MANAGE_POSTS_ADMIN: 'quan-ly-tat-ca-tin-dang',
 }

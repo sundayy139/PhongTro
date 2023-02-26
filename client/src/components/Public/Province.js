@@ -4,6 +4,7 @@ import { location } from '../../utils/constant'
 
 
 const Province = () => {
+
     return (
         <div className='flex gap-5 justify-center items-center'>
             {
@@ -12,6 +13,8 @@ const Province = () => {
                         key={item.id}
                         name={item.name}
                         image={item.image}
+                        provinceCode={item.provinceCode}
+                        categoryCode={item.categoryCode}
                     />
                 ))
             }

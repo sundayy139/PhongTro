@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, InputForm } from '../../components/Public/index';
 import * as apis from '../../services';
-import { isVietnamesePhoneNumber, validateEmail } from '../../utils/fn';
+import { isVietnamesePhoneNumber, validate, validateEmail } from '../../utils/fn';
 import { Helmet } from 'react-helmet'
 import Swal from 'sweetalert2'
 
@@ -21,68 +21,31 @@ const Register = () => {
     })
 
     const handleRegister = async () => {
-        let invalid = validate(payload)
+        let invalid = validate(payload, setInvalidFileds)
         if (invalid === 0) {
             const response = await apis.apiRegister(payload)
-            console.log(response);
             if (response?.data?.err === 0) {
-                Swal.fire("Yeahh !", response?.data?.msg, "success")
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Yeah...',
+                    text: response?.data?.msg,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
                 navigate('/dang-nhap')
                 // await apis.apiRegisterMail(payload)
             } else {
-                Swal.fire("Opps !", response?.data?.msg, "error")
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response?.data?.msg,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
             }
         }
-    }
-
-    const validate = (payload) => {
-        let invalids = 0;
-        let fields = Object.entries(payload);
-        fields.forEach(item => {
-            if (item[1] === '') {
-                setInvalidFileds(prev => [...prev, {
-                    name: item[0],
-                    message: 'Bạn không được để trống trường này'
-                }])
-                invalids++
-            }
-        })
-        fields.forEach(item => {
-            switch (item[0]) {
-                case 'password':
-                    if (item[1].length < 8) {
-                        setInvalidFileds(prev => [...prev, {
-                            name: item[0],
-                            message: 'Mật khẩu phải tối thiểu 8 kí tự '
-                        }])
-                        invalids++
-                    }
-                    break;
-                case 'phone':
-                    let checkPhone = isVietnamesePhoneNumber(item[1])
-                    if (checkPhone === false) {
-                        setInvalidFileds(prev => [...prev, {
-                            name: item[0],
-                            message: 'Số điện thoại không tồn tại'
-                        }])
-                        invalids++
-                    }
-                    break;
-                case 'email':
-                    let checkEmail = validateEmail(item[1])
-                    if (checkEmail === false) {
-                        setInvalidFileds(prev => [...prev, {
-                            name: item[0],
-                            message: 'Email không tồn tại'
-                        }])
-                        invalids++
-                    }
-                    break;
-                default:
-                    break;
-            }
-        })
-        return invalids
     }
 
     return (
@@ -132,7 +95,7 @@ const Register = () => {
                     text={'Tạo tài khoản'}
                     bgColor={'bg-secondary1'}
                     textStyle={'text-white font-semibold'}
-                    fulWidth
+                    fullWidth
                     onClick={handleRegister}
                     hover={'hover:bg-orange'}
                 />

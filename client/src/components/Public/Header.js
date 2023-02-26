@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { formatVietnameseToString } from '../../utils/fn';
 import { useSelector } from 'react-redux';
+import { path } from '../../utils/path';
 
 const isActiveStyle = 'h-full  bg-secondary2 flex items-center px-3'
 const isNotActiveStyle = 'h-full flex items-center px-3 hover:bg-secondary2'
@@ -30,6 +31,12 @@ const Header = () => {
                         </div>
                     ))
                 }
+                <NavLink
+                    to={`/${path.LIEN_HE}`}
+                    className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
+                >
+                    Liên hệ
+                </NavLink>
             </div>
         </div>
     )

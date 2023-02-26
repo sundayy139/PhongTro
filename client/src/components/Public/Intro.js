@@ -65,7 +65,7 @@ const Intro = () => {
                         bgColor={"bg-secondary2"}
                         textStyle={'text-sm font-semibold text-white'}
                         hover={'shadow-md'}
-                        fulWidth
+                        fullWidth
                     />
                 </div>
             </div>

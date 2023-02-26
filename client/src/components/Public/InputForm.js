@@ -19,7 +19,7 @@ const InputForm = ({ id, label, value, setValue, type, invalidFileds, setInvalid
             <div className='w-full mt-1 relative'>
                 <input
                     type={type === 'password' && !isShow ? 'password' : 'text'}
-                    value={value}
+                    value={value || ''}
                     id={id}
                     className='outline-none bg-[#e8f0fe] w-full h-[45px] p-[10px] rounded-md font-semibold text-[16px]'
                     onChange={(e) => setValue(prev => ({ ...prev, [type]: e.target.value }))}

@@ -2,6 +2,7 @@ import actionsType from "../actions/actionsType";
 
 const initialState = {
     currentUserData: null,
+    dataUserEdit: null,
     msg: '',
 }
 
@@ -13,11 +14,15 @@ const userReducer = (state = initialState, action) => {
                 currentUserData: action.user || [],
                 msg: action.msg || '',
             }
-        case actionsType.LOG_OUT:
+        case actionsType.SET_DATA_USER_EDIT:
             return {
                 ...state,
-                currentUserData: null,
-                msg: ''
+                dataUserEdit: action.dataEdit || null,
+            }
+        case actionsType.CLEAR_DATA_USER_EDIT:
+            return {
+                ...state,
+                dataUserEdit: null,
             }
         default:
             return state;

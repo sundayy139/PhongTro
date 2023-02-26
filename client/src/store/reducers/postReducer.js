@@ -3,6 +3,8 @@ import actionsType from "../actions/actionsType";
 const initialState = {
     posts: [],
     newPosts: [],
+    postsUser: [],
+    dataEdit: {},
     msg: '',
     count: 0
 }
@@ -27,6 +29,22 @@ const postReducer = (state = initialState, action) => {
                 ...state,
                 newPosts: action.newPosts || [],
                 msg: action.msg || '',
+            }
+        case actionsType.GET_POSTS_USER:
+            return {
+                ...state,
+                postsUser: action.posts || [],
+                msg: action.msg || '',
+            }
+        case actionsType.SET_DATA_EDIT:
+            return {
+                ...state,
+                dataEdit: action.dataEdit || null,
+            }
+        case actionsType.CLEAR_DATA_EDIT:
+            return {
+                ...state,
+                dataEdit: null,
             }
         default:
             return state;

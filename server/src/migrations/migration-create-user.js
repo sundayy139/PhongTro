@@ -27,9 +27,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.BLOB('long')
+        type: Sequelize.STRING
       },
       role: {
+        type: Sequelize.STRING
+      },
+      status: {
         type: Sequelize.STRING
       },
       createdAt: {

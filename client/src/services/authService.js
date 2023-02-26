@@ -30,4 +30,20 @@ export const apiLogin = (payload) => {
     })
 }
 
+export const apiChangePassword = (payload) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "put",
+                url: "/api/v1/auth/change-password",
+                data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 

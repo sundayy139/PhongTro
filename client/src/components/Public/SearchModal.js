@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { getNumberAcreage, getNumberPrice } from '../../utils/fn'
 import icons from '../../utils/icons'
 
+
 const { BsArrowLeft } = icons
 const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, range, defaultText }) => {
 
@@ -60,12 +61,16 @@ const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, ran
     const handleActive = (item) => {
         setActive(item.code)
         let arrMaxMin = name === 'price' ? getNumberPrice(item.value) : name === 'acreage' ? getNumberAcreage(item.value) : ''
+
         if (arrMaxMin.length === 1) {
-            if (+arrMaxMin[0] === 1 || +arrMaxMin[0] === 20) {
+            if (+arrMaxMin[0] === 1) {
                 setPercent1(0)
                 setPercent2(convertTargetTo100(1))
+            } else if (+arrMaxMin[0] === 20) {
+                setPercent1(0)
+                setPercent2(convertTargetTo100(20))
             }
-            if (+arrMaxMin[0] === 15 || +arrMaxMin[0] === 90) {
+            else if (+arrMaxMin[0] === 15 || +arrMaxMin[0] === 90) {
                 setPercent1(100)
                 setPercent2(100)
             }
@@ -78,7 +83,7 @@ const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, ran
     const handleBeforeSubmit = (e) => {
         let min = percent1 < percent2 ? percent1 : percent2
         let max = percent1 < percent2 ? percent2 : percent1
-        let arrMinMax = [+convert100toTarget(min), +convert100toTarget(max)]
+        let arrMinMax = percent1 === percent2 && percent1 === 100 ? [+convert100toTarget(min), 99999] : [+convert100toTarget(min), +convert100toTarget(max)]
 
         handleSubmit(e, {
             [`${name}Number`]: arrMinMax,
@@ -99,7 +104,7 @@ const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, ran
             onClick={() => setIsShowModal(false)}
         >
             <div
-                className='w-[700px] h-full max-h-[500px] flex flex-col bg-white mx-auto mt-[100px] rounded-[10px] overflow-hidden justify-between'
+                className='w-[700px] h-full max-h-[500px] flex flex-col bg-white mx-auto mt-[100px] rounded-[10px] overflow-hidden justify-between overflow-y-auto'
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
@@ -168,8 +173,8 @@ const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, ran
                     }
                     {
                         (name === 'acreage' || name === 'price') && (
-                            <div className='px-[25px] py-20'>
-                                <div className='flex flex-col items-center justify-center relative'>
+                            <div className='px-[25px] py-20 '>
+                                <div className='flex flex-col items-center justify-center relative '>
                                     <div className='absolute -top-14 font-semibold text-xl text-orange'>
                                         {
                                             (percent1 === 100 && percent2 === 100)

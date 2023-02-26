@@ -11,17 +11,10 @@ module.exports = {
             title: {
                 type: Sequelize.STRING
             },
-            star: {
-                type: Sequelize.STRING,
-                defaultValue: '0'
-            },
             labelCode: {
                 type: Sequelize.STRING
             },
             address: {
-                type: Sequelize.STRING
-            },
-            attributeId: {
                 type: Sequelize.STRING
             },
             categoryCode: {
@@ -31,9 +24,6 @@ module.exports = {
                 type: Sequelize.TEXT
             },
             userId: {
-                type: Sequelize.STRING
-            },
-            overviewId: {
                 type: Sequelize.STRING
             },
             imageId: {
@@ -51,11 +41,18 @@ module.exports = {
             statusCode: {
                 type: Sequelize.STRING
             },
+            target: {
+                type: Sequelize.STRING
+            },
             priceNumber: {
                 type: Sequelize.FLOAT
             },
             acreageNumber: {
                 type: Sequelize.FLOAT
+            },
+            expiredAt: {
+                allowNull: false,
+                type: Sequelize.DATE
             },
             createdAt: {
                 allowNull: false,

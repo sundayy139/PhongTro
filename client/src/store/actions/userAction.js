@@ -2,7 +2,6 @@ import * as apis from '../../services'
 import actionsType from "./actionsType";
 
 
-
 export const getCurrentUser = () => async (dispatch) => {
     try {
         const res = await apis.apiGetCurrentUser()
@@ -17,6 +16,9 @@ export const getCurrentUser = () => async (dispatch) => {
                 user: null,
                 msg: res.data.msg
             })
+            dispatch({
+                type: actionsType.LOG_OUT
+            })
         }
     } catch (error) {
         dispatch({
@@ -24,5 +26,18 @@ export const getCurrentUser = () => async (dispatch) => {
             user: null,
             msg: error
         })
+        dispatch({
+            type: actionsType.LOG_OUT
+        })
     }
 }
+
+export const setDataUserEdit = (dataEdit) => ({
+    type: actionsType.SET_DATA_USER_EDIT,
+    dataEdit,
+})
+
+export const clearDataUserEdit = () => ({
+    type: actionsType.CLEAR_DATA_USER_EDIT,
+    dataEdit: null,
+})

@@ -93,3 +93,8 @@ export const getProvinces = () => async (dispatch) => {
         })
     }
 }
+
+export const setFlag = (flag) => ({
+    type: actionsType.SET_FLAG,
+    flag,
+})

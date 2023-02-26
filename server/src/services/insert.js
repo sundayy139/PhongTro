@@ -43,9 +43,7 @@ export const insert = () => {
                     let currentPrice = getNumberFromString(item?.header?.attributes?.price)
                     let imagesId = v4()
                     let postId = v4()
-                    let attributeId = v4()
                     let userId = v4()
-                    let overviewId = v4()
                     const labelcode = generateCode(item?.header?.class?.classType)?.trim();
                     labelCodes?.every(item => item?.code !== labelcode) && labelCodes.push({
                         code: labelcode,
@@ -60,13 +58,14 @@ export const insert = () => {
                     await db.User.create({
                         id: userId,
                         name: item?.contact?.content?.find(i => i.name === "Liên hệ:")?.content,
-                        password: hashPassword('123456'),
-                        facebook: '1',
+                        password: hashPassword('123456789'),
+                        fbUrl: 'https://www.facebook.com/anoni',
                         role: 'user',
-                        email: '1',
-                        avatar: '1',
+                        email: 'anoni@gmail.com',
+                        avatar: 'https://phongtro123.com/images/default-user.png',
                         phone: item?.contact?.content?.find(i => i.name === "Điện thoại:")?.content,
                         zalo: item?.contact?.content?.find(i => i.name === "Zalo")?.content,
+                        status: 'S4'
                     })
 
                     await db.Image.create({
@@ -74,44 +73,24 @@ export const insert = () => {
                         images: JSON.stringify(item?.images)
                     })
 
-                    await db.Attribute.create({
-                        id: attributeId,
-                        price: item?.header?.attributes?.price,
-                        acreage: item?.header?.attributes?.acreage,
-                        published: item?.header?.attributes?.published,
-                        hashtag: item?.header?.attributes?.hashtag
-                    })
                     await db.Post.create({
                         id: postId,
                         title: item?.header?.title,
-                        star: item?.header?.star,
                         labelCode: labelcode,
                         address: item?.header?.address,
-                        attributeId: attributeId,
                         categoryCode: cate.code,
                         description: JSON.stringify(item?.mainContent?.content),
                         userId: userId,
-                        overviewId: overviewId,
                         imageId: imagesId,
                         priceCode: dataPrice.find(price => price.max > +currentPrice && price.min <= +currentPrice)?.code,
                         acreageCode: dataArea.find(area => area.max > +areaCurrent && area.min <= +areaCurrent)?.code,
                         provinceCode,
+                        target: 'Tất cả',
                         statusCode: 'S2',
                         priceNumber: +currentPrice,
                         acreageNumber: +areaCurrent,
+                        expiredAt: new Date()
                     })
-
-                    await db.Overview.create({
-                        id: overviewId,
-                        code: item?.overview?.content?.find(i => i.name === "Mã tin:")?.content,
-                        area: item?.overview?.content?.find(i => i.name === "Khu vực")?.content,
-                        type: item?.overview?.content?.find(i => i.name === "Loại tin rao:")?.content,
-                        target: item?.overview?.content?.find(i => i.name === "Đối tượng thuê:")?.content,
-                        bonus: item?.overview?.content?.find(i => i.name === "Gói tin:")?.content,
-                        created: Date.now(),
-                        expired: Date.now(),
-                    })
-
                 })
             })
 

@@ -26,9 +26,8 @@ export const getPostsLimit = async (req, res) => {
 }
 
 export const getNewPosts = async (req, res) => {
-    const { ...query } = req.query
     try {
-        const response = await postService.getNewPostsService(query);
+        const response = await postService.getNewPostsService();
         return res.status(200).json(response)
     } catch (error) {
         res.status(500).json({
@@ -37,3 +36,85 @@ export const getNewPosts = async (req, res) => {
         })
     }
 }
+
+export const getPostById = async (req, res) => {
+    const { postId } = req.query
+    try {
+        const response = await postService.getPostByIdService(postId);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
+export const createNewPost = async (req, res) => {
+    try {
+        const { id } = req.user
+        const response = await postService.createNewPostService(req.body, id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
+export const getPostsUser = async (req, res) => {
+    try {
+        const { id } = req.user
+        const response = await postService.getPostsUserService(id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
+export const updatePost = async (req, res) => {
+    try {
+        const { id } = req.user
+        const response = await postService.updatePostService(req.body, id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
+export const deletePost = async (req, res) => {
+    try {
+        const { id } = req.user
+        const { postId } = req.query
+        const response = await postService.deletePostService(postId, id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
+export const updateStatusPost = async (req, res) => {
+    try {
+        const { id } = req.user
+        const { postId } = req.query
+        const response = await postService.updateStatusPostService(postId, id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
+
