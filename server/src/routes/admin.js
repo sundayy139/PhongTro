@@ -10,4 +10,7 @@ router.get('/get-users', adminController.getUsers)
 router.delete('/delete-user', adminController.deleteUser)
 router.get('/get-posts', adminController.getPosts)
 router.put('/approve-post', adminController.approvePost)
+router.post('/create-blog', adminController.createBlog)
+router.put('/update-blog', adminController.updateBlog)
+router.delete('/delete-blog', adminController.deleteBlog)
 export default router

@@ -23,6 +23,17 @@ export const getUsersAdmin = () => async (dispatch) => {
     }
 }
 
+
+export const setDataUserEdit = (dataEdit) => ({
+    type: actionsType.SET_DATA_USER_EDIT,
+    dataEdit,
+})
+
+export const clearDataUserEdit = () => ({
+    type: actionsType.CLEAR_DATA_USER_EDIT,
+    dataEdit: null,
+})
+
 export const getPostsAdmin = () => async (dispatch) => {
     try {
         const res = await apis.apiGetPostsAdmin()
@@ -45,3 +56,13 @@ export const getPostsAdmin = () => async (dispatch) => {
         })
     }
 }
+
+export const setDataBlogEdit = (dataEdit) => ({
+    type: actionsType.SET_DATA_BLOG_EDIT,
+    dataEdit,
+})
+
+export const clearDataBlogEdit = () => ({
+    type: actionsType.CLEAR_DATA_BLOG_EDIT,
+    dataEdit: null,
+})

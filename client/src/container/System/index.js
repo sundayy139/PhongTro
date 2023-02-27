@@ -6,3 +6,5 @@ export { default as ChangePassword } from './ChangePassword';
 export { default as ManageUser } from './ManageUser';
 export { default as ManagePostAdmin } from './ManagePostAdmin';
 export { default as ManagePage } from './ManagePage';
+export { default as CreateBlog } from './CreateBlog';
+export { default as ManageBlog } from './ManageBlog';

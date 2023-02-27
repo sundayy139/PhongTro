@@ -142,7 +142,7 @@ const ManagePost = () => {
             cell: (row) => (
                 <div className='flex gap-4 justify-end'>
                     <button
-                        className='bg-yellow-500 p-2 rounded-[5px]'
+                        className='bg-blue-500 p-2 rounded-[5px]'
                         title='Sửa bài đăng'
                         onClick={() => {
                             setIsShow(true)
@@ -161,7 +161,7 @@ const ManagePost = () => {
                     {
                         row.statusCode === 'S2' && (
                             <button
-                                className='bg-blue-500 p-2 rounded-[5px]'
+                                className='bg-yellow-500 p-2 rounded-[5px]'
                                 title='Xác nhận đã được thuê'
                                 onClick={() => handleUpdateStatusPost(row)}
                             >

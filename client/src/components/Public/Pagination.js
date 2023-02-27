@@ -1,14 +1,11 @@
 import React, { memo, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { PageNumber } from './index'
 import icons from '../../utils/icons'
 
 const { MdLastPage } = icons
 
-const Pagination = () => {
-    const { count, posts } = useSelector(state => state.post)
-
+const Pagination = ({ count, data }) => {
     const [arrPage, setArrPage] = useState()
     const [isHideEnd, setIsHideEnd] = useState(false)
     const [isHideStart, setIsHideStart] = useState(false)
@@ -24,8 +21,9 @@ const Pagination = () => {
 
     useEffect(() => {
 
-        let length = posts.length < process.env.REACT_APP_POSTS_LIMIT ? process.env.REACT_APP_POSTS_LIMIT : posts.length
-        let maxPage = Math.ceil(count / length)
+        let length = data?.length < process.env.REACT_APP_data_LIMIT ? process.env.REACT_APP_data_LIMIT : data?.length
+        let maxPage = count > 0 ? Math.ceil(count / length) : 1
+
         let minPage = 1
 
         let start = (currentPage - 2) < minPage ? minPage : (currentPage - 2)
@@ -41,7 +39,7 @@ const Pagination = () => {
         currentPage >= maxPage - 2 ? setIsHideEnd(true) : setIsHideEnd(false)
 
 
-    }, [count, posts, currentPage])
+    }, [count, data, currentPage])
 
 
     return (
@@ -78,7 +76,7 @@ const Pagination = () => {
                         <PageNumber
                             icons={<MdLastPage size={20} />}
                             setCurrentPage={setCurrentPage}
-                            number={Math.ceil(count / posts.length)}
+                            number={Math.ceil(count / data?.length)}
                         />
                     </>
                 )

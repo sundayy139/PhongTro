@@ -207,6 +207,12 @@ export const menuManageSidebarAdmin = [
         path: '/he-thong/quan-ly-tat-ca-tin-dang',
         icons: <BiNotepad size={16} />
     },
+    {
+        id: 3,
+        text: "Quản lý blog",
+        path: '/he-thong/quan-ly-blog',
+        icons: <BiNotepad size={16} />
+    },
 ]
 
 

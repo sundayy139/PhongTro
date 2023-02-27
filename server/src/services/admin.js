@@ -1,4 +1,5 @@
 import db from "../models/index";
+import { v4 as generateId } from 'uuid'
 
 // GET ALL USERS
 export const getUsersService = () => {
@@ -23,7 +24,7 @@ export const getUsersService = () => {
     })
 }
 
-// GET ALL USERS
+// DELETE USER
 export const deleteUserService = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -73,7 +74,6 @@ export const getPostsService = () => {
                     { model: db.Label, as: 'labelData', attributes: ['code', 'value'] },
                 ]
             })
-            console.log(posts.length);
             resolve({
                 err: posts ? 0 : 1,
                 msg: posts ? "Thành công" : "Không lấy được bài đăng",
@@ -119,4 +119,107 @@ export const approvePostService = (postId) => {
     })
 }
 
+// CREATE BLOG
+export const createBlogService = (body, id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const { descHTML, descMarkdown, image, title } = body
+            if (!id || !descHTML || !descMarkdown || !image || !title) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const blog = await db.Blog.create({
+                    id: generateId(),
+                    descHTML: descHTML,
+                    descMarkdown: descMarkdown,
+                    userId: id,
+                    image: image,
+                    title: title
+                })
 
+                resolve({
+                    err: blog ? 0 : 2,
+                    msg: blog ? "Tạo mới blog thành công" : 'Tạo mới blog thất bại',
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+// UPDATE BLOG
+export const updateBlogService = (payload) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const { id, descHTML, descMarkdown, title, image } = payload
+            if (!id) {
+                resolve({
+                    err: 1,
+                    msg: "Thiếu mất gì đó rồi",
+                })
+            } else {
+                const blog = await db.Blog.findOne({
+                    where: {
+                        id: id
+                    }
+                })
+                if (!blog) {
+                    resolve({
+                        err: 2,
+                        msg: "Không tìm thấy blog",
+                    })
+                } else {
+                    blog.title = title
+                    blog.descHTML = descHTML
+                    blog.descMarkdown = descMarkdown
+                    blog.image = image
+
+                    await blog.save()
+                    resolve({
+                        err: 0,
+                        msg: "Cập nhật blog thành công",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+// DELETE BLOG
+export const deleteBlogService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!id) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const blog = await db.Blog.findOne({
+                    where: {
+                        id: id,
+                    }
+                })
+                if (!blog) {
+                    resolve({
+                        err: 2,
+                        msg: "Không tìm thấy blog",
+                    })
+                } else {
+                    await blog.destroy()
+                    resolve({
+                        err: 0,
+                        msg: "Xóa blog thành công",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}

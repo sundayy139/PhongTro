@@ -1,22 +1,23 @@
 import actionsType from "../actions/actionsType";
 
 const initialState = {
-    currentUserData: null,
-    dataUserEdit: null,
+    blogs: null,
+    count: '',
     msg: '',
 }
 
-const userReducer = (state = initialState, action) => {
+const postReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionsType.GET_CURRENT_USER:
+        case actionsType.GET_BLOGS:
             return {
                 ...state,
-                currentUserData: action.user || [],
+                blogs: action.blogs || [],
                 msg: action.msg || '',
+                count: action.count || 0
             }
         default:
             return state;
     }
 }
 
-export default userReducer
+export default postReducer

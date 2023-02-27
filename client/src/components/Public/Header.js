@@ -32,6 +32,12 @@ const Header = () => {
                     ))
                 }
                 <NavLink
+                    to={`/${path.BLOG}`}
+                    className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
+                >
+                    Blog
+                </NavLink>
+                <NavLink
                     to={`/${path.LIEN_HE}`}
                     className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
                 >

@@ -20,3 +20,5 @@ export { default as SearchModal } from './SearchModal';
 export { default as User } from './User';
 export { default as Slick } from './Slick';
 export { default as Map } from './Map';
+export { default as BlogItem } from './BlogItem';
+export { default as ListBlog } from './ListBlog';

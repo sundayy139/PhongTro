@@ -11,6 +11,8 @@
 @import "lightgallery/css/lightgallery.css";
 @import "lightgallery/css/lg-zoom.css";
 @import "lightgallery/css/lg-thumbnail.css";
+
+@import "react-markdown-editor-lite/lib/index.css";
 * {
   font-family: "Inter", sans-serif;
 }
@@ -59,4 +61,27 @@ input[type="range"]::-webkit-slider-thumb:active {
 
 .lg-react-element {
   height: 320px;
+}
+
+.text-dangerous.css > h1,
+.text-dangerous.css > h2,
+.text-dangerous.css > h3,
+.text-dangerous.css > h4,
+.text-dangerous.css > h5,
+.text-dangerous.css > h6,
+.text-dangerous.css > p,
+.text-dangerous.css > span,
+.text-dangerous.css > strong,
+.text-dangerous.css > p > strong,
+.text-dangerous.css > img,
+.text-dangerous.css > li {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.text-dangerous.css img {
+  width: 100%;
+  object-fit: contain;
+  border-radius: 5px;
 }

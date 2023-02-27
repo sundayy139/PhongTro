@@ -24,8 +24,8 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
     const [invalidFileds, setInvalidFileds] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [userData, setUserData] = useState(null)
-    const [role, setRole] = useState(null)
-    const { currentUserData, dataUserEdit } = useSelector(state => state.user)
+    const { currentUserData } = useSelector(state => state.user)
+    const { dataUserEdit } = useSelector(state => state.admin)
     const [payload, setPayload] = useState({
         name: '',
         email: '',
@@ -34,13 +34,13 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
         avatar: '',
         id: ''
     })
+    const dispatch = useDispatch()
 
     useEffect(() => {
         isEdit ? setUserData(dataUserEdit) : setUserData(currentUserData)
     }, [isEdit])
 
 
-    const dispatch = useDispatch()
 
     useEffect(() => {
         setPayload({
@@ -262,6 +262,11 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                             />
                         </div>
                     </div>
+                    <small className='text-[10px] text-red-500'>
+                        {
+                            invalidFileds?.some(item => item.name === 'image') && invalidFileds?.find(item => item.name === 'image')?.message
+                        }
+                    </small>
                 </div>
                 <div className='flex justify-center w-full mt-10'>
                     <Button

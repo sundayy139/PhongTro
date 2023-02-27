@@ -7,6 +7,7 @@ import { persistReducer } from 'redux-persist'
 import postReducer from './postReducer';
 import appReducer from './appReducer';
 import adminReducer from './adminReduce';
+import blogReducer from './blogReducer';
 
 const commonConfig = {
     storage: storage,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     post: postReducer,
     admin: adminReducer,
+    blog: blogReducer,
     app: persistReducer(appConfig, appReducer),
 })
 

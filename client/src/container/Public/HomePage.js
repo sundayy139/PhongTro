@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListPost, Pagination, Province, Sidebar } from '../../components/Public/index'
 import { text } from '../../utils/constant'
 import * as actions from '../../store/actions'
@@ -7,6 +7,7 @@ import * as actions from '../../store/actions'
 
 const HomePage = () => {
     const dispatch = useDispatch();
+    const { count, posts } = useSelector(state => state.post)
 
     useEffect(() => {
         dispatch(actions.getNewPosts())
@@ -21,7 +22,10 @@ const HomePage = () => {
             <div className=' w-full flex gap-5'>
                 <div className='w-[70%] flex flex-col gap-5 mb-[50px]'>
                     <ListPost />
-                    <Pagination />
+                    <Pagination
+                        count={count}
+                        data={posts}
+                    />
                 </div>
                 <div className='w-[30%] flex flex-col justify-start'>
                     <Sidebar />

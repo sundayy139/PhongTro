@@ -31,13 +31,3 @@ export const getCurrentUser = () => async (dispatch) => {
         })
     }
 }
-
-export const setDataUserEdit = (dataEdit) => ({
-    type: actionsType.SET_DATA_USER_EDIT,
-    dataEdit,
-})
-
-export const clearDataUserEdit = () => ({
-    type: actionsType.CLEAR_DATA_USER_EDIT,
-    dataEdit: null,
-})

@@ -57,3 +57,49 @@ export const apiApprovePost = (postId) => {
         }
     })
 }
+
+
+export const apiCreateBlog = (payload) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "post",
+                url: "/api/v1/admin/create-blog",
+                data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiDeleteBlogAdmin = (id) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "delete",
+                url: "/api/v1/admin/delete-blog",
+                params: { id }
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiUpdateBlogAdmin = (payload) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "put",
+                url: "/api/v1/admin/update-blog",
+                data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}

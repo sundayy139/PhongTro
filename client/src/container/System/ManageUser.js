@@ -53,6 +53,7 @@ const ManageUser = () => {
     const [isShow, setIsShow] = useState(false)
     const [search, setSearch] = useState('')
     const [usersFilter, setUsersFilter] = useState([])
+    const [status, setStatus] = useState('')
     const dispatch = useDispatch()
     const { usersData } = useSelector(state => state.admin)
     const { flag } = useSelector(state => state.app)
@@ -73,6 +74,7 @@ const ManageUser = () => {
 
         })
         setUsersFilter(result)
+        setStatus('0')
     }, [search, usersData])
 
     const handleDeleteUser = async (row) => {
@@ -98,6 +100,18 @@ const ManageUser = () => {
             }
         })
     }
+
+    useEffect(() => {
+        if (+status === 1) {
+            const activeUser = usersData?.filter(item => item.status === 'S4')
+            setUsersFilter(activeUser)
+        } else if (+status === 2) {
+            const activeUser = usersData?.filter(item => item.status === 'S5')
+            setUsersFilter(activeUser)
+        } else if (+status === 0) {
+            setUsersFilter(usersData)
+        }
+    }, [status])
 
     const columns = [
         {
@@ -223,6 +237,27 @@ const ManageUser = () => {
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                     />
+                                    <select
+                                        className='outline-none border border-gray-300 p-2 rounded-[5px] text-xs'
+                                        onChange={(e) => setStatus(e.target.value)}
+                                        value={status}
+                                    >
+                                        <option
+                                            value='0'
+                                        >
+                                            Lọc theo trạng thái
+                                        </option>
+                                        <option
+                                            value='1'
+                                        >
+                                            Đang hoạt động
+                                        </option>
+                                        <option
+                                            value='2'
+                                        >
+                                            Bị khóa
+                                        </option>
+                                    </select>
                                 </div>
                             }
                         />

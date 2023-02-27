@@ -79,8 +79,6 @@ const ManagePostAdmin = () => {
         setStatus('0')
     }, [search])
 
-    console.log(allPostsUser)
-
     useEffect(() => {
         if (+status === 1) {
             const activePosts = allPostsUser?.filter(item => moment(moment.utc(item.expiredAt)).local().unix() > moment(new Date).unix())
@@ -143,7 +141,7 @@ const ManagePostAdmin = () => {
                 <div className='flex gap-4 items-start'>
 
                     <button
-                        className='bg-yellow-500 p-2 rounded-[5px]'
+                        className='bg-blue-500 p-2 rounded-[5px]'
                         title='Sửa bài đăng'
                         onClick={() => {
                             setIsShow(true)
@@ -162,7 +160,7 @@ const ManagePostAdmin = () => {
                     {
                         row.statusCode === 'S1' && (
                             <button
-                                className='bg-blue-500 p-2 rounded-[5px]'
+                                className='bg-yellow-500 p-2 rounded-[5px]'
                                 title='Duyệt bài đăng'
                                 onClick={() => handleApprovePost(row)}
                             >
