@@ -6,7 +6,7 @@ const {
     BsEye
 } = icons
 
-const InputForm = ({ id, label, value, setValue, type, invalidFileds, setInvalidFileds }) => {
+const InputForm = ({ id, label, value, setValue, type, name, invalidFileds, setInvalidFileds }) => {
     const [isShow, setIsShow] = useState(false)
     return (
         <div>
@@ -22,14 +22,14 @@ const InputForm = ({ id, label, value, setValue, type, invalidFileds, setInvalid
                     value={value || ''}
                     id={id}
                     className='outline-none bg-[#e8f0fe] w-full h-[45px] p-[10px] rounded-md font-semibold text-[16px]'
-                    onChange={(e) => setValue(prev => ({ ...prev, [type]: e.target.value }))}
+                    onChange={(e) => setValue(prev => ({ ...prev, [name]: e.target.value }))}
                     onFocus={() => setInvalidFileds([])}
                 />
                 {
-                    invalidFileds?.length > 0 && invalidFileds?.some(item => item.name === type) && (
+                    invalidFileds?.length > 0 && invalidFileds?.some(item => item.name === name) && (
                         <small className='text-[10px] text-red-500'>
                             {
-                                invalidFileds?.find(item => item.name === type)?.message
+                                invalidFileds?.find(item => item.name === name)?.message
                             }
                         </small>
                     )

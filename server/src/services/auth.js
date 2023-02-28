@@ -2,6 +2,7 @@ import db from "../models/index";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 } from 'uuid'
+import * as mailService from '../services/mailer';
 require('dotenv').config()
 
 const hashPassword = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(12))
@@ -153,10 +154,15 @@ export const forgotPasswordService = (body) => {
                     msg: "Không tìm thấy người dùng"
                 })
             } else {
-                const token = jwt.sign({ id: user.id, phone: user.phone, email: user.email }, process.env.SECRET_KEY, { expiresIn: "20m" })
+                const token = jwt.sign({ id: user.id, phone: user.phone, email: user.email }, process.env.SECRET_KEY, { expiresIn: "15m" })
+                const link = `${process.env.CLIENT_URL}/reset-password/${token}`
+
+                // Send MAIL
+                await mailService.sendMailService(user.email, user.name, link)
+
                 resolve({
-                    err: 1,
-                    msg: 'Người dùng không tồn tại'
+                    err: 0,
+                    msg: 'Link thay đổi mật khẩu đã được gửi tới email của bạn'
                 })
             }
         } catch (e) {
@@ -164,6 +170,57 @@ export const forgotPasswordService = (body) => {
         }
     })
 }
+
+export const resetPasswordService = (token, password, confirmPassword) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!token || !password || !confirmPassword) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi"
+                })
+            } else {
+                jwt.verify(token, process.env.SECRET_KEY, async (err, userData) => {
+                    if (err) {
+                        resolve({
+                            err: 2,
+                            msg: "Token hết hạn"
+                        })
+                    } else {
+                        const user = await db.User.findOne({
+                            where: {
+                                id: userData.id
+                            }
+                        })
+                        if (!user) {
+                            resolve({
+                                err: 2,
+                                msg: "Không tìm thấy người dùng"
+                            })
+                        } else {
+                            if (password !== confirmPassword) {
+                                resolve({
+                                    err: 3,
+                                    msg: "Nhập lại mật khẩu không đúng"
+                                })
+                            } else {
+                                user.password = hashPassword(password)
+                                await user.save()
+                                resolve({
+                                    err: 0,
+                                    msg: "Cập nhật mật khẩu thành công"
+                                })
+                            }
+                        }
+                    }
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 
 

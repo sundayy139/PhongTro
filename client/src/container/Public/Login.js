@@ -5,6 +5,7 @@ import { Button, InputForm } from '../../components/Public/index'
 import * as actions from '../../store/actions';
 import { Helmet } from 'react-helmet'
 import Swal from 'sweetalert2'
+import { path } from '../../utils/path';
 
 
 const title = 'Đăng nhập - Phòng trọ';
@@ -42,18 +43,20 @@ const Login = () => {
                 <InputForm
                     label={'SỐ ĐIỆN THOẠI'}
                     id='phone'
+                    name='phone'
                     value={payload.phone}
                     setValue={setPayload}
-                    type={"phone"}
+                    type="text"
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
                 <InputForm
                     label={'MẬT KHẨU'}
                     id='password'
+                    name='password'
                     value={payload.password}
                     setValue={setPayload}
-                    type={"password"}
+                    type="password"
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
@@ -68,6 +71,7 @@ const Login = () => {
             </div>
             <div className='flex items-center justify-between text-sm text mb-[20px] mt-[30px]'>
                 <span
+                    onClick={() => navigate(`/${path.FORGOT_PASSWORD}`)}
                     className='hover:text-orange cursor-pointer'
                 >
                     Bạn quên mật khẩu?

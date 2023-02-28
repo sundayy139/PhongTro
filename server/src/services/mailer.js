@@ -1,45 +1,69 @@
 require('dotenv').config();
 import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen'
+const Mailgen = require('mailgen')
 
-export const registerMailService = async (dataSend) => {
 
-    const { name, email, text, subject } = dataSend
+export const sendMailService = (email, name, link) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!email || !link) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 587,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: process.env.EMAIL_APP, // generated ethereal user
+                        pass: process.env.PASSWORD_APP, // generated ethereal password
+                    },
+                });
 
-    let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: process.env.EMAIL_APP, // generated ethereal user
-            pass: process.env.PASSWORD_APP, // generated ethereal password
-        },
-    });
+                let MailGenerator = new Mailgen({
+                    theme: 'default',
+                    product: {
+                        name: 'Phòng trọ 123',
+                        link: process.env.CLIENT_URL
+                    }
+                })
 
-    let MailGennerator = new Mailgen({
-        theme: 'default',
-        product: {
-            name: 'Mailgen',
-            link: 'https://mailgen.js/'
+                let response = {
+                    body: {
+                        name: name,
+                        intro: 'Bạn đã yêu cầu đặt lại mật khẩu cho tài khoản của bạn tại Phongtro123.com ',
+                        action: {
+                            instructions: 'Vui lòng nhấp vào nút bên dưới để đặt lại mật khẩu của bạn. Link sẽ hết hạn sau 15 phút.',
+                            button: {
+                                color: '#22BC66',
+                                text: 'Đặt lại mật khẩu',
+                                link: link
+                            }
+                        }
+                    },
+                    outro: 'Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.',
+                }
+
+                let mail = MailGenerator.generate(response)
+
+                let message = {
+                    from: 'Phòng Trọ', // sender address
+                    to: email, // list of receivers
+                    subject: 'Cấp lại mật khẩu', // Subject line,
+                    html: mail
+                }
+
+                await transporter.sendMail(message)
+                resolve({
+                    err: 0,
+                    msg: "Gửi email thành công",
+                })
+            }
+
+        } catch (e) {
+            reject(e);
         }
     })
-
-    var emailBody = MailGennerator.generate({
-        body: {
-            name: name || email,
-            intro: text || 'Chào mừng bạn đến với Phongtro123',
-            outro: 'Nếu cần hỗ trợ hoặc có câu hỏi, hãy liên hệ lại với chúng tôi!'
-        }
-    })
-
-    let message = {
-        from: process.env.EMAIL_APP,
-        to: email,
-        subject: subject || "Đăng ký tài khoản thành công",
-        html: emailBody
-    }
-
-    // send mail with defined transport object
-
-    await transporter.sendMail(message)
 }

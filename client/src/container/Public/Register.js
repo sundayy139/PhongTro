@@ -60,7 +60,8 @@ const Register = () => {
                     id='name'
                     value={payload.name}
                     setValue={setPayload}
-                    type={"name"}
+                    type='text'
+                    name='name'
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
@@ -69,25 +70,28 @@ const Register = () => {
                     id='phone'
                     value={payload.phone}
                     setValue={setPayload}
-                    type={"phone"}
+                    name='phone'
+                    type='text'
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
                 <InputForm
                     label={'EMAIL'}
                     id='email'
+                    name='email'
                     value={payload.email}
                     setValue={setPayload}
-                    type={"email"}
+                    type='text'
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
                 <InputForm
                     label={'MẬT KHẨU'}
                     id='password'
+                    name='password'
                     value={payload.password}
                     setValue={setPayload}
-                    type={"password"}
+                    type="password"
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />

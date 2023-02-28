@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { path } from './utils/path';
-import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog } from './container/Public/index';
+import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword } from './container/Public/index';
 import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog } from './container/System/index';
 import { Auth, IsAdmin } from './middleware/authMiddleware'
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,6 +34,8 @@ function App() {
           <Route path={path.HOME__PAGE} element={<HomePage />} />
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.REGISTER} element={<Register />} />
+          <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={path.CHO_THUE_CAN_HO} element={<LeasePage />} />
           <Route path={path.CHO_THUE_MAT_BANG} element={<LeasePage />} />
           <Route path={path.NHA_CHO_THUE} element={<LeasePage />} />

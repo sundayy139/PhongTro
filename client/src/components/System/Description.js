@@ -5,6 +5,7 @@ import { Select, InputDisable, InputForm } from './index'
 
 const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) => {
     const { categories } = useSelector(state => state.app)
+    const { currentUserData } = useSelector(state => state.user)
     const { dataEdit } = useSelector(state => state.post)
     const [categoryCode, setCategoryCode] = useState(payload?.categoryCode)
     const [targetCode, setTargetCode] = useState(payload?.target)
@@ -27,7 +28,6 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
         { id: 2, code: 'Nam', value: 'Nam' },
         { id: 3, code: 'Nữ', value: 'Nữ' },
     ]
-
     return (
         <div className='flex flex-col gap-9'>
             <h2 className='font-semibold text-2xl'>Thông tin mô tả</h2>
@@ -76,12 +76,12 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
             <div className='w-[50%] flex flex-col gap-9'>
                 <InputDisable
                     label={"Thông tin liên hệ"}
-                    value={dataEdit?.userData?.name}
+                    value={Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.name : currentUserData?.name}
                 />
 
                 <InputDisable
                     label={"Số điện thoại"}
-                    value={dataEdit?.userData?.phone}
+                    value={Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.phone : currentUserData?.phone}
                 />
                 <div>
                     <InputForm

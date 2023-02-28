@@ -75,3 +75,17 @@ export const forgotPassword = async (req, res) => {
     }
 }
 
+export const resetPassword = async (req, res) => {
+    const { password, confirmPassword, token } = req.body
+    try {
+        const response = await authService.resetPasswordService(token, password, confirmPassword)
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at auth controller' + error
+        })
+    }
+}
+
+

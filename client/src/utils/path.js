@@ -24,6 +24,8 @@ export const path = {
     MANAGE_BLOG: 'quan-ly-blog',
     MANAGE_PROFILE: 'sua-thong-tin',
     CHANGE_PASSWORD: 'doi-mat-khau',
+    FORGOT_PASSWORD: 'quen-mat-khau',
+    RESET_PASSWORD: 'reset-password/:token',
 
     MANAGE_USERS: 'quan-ly-nguoi-dung',
     MANAGE_POSTS_ADMIN: 'quan-ly-tat-ca-tin-dang',

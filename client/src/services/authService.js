@@ -45,5 +45,36 @@ export const apiChangePassword = (payload) => {
     })
 }
 
+export const apiForgotPassword = (payload) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "post",
+                url: "/api/v1/auth/forgot-password",
+                data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiResetPassword = (payload) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "post",
+                url: "/api/v1/auth/reset-password",
+                data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 
 
