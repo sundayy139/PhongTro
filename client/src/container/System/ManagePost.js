@@ -221,7 +221,7 @@ const ManagePost = () => {
                     ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                         Chưa cho thuê
                     </div>
-                    : row.statusCode === 'S3'
+                    : row.statusCode === 'S6'
                         ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                             Đã cho thuê
                         </div>

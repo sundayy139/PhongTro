@@ -6,7 +6,7 @@ import * as actions from '../../store/actions';
 import DataTable from "react-data-table-component";
 import moment from 'moment';
 import icons from '../../utils/icons'
-import { BreadCrumb, UpdatePost } from '../../components/System/index';
+import { BreadCrumb, LineChart, UpdatePost } from '../../components/System/index';
 import * as apis from '../../services/index';
 import logo from '../../assets/image/homestay.png';
 import Swal from 'sweetalert2';
@@ -74,6 +74,7 @@ const ManagePostAdmin = () => {
                 || String(moment(moment.utc(value.expiredAt)).local().format('dd DD/MM/YYYY')).match(search.toLowerCase())
                 || String(moment(moment.utc(value.createdAt)).local().format('dd DD/MM/YYYY')).match(search.toLowerCase())
                 || String(getNumberFromString(value.id)).toLowerCase().match(search.toLowerCase())
+                || String(value.categoryCode).toLowerCase().match(search.toLowerCase())
         })
         setPostsFilter(result)
         setStatus('0')
@@ -197,6 +198,11 @@ const ManagePostAdmin = () => {
             sortable: true,
         },
         {
+            name: "Chuyên mục",
+            selector: (row) => row.categoryCode,
+            sortable: true,
+        },
+        {
             name: "Ngày bắt đầu",
             selector: (row) => moment(moment.utc(row.createdAt)).local().format('dd DD/MM/YYYY'),
             sortable: true,
@@ -220,7 +226,7 @@ const ManagePostAdmin = () => {
                     ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                         Chưa cho thuê
                     </div>
-                    : row.statusCode === 'S3'
+                    : row.statusCode === 'S6'
                         ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                             Đã cho thuê
                         </div>
@@ -265,7 +271,7 @@ const ManagePostAdmin = () => {
             <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>Quản lý tin đăng</h1>
             <div className='py-6'>
                 {
-                    postsFilter && postsFilter.length > 0 && (
+                    postsFilter && (
                         <DataTable
                             columns={columns}
                             data={postsFilter}

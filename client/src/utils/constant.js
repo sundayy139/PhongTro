@@ -8,7 +8,10 @@ const {
     BsFillChatFill,
     BsFillInfoCircleFill,
     BiNotepad,
-    FaLock
+    FaLock,
+    BsBookHalf,
+    BsCalendarMonth,
+    BsCalendarDay
 } = icons
 
 export const text = {
@@ -197,21 +200,41 @@ export const menuManageSidebar = [
 export const menuManageSidebarAdmin = [
     {
         id: 1,
-        text: "Quản lý người dùng",
+        text: "Người dùng",
         path: '/he-thong/quan-ly-nguoi-dung',
         icons: <FaUserCircle size={16} />
     },
     {
         id: 2,
-        text: "Quản lý tin đăng",
+        text: "Tin đăng",
         path: '/he-thong/quan-ly-tat-ca-tin-dang',
         icons: <BiNotepad size={16} />
     },
     {
         id: 3,
-        text: "Quản lý blog",
+        text: "Blog",
         path: '/he-thong/quan-ly-blog',
-        icons: <BiNotepad size={16} />
+        icons: <BsBookHalf size={16} />
+    },
+]
+export const menuStatisticsSidebarAdmin = [
+    {
+        id: 1,
+        text: "Tổng quan",
+        path: '/he-thong/tong-quan',
+        icons: <FaUserCircle size={16} />
+    },
+    {
+        id: 2,
+        text: "Hàng tháng",
+        path: '/he-thong/thong-ke-theo-thang',
+        icons: <BsCalendarMonth size={16} />
+    },
+    {
+        id: 3,
+        text: "Hàng ngày",
+        path: '/he-thong/thong-ke-theo-ngay',
+        icons: <BsCalendarDay size={16} />
     },
 ]
 

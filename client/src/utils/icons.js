@@ -16,11 +16,15 @@ import {
     BsClock,
     BsDot,
     BsFlagFill,
-    BsFillInfoCircleFill
+    BsFillInfoCircleFill,
+    BsBookHalf,
+    BsCalendarMonth,
+    BsCalendarDay
 }
     from 'react-icons/bs';
 import { GrNext } from 'react-icons/gr';
 import { BiNotepad } from 'react-icons/bi';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 import { TiTick } from 'react-icons/ti';
 import { GiPriceTag } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -69,7 +73,11 @@ const icons = {
     MdInfo,
     BiNotepad,
     BsFillInfoCircleFill,
-    FaLock
+    FaLock,
+    AiOutlineArrowUp,
+    BsBookHalf,
+    BsCalendarMonth,
+    BsCalendarDay
 }
 
 export default icons

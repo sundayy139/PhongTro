@@ -5,7 +5,7 @@ export const apiGetUsersAdmin = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/admin/get-users",
+                url: "/api/v1/user/get-users",
             })
             resolve(res)
         } catch (error) {
@@ -19,7 +19,7 @@ export const apiGetPostsAdmin = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/admin/get-posts",
+                url: "/api/v1/post/get-posts",
             })
             resolve(res)
         } catch (error) {
@@ -33,7 +33,7 @@ export const apiDeleteUserAdmin = (id) => {
         try {
             const res = axios({
                 method: "delete",
-                url: "/api/v1/admin/delete-user",
+                url: "/api/v1/user/delete-user",
                 params: { id }
             })
             resolve(res)
@@ -48,7 +48,7 @@ export const apiApprovePost = (postId) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/admin/approve-post",
+                url: "/api/v1/post/approve-post",
                 params: { postId }
             })
             resolve(res)
@@ -64,7 +64,7 @@ export const apiCreateBlog = (payload) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/admin/create-blog",
+                url: "/api/v1/blog/create-blog",
                 data: payload
             })
             resolve(res)
@@ -79,7 +79,7 @@ export const apiDeleteBlogAdmin = (id) => {
         try {
             const res = axios({
                 method: "delete",
-                url: "/api/v1/admin/delete-blog",
+                url: "/api/v1/blog/delete-blog",
                 params: { id }
             })
             resolve(res)
@@ -94,8 +94,68 @@ export const apiUpdateBlogAdmin = (payload) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/admin/update-blog",
+                url: "/api/v1/blog/update-blog",
                 data: payload
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetUserByMonth = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/user/get-count-user-by-month",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetUserByDay = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/user/get-count-user-by-day",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetPostByMonth = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/post/get-count-post-by-month",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetPostByDay = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/post/get-count-post-by-day",
+                params: query
             })
             resolve(res)
         } catch (error) {

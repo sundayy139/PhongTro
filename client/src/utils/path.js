@@ -29,4 +29,8 @@ export const path = {
 
     MANAGE_USERS: 'quan-ly-nguoi-dung',
     MANAGE_POSTS_ADMIN: 'quan-ly-tat-ca-tin-dang',
+
+    STATISTICS_MONTH: 'thong-ke-theo-thang',
+    STATISTICS_DAY: 'thong-ke-theo-ngay',
+    STATISTICS_OVERVIEW: 'tong-quan',
 }

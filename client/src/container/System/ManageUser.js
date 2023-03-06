@@ -43,7 +43,6 @@ const tableCustomStyles = {
 }
 
 const ManageUser = () => {
-
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Quản lý', link: '/he-thong' },
@@ -203,6 +202,7 @@ const ManageUser = () => {
 
     ]
 
+
     return (
         <div className='px-8 py-4'>
             <Helmet>
@@ -214,7 +214,6 @@ const ManageUser = () => {
             />
             <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>Quản lý người dùng</h1>
             <div className='py-6'>
-
                 {
                     usersFilter && (
                         <DataTable

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { path } from './utils/path';
 import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword } from './container/Public/index';
-import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog } from './container/System/index';
+import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsByMonth, StatisticsByDay } from './container/System/index';
 import { Auth, IsAdmin } from './middleware/authMiddleware'
 import { useDispatch, useSelector } from 'react-redux';
 import *  as actions from './store/actions'
@@ -10,7 +10,6 @@ import *  as actions from './store/actions'
 function App() {
 
   const { isLoggedIn } = useSelector(state => state.auth)
-  const { currentUserData } = useSelector(state => state.user)
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,7 +26,7 @@ function App() {
   }, [isLoggedIn])
 
   return (
-    <div className='App bg-primary' >
+    <div className='App bg-primary w-full h-full' >
       <Routes>
         <Route path={path.HOME} element={<Home />}>
           <Route path="*" element={<HomePage />} />
@@ -57,6 +56,8 @@ function App() {
           <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
           <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
           <Route path={path.MANAGE_POSTS_ADMIN} element={<ManagePostAdmin />} />
+          <Route path={path.STATISTICS_MONTH} element={<StatisticsByMonth />} />
+          <Route path={path.STATISTICS_DAY} element={<StatisticsByDay />} />
         </Route>
       </Routes>
     </div>

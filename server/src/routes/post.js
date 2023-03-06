@@ -1,6 +1,6 @@
 import express from 'express';
 import * as postController from '../controller/post'
-import { verifyToken } from '../middleware/auth'
+import { verifyAdmin, verifyToken } from '../middleware/auth'
 
 const router = express.Router()
 
@@ -16,4 +16,9 @@ router.put('/update-post', postController.updatePost)
 router.delete('/delete-post', postController.deletePost)
 router.put('/update-status-post', postController.updateStatusPost)
 
+router.use(verifyAdmin)
+router.get('/get-posts', postController.getPostsAdmin)
+router.put('/approve-post', postController.approvePost)
+router.get('/get-count-post-by-month', postController.getCountPostByMonth)
+router.get('/get-count-post-by-day', postController.getCountPostByDay)
 export default router

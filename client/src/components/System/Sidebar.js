@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { menuManageSidebar, menuManageSidebarAdmin } from '../../utils/constant'
+import { menuManageSidebar, menuManageSidebarAdmin, menuStatisticsSidebarAdmin } from '../../utils/constant'
 import * as actions from '../../store/actions'
 import { User } from './index'
 import { useDispatch, useSelector } from 'react-redux'
@@ -41,7 +41,7 @@ const Sidebar = () => {
     return (
         <div className='w-full bg-[#f8f9fa] h-full p-4 flex flex-col gap-10 text-[16px] border-r border-gray-300 text-[#333]'>
             <User />
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-3'>
                 {
                     menuManageSidebar.map(item => (
                         <NavLink
@@ -58,7 +58,7 @@ const Sidebar = () => {
                 }
                 {
                     currentUserData?.role === 'admin' && (
-                        <div className='text-sm font-bold uppercase'>
+                        <div className='text-sm font-bold uppercase mt-4'>
                             Quản lý
                         </div>
                     )
@@ -66,6 +66,29 @@ const Sidebar = () => {
                 {
                     currentUserData?.role === 'admin' && (
                         menuManageSidebarAdmin.map(item => (
+                            <NavLink
+                                key={item.id}
+                                to={item.path}
+                                className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
+                            >
+                                {item.icons}
+                                <span>
+                                    {item.text}
+                                </span>
+                            </NavLink>
+                        ))
+                    )
+                }
+                {
+                    currentUserData?.role === 'admin' && (
+                        <div className='text-sm font-bold uppercase mt-4'>
+                            Thống kê
+                        </div>
+                    )
+                }
+                {
+                    currentUserData?.role === 'admin' && (
+                        menuStatisticsSidebarAdmin.map(item => (
                             <NavLink
                                 key={item.id}
                                 to={item.path}

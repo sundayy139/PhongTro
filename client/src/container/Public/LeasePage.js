@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet'
 
 const LeasePage = () => {
     const dispatch = useDispatch()
-    const { categories, curCategoryCode } = useSelector(state => state.app)
+    const { categories } = useSelector(state => state.app)
     const location = useLocation()
     const [categoryCode, setCategoryCode] = useState('')
     const [categoryInfo, setCategoryInfo] = useState(null)

@@ -22,3 +22,4 @@ export { default as Slick } from './Slick';
 export { default as Map } from './Map';
 export { default as BlogItem } from './BlogItem';
 export { default as ListBlog } from './ListBlog';
+export { default as ScrollToTop } from './ScrollToTop';

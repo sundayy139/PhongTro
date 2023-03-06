@@ -28,6 +28,7 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
         { id: 2, code: 'Nam', value: 'Nam' },
         { id: 3, code: 'Nữ', value: 'Nữ' },
     ]
+
     return (
         <div className='flex flex-col gap-9'>
             <h2 className='font-semibold text-2xl'>Thông tin mô tả</h2>
@@ -76,12 +77,12 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
             <div className='w-[50%] flex flex-col gap-9'>
                 <InputDisable
                     label={"Thông tin liên hệ"}
-                    value={Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.name : currentUserData?.name}
+                    value={dataEdit && Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.name : currentUserData?.name}
                 />
 
                 <InputDisable
                     label={"Số điện thoại"}
-                    value={Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.phone : currentUserData?.phone}
+                    value={dataEdit && Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.phone : currentUserData?.phone}
                 />
                 <div>
                     <InputForm

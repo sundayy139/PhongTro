@@ -32,3 +32,58 @@ export const updateProfile = async (req, res) => {
     }
 }
 
+// ADMIN
+export const getUsers = async (req, res) => {
+    try {
+        const response = await userService.getUsersService();
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at user controller' + error
+        })
+    }
+}
+
+// ADMIN
+export const deleteUser = async (req, res) => {
+    const { id } = req.query
+    try {
+        const response = await userService.deleteUserService(id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at user controller' + error
+        })
+    }
+}
+
+// ADMIN
+export const getCountUserByMonth = async (req, res) => {
+    try {
+        const { status } = req.query
+        const response = await userService.getCountUserByMonthService(status);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at user controller' + error
+        })
+    }
+}
+
+// ADMIN
+export const getCountUserByDay = async (req, res) => {
+    try {
+        const { status, startDate, endDate, categoryCode } = req.query
+        const response = await userService.getCountUserByDayService(status, startDate, endDate, categoryCode);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at user controller' + error
+        })
+    }
+}
+

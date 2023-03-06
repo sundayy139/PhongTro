@@ -1,9 +1,10 @@
 import db from "../models/index";
 require('dotenv').config()
 const { Op } = require("sequelize");
+const sequelize = require("sequelize");
 import { v4 as generateId } from 'uuid'
 import generateCode from "../utils/fn";
-
+import moment from 'moment'
 
 // GET ALL POSTS
 export const getPostsService = () => {
@@ -243,7 +244,6 @@ export const createNewPostService = (body, id) => {
     })
 }
 
-
 // GET POSTS USER
 export const getPostsUserService = (userId) => {
     return new Promise(async (resolve, reject) => {
@@ -439,7 +439,7 @@ export const updateStatusPostService = (postId, id) => {
                         msg: "Không tìm thấy bài đăng",
                     })
                 } else {
-                    post.statusCode = 'S3'
+                    post.statusCode = 'S6'
                     await post.save()
                     resolve({
                         err: 0,
@@ -452,3 +452,150 @@ export const updateStatusPostService = (postId, id) => {
         }
     })
 }
+
+// GET ALL POSTS ADMIN
+export const getPostsAdminService = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const posts = await db.Post.findAll({
+                raw: true,
+                nest: true,
+                order: [['statusCode', 'ASC']],
+                include: [
+                    { model: db.Image, as: 'imagesData', attributes: ['images'] },
+                    { model: db.User, as: 'userData', attributes: { exclude: ['password'] } },
+                    { model: db.Province, as: 'provinceData', attributes: ['code', 'value'] },
+                    { model: db.Category, as: 'categoryData', attributes: ['code', 'value'] },
+                    { model: db.Label, as: 'labelData', attributes: ['code', 'value'] },
+                ]
+            })
+            resolve({
+                err: posts ? 0 : 1,
+                msg: posts ? "Thành công" : "Không lấy được bài đăng",
+                posts
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+// APPROVE POST ADMIN
+export const approvePostService = (postId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!postId) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const post = await db.Post.findOne({
+                    where: {
+                        id: postId,
+                    }
+                })
+                if (!post) {
+                    resolve({
+                        err: 2,
+                        msg: "Không tìm thấy bài đăng",
+                    })
+                } else {
+                    post.statusCode = 'S2'
+                    await post.save()
+                    resolve({
+                        err: 0,
+                        msg: "Phê duyệt bài đăng thành công",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+// GET POST BY MONTH ADMIN
+export const getCountPostByMonthService = (status, categoryCode) => {
+    return new Promise(async (resolve, reject) => {
+        const queries = {}
+        if (status) queries.statusCode = status
+        if (categoryCode) queries.categoryCode = categoryCode
+        try {
+            const postCounts = [];
+            const firstMonth = (new Date(new Date().getFullYear(), 0));
+            while (firstMonth.getMonth() <= new Date().getMonth()) {
+                postCounts.push({ month: moment(moment.utc(firstMonth)).local().format('MM/YYYY'), count: 0 });
+                firstMonth.setMonth(firstMonth.getMonth() + 1)
+            }
+
+            const results = await db.Post.findAll({
+                attributes: [
+                    [sequelize.fn('DATE_FORMAT', sequelize.col('createdAt'), '%m/%Y'), 'month'],
+                    [sequelize.fn('count', sequelize.col('id')), 'count']
+                ],
+                group: ['month'],
+                raw: true,
+                where: queries
+            });
+            results.forEach(post => {
+                const resultItem = postCounts.find(item => item.month === post.month);
+                if (resultItem) {
+                    resultItem.count = post.count;
+                }
+            });
+            resolve({
+                err: postCounts ? 0 : 1,
+                msg: postCounts ? "Thành công" : "Không lấy được bài đăng",
+                postCounts
+            })
+        } catch (e) {
+            console.log(e);
+            reject(e);
+        }
+    })
+}
+
+// GET POST BY DAY ADMIN
+export const getCountPostByDayService = (status, startDate, endDate, categoryCode) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const queries = {}
+            if (status) queries.statusCode = status
+            if (categoryCode) queries.categoryCode = categoryCode
+            if (startDate && endDate) {
+                queries.createdAt =
+                {
+                    [Op.gte]: new Date(startDate),
+                    [Op.lte]: new Date(endDate),
+                }
+            }
+            // Tạo mảng chứa các ngày trong khoảng thời gian cho trước
+            const postCounts = [];
+            let currentDate = new Date(new Date(startDate).getTime());
+            while (currentDate <= new Date(endDate)) {
+                postCounts.push({ date: moment(moment.utc(currentDate)).local().format('DD/MM'), count: 0 });
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            const results = await db.Post.findAll({
+                where: queries
+            });
+
+            results.forEach(post => {
+                const postDate = moment(moment.utc(post.createdAt)).local().format('DD/MM');
+                const resultItem = postCounts.find(item => item.date === postDate);
+                if (resultItem) {
+                    resultItem.count++;
+                }
+            });
+            resolve({
+                err: postCounts ? 0 : 1,
+                msg: postCounts ? "Thành công" : "Không lấy được bài đăng",
+                postCounts
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+

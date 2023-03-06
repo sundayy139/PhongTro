@@ -4,6 +4,8 @@ import { contactInfo } from '../../utils/constant'
 import { validate } from '../../utils/fn'
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
+import * as apis from '../../services'
+import Swal from 'sweetalert2';
 
 
 const title = 'Liên hệ - Phòng trọ';
@@ -17,10 +19,34 @@ const Contact = () => {
         content: ''
     })
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let invalid = validate(payload, setInvalidFileds)
         if (invalid === 0) {
-            console.log(payload);
+            const res = await apis.apiCreateFeedback(payload)
+            if (res?.data?.err === 0) {
+                Swal.fire({
+                    title: 'Yeahh..!',
+                    text: res?.data?.msg,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                setPayload({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    content: ''
+                })
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: res?.data?.msg,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
         }
     }
 
@@ -52,6 +78,7 @@ const Contact = () => {
                         <InputForm
                             label={'HỌ TÊN CỦA BẠN'}
                             id='name'
+                            name='name'
                             value={payload.name}
                             setValue={setPayload}
                             type={"name"}
@@ -61,6 +88,7 @@ const Contact = () => {
                         <InputForm
                             label={'SỐ ĐIỆN THOẠI'}
                             id='phone'
+                            name='phone'
                             value={payload.phone}
                             setValue={setPayload}
                             type={"phone"}
@@ -70,6 +98,7 @@ const Contact = () => {
                         <InputForm
                             label={'email'}
                             id='email'
+                            name='email'
                             value={payload.email}
                             setValue={setPayload}
                             type={"email"}

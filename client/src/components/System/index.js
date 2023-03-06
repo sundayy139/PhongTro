@@ -13,3 +13,4 @@ export { default as UpdatePost } from './UpdatePost';
 export { default as UpdateUser } from './UpdateUser';
 export { default as BreadCrumb } from './BreadCrumb';
 export { default as UpdateBlog } from './UpdateBlog';
+export { default as LineChart } from './LineChart';

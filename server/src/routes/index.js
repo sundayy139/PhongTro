@@ -7,8 +7,8 @@ import acreageRouter from './acreage'
 import provinceRouter from './province'
 import mailerRouter from './mailer'
 import userRouter from './user'
-import adminRouter from './admin'
 import blogRouter from './blog'
+import feedbackRouter from './feedback'
 
 const initRoutes = (app) => {
     app.use('/api/v1/auth', authRouter)
@@ -20,8 +20,8 @@ const initRoutes = (app) => {
     app.use('/api/v1/acreage', acreageRouter)
     app.use('/api/v1/province', provinceRouter)
     app.use('/api/v1/mailer', mailerRouter)
-    app.use('/api/v1/admin', adminRouter)
     app.use('/api/v1/blog', blogRouter)
+    app.use('/api/v1/feedback', feedbackRouter)
 
     return app.use('/', (req, res) => {
         res.send('server on ...')
