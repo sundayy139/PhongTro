@@ -7,8 +7,9 @@ import { path } from '../../utils/path';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions'
 import { menuAdmin, menuManage } from '../../utils/constant';
+import { Header } from './index'
 
-const { BsPlusCircle, MdLogout, MdOutlineKeyboardArrowDown } = icons
+const { BsPlusCircle, MdLogout, MdOutlineKeyboardArrowDown, RxHamburgerMenu } = icons
 
 const TopBar = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const TopBar = () => {
     const { isLoggedIn } = useSelector(state => state.auth)
     const { currentUserData } = useSelector(state => state.user)
     const [isShow, setIsShow] = useState(false)
+    const [isShowMenuRes, setIsShowMenuRes] = useState(false)
     const ref = useRef()
 
     const goLogin = useCallback(() => {
@@ -49,10 +51,13 @@ const TopBar = () => {
     }
 
     return (
-        <div ref={ref} className='max-w-1100 mx-auto flex items-center justify-between'>
+        <div
+            ref={ref}
+            className='pc:max-w-1100 laptop:max-w-1100 phone:w-full tablet:w-full tablet:px-4 phone:px-4 mx-auto flex items-center justify-between  phone:shadow-md tablet:shadow-md tablet:fixed phone:fixed top-0 left-0 phone:bg-white tablet:bg-white z-[1000]'
+        >
             <Link
                 to={'/'}
-                className='w-[240px] h-[70px]'
+                className='pc:w-[240px] pc:h-[70px] laptop:w-[240px] laptop:h-[70px] tablet:w-[150px] tablet:h-[50px] phone:w-[150px] phone:h-[50px] '
             >
                 <img
                     src={logo}
@@ -60,20 +65,30 @@ const TopBar = () => {
                     className='w-full h-full object-contain'
                 />
             </Link>
-            <div className='flex items-center gap-2 h-[40px]'>
+            <div className='flex items-center gap-2 h-[40px] cursor-pointer pc:hidden laptop:hidden'>
+                <span className='flex items-center gap-2'
+                    onClick={() => setIsShowMenuRes(true)}
+                >
+                    <RxHamburgerMenu size={30} />
+                    <span>
+                        Danh mục
+                    </span>
+                </span>
+            </div>
+            <div className='pc:flex laptop:flex  items-center gap-2 h-[40px] phone:hidden tablet:hidden '>
                 {
                     !isLoggedIn ? (
                         <>
                             <Button
                                 text={'Đăng nhập'}
-                                textStyle={'text-white text-sm font-semibold'}
+                                textStyle={'text-white text-sm font-semibold py-[10px]'}
                                 bgColor={'bg-secondary1'}
                                 onClick={goLogin}
                                 hover={'hover:shadow-md'}
                             />
                             <Button
                                 text={'Đăng ký'}
-                                textStyle={'text-white text-sm font-semibold'}
+                                textStyle={'text-white text-sm font-semibold py-[10px]'}
                                 bgColor={'bg-secondary1'}
                                 onClick={goRegister}
                                 hover={'hover:shadow-md'}
@@ -87,7 +102,7 @@ const TopBar = () => {
                             <div className='relative'>
                                 <Button
                                     text={'Quản lý tài khoản'}
-                                    textStyle={'text-white text-sm font-semibold'}
+                                    textStyle={'text-white text-sm font-semibold py-[10px]'}
                                     bgColor={'bg-secondary1'}
                                     onClick={() => setIsShow(!isShow)}
                                     hover={'hover:shadow-md'}
@@ -145,13 +160,21 @@ const TopBar = () => {
                 }
                 <Button
                     text={'Đăng tin mới'}
-                    textStyle={'text-white text-sm font-semibold'}
+                    textStyle={'text-white text-sm font-semibold py-[10px]'}
                     bgColor={'bg-secondary2'}
-                    icAfter={<BsPlusCircle />}
+                    icAfter={<BsPlusCircle size={15} />}
                     hover={'hover:shadow-md'}
                     onClick={handleClick}
                 />
             </div>
+            {
+                isShowMenuRes && (
+                    <Header
+                        isShowMenuRes={isShowMenuRes}
+                        setIsShowMenuRes={setIsShowMenuRes}
+                    />
+                )
+            }
         </div>
     )
 }

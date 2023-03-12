@@ -5,7 +5,7 @@ const Button = ({ text, textStyle, bgColor, icAfter, icBefore, onClick, fullWidt
     return (
         <button
             type='button'
-            className={`h-full whitespace-nowrap py-[10px] px-4 ${textStyle} ${bgColor} rounded-md outline-none ${hover} flex gap-2 items-center justify-center ${fullWidth && 'w-full'}`}
+            className={`h-full whitespace-nowrap px-4 ${textStyle} ${bgColor} rounded-md outline-none ${hover} flex gap-2 items-center justify-center ${fullWidth && 'w-full'}`}
             onClick={onClick}
         >
             {

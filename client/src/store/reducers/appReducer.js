@@ -6,6 +6,7 @@ const initialState = {
     acreages: [],
     provinces: [],
     curCategoryCode: null,
+    isOpenMenuResponse: 'false',
     flag: false,
     msg: ''
 }
@@ -46,6 +47,7 @@ const appReducer = (state = initialState, action) => {
                 ...state,
                 flag: action.flag
             }
+
         default:
             return state;
     }

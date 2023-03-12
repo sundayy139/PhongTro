@@ -6,12 +6,12 @@ import * as actions from '../../store/actions';
 import DataTable from "react-data-table-component";
 import moment from 'moment';
 import icons from '../../utils/icons'
-import { BreadCrumb, LineChart, UpdatePost } from '../../components/System/index';
+import { BreadCrumb, UpdatePost } from '../../components/System/index';
 import * as apis from '../../services/index';
 import logo from '../../assets/image/homestay.png';
 import Swal from 'sweetalert2';
 
-const { BsFillPenFill, BsTrashFill, TiTick } = icons
+const { BsFillPenFill, BsTrashFill, TiTick, TiTimes } = icons
 
 const title = 'Quản lý tin - Phòng trọ';
 
@@ -135,12 +135,35 @@ const ManagePostAdmin = () => {
         })
     }
 
+    const handleRefusePost = async (row) => {
+        Swal.fire({
+            title: 'Từ chối duyệt bài đăng này?',
+            text: "Xác nhận từ chối duyệt bài đăng này lên trang chủ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await apis.apiApprovePost(row.id)
+                if (res?.data?.err === 0) {
+                    dispatch(actions.setFlag(!flag))
+                    Swal.fire(
+                        'Updated!',
+                        res?.data?.msg,
+                        'success'
+                    )
+                }
+            }
+        })
+    }
+
     const columns = [
         {
             name: "Hành động",
             cell: (row) => (
                 <div className='flex gap-4 items-start'>
-
                     <button
                         className='bg-blue-500 p-2 rounded-[5px]'
                         title='Sửa bài đăng'
@@ -160,18 +183,27 @@ const ManagePostAdmin = () => {
                     </button>
                     {
                         row.statusCode === 'S1' && (
-                            <button
-                                className='bg-yellow-500 p-2 rounded-[5px]'
-                                title='Duyệt bài đăng'
-                                onClick={() => handleApprovePost(row)}
-                            >
-                                <TiTick size={15} color="white" />
-                            </button>
+                            <>
+                                <button
+                                    className='bg-green-500 p-2 rounded-[5px]'
+                                    title='Duyệt bài đăng'
+                                    onClick={() => handleApprovePost(row)}
+                                >
+                                    <TiTick size={15} color="white" />
+                                </button>
+                                <button
+                                    className='bg-yellow-500 p-2 rounded-[5px]'
+                                    title='Từ chối'
+                                    onClick={() => handleRefusePost(row)}
+                                >
+                                    <TiTimes size={15} color="white" />
+                                </button>
+                            </>
                         )
                     }
                 </div>
             ),
-            minWidth: '150px',
+            minWidth: '200px',
         },
         {
             name: "Mã tin",

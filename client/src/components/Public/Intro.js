@@ -7,17 +7,18 @@ const { BsStarFill } = icons
 
 const Intro = () => {
     return (
-        <div className='w-full bg-white rounded-[10px] border border-[#dedede] pt-[40px] p-[70px] text-center text-[#333333]'>
+        <div className='w-full bg-white pc:rounded-[10px] pc:border pc:border-[#dedede] pc:pt-[40px] pc:p-[70px] pc:text-center laptop:rounded-[10px] laptop:border laptop:border-[#dedede] laptop:pt-[40px] laptop:p-[70px] laptop:text-center text-[#333333]
+         phone:px-4 phone:py-10 tablet:px-4 tablet:py-10'>
             <h4 className='text-lg font-bold'>
                 {textIntro.title}
             </h4>
             <p className='text-sm my-[14px]'>
                 {textIntro.desc}
             </p>
-            <div className='flex items-center  justify-evenly'>
+            <div className='flex items-center pc:justify-evenly laptop:justify-evenly phone:flex-wrap phone:text-center tablet:flex-wrap tablet:text-center'>
                 {textIntro?.statistic?.map((item, i) => (
-                    <span key={i} className='flex flex-col gap-[5px]'>
-                        <span className='text-[21px] font-bold'>
+                    <span key={i} className='flex flex-col gap-[5px] w-1/2'>
+                        <span className='pc:text-[21px] laptop:text-[21px] font-bold phone:text-lg tablet:text-lg'>
                             {item.value}
                         </span>
                         <span className='text-sm'>
@@ -28,7 +29,7 @@ const Intro = () => {
             </div>
             <br />
             <br />
-            <h4 className='text-lg font-bold'>
+            <h4 className='text-lg text-center font-bold'>
                 {textIntro.price}
             </h4>
             <span className='flex items-center justify-center text-yellow-300 my-3'>
@@ -63,7 +64,7 @@ const Intro = () => {
                     <Button
                         text={"Đăng tin ngay"}
                         bgColor={"bg-secondary2"}
-                        textStyle={'text-sm font-semibold text-white'}
+                        textStyle={'text-sm font-semibold text-white py-[10px]'}
                         hover={'shadow-md'}
                         fullWidth
                     />

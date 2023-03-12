@@ -188,11 +188,11 @@ const ManageUser = () => {
         },
         {
             name: "Trạng thái",
-            selector: (row) => row.status === 'S5'
+            selector: (row) => row.statusCode === 'S5'
                 ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[100px]'>
                     Ngừng hoạt động
                 </div>
-                : row.status === 'S4'
+                : row.statusCode === 'S4'
                     ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[100px]'>
                         Đang hoạt động
                     </div>
@@ -201,7 +201,6 @@ const ManageUser = () => {
         },
 
     ]
-
 
     return (
         <div className='px-8 py-4'>

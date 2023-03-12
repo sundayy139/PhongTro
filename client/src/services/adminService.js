@@ -58,6 +58,20 @@ export const apiApprovePost = (postId) => {
     })
 }
 
+export const apiRefusePost = (postId) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "put",
+                url: "/api/v1/post/refuse-post",
+                params: { postId }
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 export const apiCreateBlog = (payload) => {
     return new Promise((resolve, reject) => {

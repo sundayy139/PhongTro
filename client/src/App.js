@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { path } from './utils/path';
 import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword } from './container/Public/index';
-import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsByMonth, StatisticsByDay } from './container/System/index';
+import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsPost, StatisticsUser, Dashboard } from './container/System/index';
 import { Auth, IsAdmin } from './middleware/authMiddleware'
 import { useDispatch, useSelector } from 'react-redux';
 import *  as actions from './store/actions'
@@ -56,8 +56,9 @@ function App() {
           <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
           <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
           <Route path={path.MANAGE_POSTS_ADMIN} element={<ManagePostAdmin />} />
-          <Route path={path.STATISTICS_MONTH} element={<StatisticsByMonth />} />
-          <Route path={path.STATISTICS_DAY} element={<StatisticsByDay />} />
+          <Route path={path.STATISTICS_POST} element={<StatisticsPost />} />
+          <Route path={path.STATISTICS_USER} element={<StatisticsUser />} />
+          <Route path={path.DASHBOARD} element={<Dashboard />} />
         </Route>
       </Routes>
     </div>

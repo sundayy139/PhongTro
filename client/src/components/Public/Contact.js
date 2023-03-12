@@ -5,22 +5,23 @@ import { Button } from './index'
 
 const Contact = () => {
     return (
-        <div className='w-full bg-white rounded-[10px] border-[7px] border-[#dedede] border-dashed pt-[40px] p-[70px] text-center text-[#333333]'>
+        <div className='w-full bg-white pc:rounded-[10px] pc:border-[7px] pc:border-[#dedede] pc:border-dashed pc:pt-[40px] pc:p-[70px] pc:text-center laptop:rounded-[10px] laptop:border-[7px] laptop:border-[#dedede] laptop:border-dashed laptop:pt-[40px] laptop:p-[70px] laptop:text-center text-[#333333]
+        phone:px-4 phone:py-10 tablet:px-4 tablet:py-10'>
             <img src={bgSupport} className='h-[150px] object-contain w-full' />
             <div className='w-full flex flex-col mt-[30px]'>
                 <span className='text-sm mb-[20px]'>
                     {supportText.title}
                 </span>
-                <div className='flex items-center justify-evenly w-full'>
+                <div className='flex pc:items-center pc:justify-evenly laptop:items-center laptop:justify-evenly w-full phone:flex-wrap tablet:flex-wrap'>
                     {
                         supportText.info.map((item, i) => (
-                            <div key={i} className='flex flex-col gap-3'>
+                            <div key={i} className='flex flex-col pc:w-full laptop:w-full gap-2 text-left phone:w-1/2 phone:flex-none phone:pr-4 phone:pb-4 tablet:pr-4 tablet:pb-4'>
                                 <span className='text-sm text-orange font-bold uppercase'>
                                     {item.name}
                                 </span>
                                 <a
                                     target='_blank'
-                                    className='text-[21px] text-[#233762] font-bold'
+                                    className='pc:text-[21px] laptop:text-[21px] phone:text-sm tablet:text-sm text-[#233762] font-bold'
                                     href={`tel:${item.phone}`}
                                 >
                                     {`Điện thoại: ${item.phone}`}
@@ -28,7 +29,7 @@ const Contact = () => {
                                 <a
                                     target='_blank'
                                     href={`https://zalo.me/${item.phone}`}
-                                    className='text-[21px] text-[#233762] font-bold'
+                                    className='pc:text-[21px] laptop:text-[21px] phone:text-sm tablet:text-sm text-[#233762] font-bold'
                                 >
                                     {`Zalo: ${item.phone}`}
                                 </a>
@@ -40,7 +41,7 @@ const Contact = () => {
                     <div className='w-[150px] '>
                         <Button
                             text={"Gửi liên hệ"}
-                            textStyle={'text-white text-sm font-semibold'}
+                            textStyle={'text-white text-sm font-semibold py-[10px]'}
                             bgColor={"bg-secondary1"}
                             fullWidth
                         />

@@ -128,7 +128,7 @@ export const deleteUserService = (id) => {
 export const getCountUserByMonthService = (status) => {
     return new Promise(async (resolve, reject) => {
         const queries = {}
-        if (status) queries.status = status
+        if (status) queries.statusCode = status
         try {
             const userCounts = [];
             const firstMonth = (new Date(new Date().getFullYear(), 0));
@@ -168,7 +168,7 @@ export const getCountUserByDayService = (status, startDate, endDate, categoryCod
     return new Promise(async (resolve, reject) => {
         try {
             const queries = {}
-            if (status) queries.status = status
+            if (status) queries.statusCode = status
             if (categoryCode) queries.categoryCode = categoryCode
             if (startDate && endDate) {
                 queries.createdAt =

@@ -32,7 +32,7 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
-      status: {
+      statusCode: {
         type: Sequelize.STRING
       },
       createdAt: {

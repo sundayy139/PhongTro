@@ -98,7 +98,7 @@ const Register = () => {
                 <Button
                     text={'Tạo tài khoản'}
                     bgColor={'bg-secondary1'}
-                    textStyle={'text-white font-semibold'}
+                    textStyle={'text-white font-semibold py-[10px]'}
                     fullWidth
                     onClick={handleRegister}
                     hover={'hover:bg-orange'}

@@ -55,6 +55,7 @@ export const insert = () => {
                         value: item?.header?.address?.split(',')?.slice(-1)[0].trim()
                     })
 
+
                     await db.User.create({
                         id: userId,
                         name: item?.contact?.content?.find(i => i.name === "Liên hệ:")?.content,
@@ -65,7 +66,7 @@ export const insert = () => {
                         avatar: 'https://phongtro123.com/images/default-user.png',
                         phone: item?.contact?.content?.find(i => i.name === "Điện thoại:")?.content,
                         zalo: item?.contact?.content?.find(i => i.name === "Zalo")?.content,
-                        status: 'S4'
+                        statusCode: 'S4'
                     })
 
                     await db.Image.create({

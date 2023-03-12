@@ -8,5 +8,6 @@ export { default as ManagePostAdmin } from './ManagePostAdmin';
 export { default as ManagePage } from './ManagePage';
 export { default as CreateBlog } from './CreateBlog';
 export { default as ManageBlog } from './ManageBlog';
-export { default as StatisticsByMonth } from './StatisticsByMonth';
-export { default as StatisticsByDay } from './StatisticsByDay';
+export { default as StatisticsPost } from './StatisticsPost';
+export { default as StatisticsUser } from './StatisticsUser';
+export { default as Dashboard } from './Dashboard';

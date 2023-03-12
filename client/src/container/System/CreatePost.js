@@ -31,7 +31,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
             priceCode: dataEdit?.priceCode ? dataEdit.priceCode : '',
             acreageCode: dataEdit?.acreageCode ? dataEdit.acreageCode : '',
             images: dataEdit?.imagesData?.images ? JSON.parse(dataEdit.imagesData.images) : '',
-            description: dataEdit?.description ? dataEdit.description : '',
+            description: dataEdit?.description ? JSON.parse(dataEdit?.description).join("\n") : '',
             target: dataEdit?.target ? dataEdit.target : '',
             expired: dataEdit?.expiredAt
                 ? (new Date(Math.abs(new Date(dataEdit?.expiredAt) - new Date(dataEdit?.createdAt))).getDate() - 1)

@@ -39,7 +39,7 @@ const PageNumber = ({ number, currentPage, icons, setCurrentPage, type }) => {
 
     return (
         <div
-            className={`w-[50px] h-[50px] text-sm rounded-md ${number !== '...' ? 'cursor-pointer' : ''} flex items-center justify-center ${+currentPage === +number ? 'text-white bg-[#e13427]' : 'bg-white hover:bg-[#ddd]'}`}
+            className={`pc:w-[50px] pc:h-[50px] laptop:w-[50px] laptop:h-[50px] phone:w-[40px] phone:h-[40px]  tablet:w-[40px] tablet:h-[40px] text-sm rounded-md ${number !== '...' ? 'cursor-pointer' : ''} flex items-center justify-center ${+currentPage === +number ? 'text-white bg-[#e13427]' : 'bg-white hover:bg-[#ddd]'}`}
             onClick={handleChangePage}
         >
             {icons || number}

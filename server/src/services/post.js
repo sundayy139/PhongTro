@@ -182,7 +182,7 @@ export const createNewPostService = (body, id) => {
                 const imagesId = generateId()
                 const labelCode = generateCode(body.label)
                 const provinceCode = generateCode(body.province)
-
+                const desc = description.split("\n")
                 const existingLabel = await db.Label.findOne({
                     where: {
                         value: body.label
@@ -220,7 +220,7 @@ export const createNewPostService = (body, id) => {
                     labelCode: existingLabel ? existingLabel.code : labelCode,
                     address: body.address || null,
                     categoryCode: body.categoryCode,
-                    description: body.description || null,
+                    description: JSON.stringify(desc) || null,
                     userId: id,
                     imageId: imagesId,
                     priceCode: body.priceCode || null,
@@ -299,7 +299,7 @@ export const updatePostService = (body, id) => {
             } else {
                 const labelCode = generateCode(label)
                 const provinceCode = generateCode(province)
-
+                const desc = description.split("\n")
                 const existingLabel = await db.Label.findOne({
                     where: {
                         value: label
@@ -350,7 +350,7 @@ export const updatePostService = (body, id) => {
                         labelCode: existingLabel ? existingLabel.code : labelCode,
                         address: address,
                         categoryCode: categoryCode,
-                        description: description,
+                        description: JSON.stringify(desc),
                         priceCode: priceCode,
                         acreageCode: acreageCode,
                         provinceCode: existingProvince ? existingProvince.code : provinceCode,
@@ -514,6 +514,42 @@ export const approvePostService = (postId) => {
         }
     })
 }
+
+// APPROVE POST ADMIN
+export const refusePostService = (postId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!postId) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const post = await db.Post.findOne({
+                    where: {
+                        id: postId,
+                    }
+                })
+                if (!post) {
+                    resolve({
+                        err: 2,
+                        msg: "Không tìm thấy bài đăng",
+                    })
+                } else {
+                    post.statusCode = 'S3'
+                    await post.save()
+                    resolve({
+                        err: 0,
+                        msg: "Từ chối phê duyệt bài đăng thành công",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 // GET POST BY MONTH ADMIN
 export const getCountPostByMonthService = (status, categoryCode) => {

@@ -100,11 +100,11 @@ const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, ran
 
     return (
         <div
-            className='fixed top-0 left-0 right-0 bottom-0 bg-overlay-3 z-50'
+            className='fixed top-0 left-0 right-0 bottom-0 bg-overlay-3 z-[9999]'
             onClick={() => setIsShowModal(false)}
         >
             <div
-                className='w-[700px] h-full max-h-[500px] flex flex-col bg-white mx-auto mt-[100px] rounded-[10px] overflow-hidden justify-between overflow-y-auto'
+                className='pc:w-[700px] pc:max-h-[500px] laptop:w-[700px] laptop:max-h-[500px] h-full flex flex-col bg-white mx-auto pc:mt-[100px] laptop:mt-[100px] pc:rounded-[10px] laptop:rounded-[10px] justify-between overflow-y-auto'
                 onClick={(e) => {
                     e.stopPropagation();
                 }}

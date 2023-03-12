@@ -63,7 +63,7 @@ const Login = () => {
                 <Button
                     text={'Đăng nhập'}
                     bgColor={'bg-secondary1'}
-                    textStyle={'text-white font-semibold'}
+                    textStyle={'text-white font-semibold py-[10px]'}
                     fullWidth
                     onClick={handleLogin}
                     hover={'hover:bg-orange'}

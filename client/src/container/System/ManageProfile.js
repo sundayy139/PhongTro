@@ -38,8 +38,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
 
     useEffect(() => {
         isEdit ? setUserData(dataUserEdit) : setUserData(currentUserData)
-    }, [isEdit])
-
+    }, [isEdit, currentUserData])
 
 
     useEffect(() => {
@@ -51,7 +50,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
             avatar: userData?.avatar || '',
             id: userData?.id || '',
             role: userData?.role || '',
-            status: userData?.status || '',
+            status: userData?.status || 'S4',
         })
     }, [userData])
 

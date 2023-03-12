@@ -25,15 +25,16 @@ import {
 import { GrNext } from 'react-icons/gr';
 import { BiNotepad } from 'react-icons/bi';
 import { AiOutlineArrowUp } from 'react-icons/ai';
-import { TiTick } from 'react-icons/ti';
+import { TiTick, TiTimes } from 'react-icons/ti';
 import { GiPriceTag } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GiMoneyStack, GiNotebook } from 'react-icons/gi';
 import { TbVectorOff } from 'react-icons/tb';
 import { HiOutlineBuildingOffice, HiOutlineHashtag } from 'react-icons/hi2';
 import { FiDelete } from 'react-icons/fi';
+import { RxHamburgerMenu } from 'react-icons/rx';
 import { FaUserCircle, FaLock } from 'react-icons/fa';
-import { MdLastPage, MdInfo, MdFirstPage, MdLocationOn, MdLogout, MdOutlineKeyboardArrowDown, MdAdminPanelSettings } from 'react-icons/md';
+import { MdDashboard, MdDonutLarge, MdLastPage, MdInfo, MdFirstPage, MdLocationOn, MdLogout, MdOutlineKeyboardArrowDown, MdAdminPanelSettings } from 'react-icons/md';
 
 const icons = {
     BsPlusCircle,
@@ -77,7 +78,11 @@ const icons = {
     AiOutlineArrowUp,
     BsBookHalf,
     BsCalendarMonth,
-    BsCalendarDay
+    BsCalendarDay,
+    MdDonutLarge,
+    MdDashboard,
+    TiTimes,
+    RxHamburgerMenu
 }
 
 export default icons

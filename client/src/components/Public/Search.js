@@ -76,7 +76,9 @@ const Search = () => {
 
     return (
         <>
-            <div className='w-full p-[10px] bg-[#febb02] rounded-[8px] grid grid-cols-5 gap-2'>
+            <div className='w-full pc:p-[10px] laptop:p-[10px] pc:bg-[#febb02] laptop:bg-[#febb02] phone:bg-primary tablet:bg-primary  pc:rounded-[8px] laptop:rounded-[8px] pc:grid pc:grid-cols-5 laptop:grid laptop:grid-cols-5 gap-2
+            phone:flex phone:flex-col tablet:flex tablet:flex-col phone:py-[10px] tablet:py-[10px] tablet:px-4 phone:px-4
+            '>
                 <span
                     onClick={() => handleShowModal(categories, 'category', "Tất cả danh mục")}
                     className='flex-1 cursor-pointer'>
@@ -122,8 +124,8 @@ const Search = () => {
                     <Button
                         text={"Tìm kiếm"}
                         icBefore={<BsSearch />}
-                        bgColor={"bg-secondary1"}
-                        textStyle={'text-white text-sm font-semibold'}
+                        bgColor={"pc:bg-secondary1 laptop:bg-secondary1 phone:bg-[#febb02] tablet:bg-[#febb02]"}
+                        textStyle={'pc:text-white laptop:text-white text-sm font-semibold'}
                         fullWidth
                         hover={'hover:shadow-md'}
                         onClick={handleSearch}

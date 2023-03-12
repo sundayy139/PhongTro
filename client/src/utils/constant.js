@@ -10,8 +10,7 @@ const {
     BiNotepad,
     FaLock,
     BsBookHalf,
-    BsCalendarMonth,
-    BsCalendarDay
+    MdDashboard
 } = icons
 
 export const text = {
@@ -23,21 +22,24 @@ export const text = {
 export const location = [
     {
         id: 'hcm',
-        name: "Phòng trọ Hồ Chí Minh",
+        name: "Phòng trọ",
+        province: 'Hồ Chí Minh',
         image: 'https://phongtro123.com/images/location_hcm.jpg',
         provinceCode: 'CHNCT',
         categoryCode: 'CTPT'
     },
     {
         id: 'hn',
-        name: "Phòng trọ Hà Nội",
+        name: "Phòng trọ",
+        province: 'Hà Nội',
         image: 'https://phongtro123.com/images/location_hn.jpg',
         provinceCode: 'NOPFU',
         categoryCode: 'CTPT'
     },
     {
         id: 'dn',
-        name: "Phòng trọ Đà Nẵng",
+        name: "Phòng trọ",
+        province: 'Đà Nẵng',
         image: 'https://phongtro123.com/images/location_dn.jpg',
         provinceCode: 'NAPEU',
         categoryCode: 'CTPT'
@@ -221,23 +223,22 @@ export const menuStatisticsSidebarAdmin = [
     {
         id: 1,
         text: "Tổng quan",
-        path: '/he-thong/tong-quan',
-        icons: <FaUserCircle size={16} />
+        path: '/he-thong/thong-ke/tong-quan',
+        icons: <MdDashboard size={16} />
     },
     {
         id: 2,
-        text: "Hàng tháng",
-        path: '/he-thong/thong-ke-theo-thang',
-        icons: <BsCalendarMonth size={16} />
+        text: "Tin đăng",
+        path: '/he-thong/thong-ke/tin-dang',
+        icons: <BiNotepad size={16} />
     },
     {
         id: 3,
-        text: "Hàng ngày",
-        path: '/he-thong/thong-ke-theo-ngay',
-        icons: <BsCalendarDay size={16} />
+        text: "Người dùng",
+        path: '/he-thong/thong-ke/nguoi-dung',
+        icons: <FaUserCircle size={16} />
     },
 ]
-
 
 export const contactInfo = [
     {

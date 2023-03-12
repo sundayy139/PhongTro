@@ -6,12 +6,13 @@ import { location } from '../../utils/constant'
 const Province = () => {
 
     return (
-        <div className='flex gap-5 justify-center items-center'>
+        <div className='w-full flex pc:gap-10 laptop:gap-10 items-center pc:justify-center laptop:justify-center phone:overflow-x-auto tablet:overflow-x-auto phone:gap-4 tablet:gap-4'>
             {
                 location.map(item => (
                     <ProvinceButton
                         key={item.id}
                         name={item.name}
+                        province={item.province}
                         image={item.image}
                         provinceCode={item.provinceCode}
                         categoryCode={item.categoryCode}

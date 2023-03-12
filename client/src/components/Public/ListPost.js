@@ -33,29 +33,29 @@ const List = ({ categoryCode }) => {
     }, [paramsSearch, categoryCode, sort])
 
     return (
-        <div className='w-full border border-[#dedede] bg-white rounded-[10px]' >
-            <div className='flex flex-col gap-5 p-5'>
-                <div className='flex justify-between items-center'>
+        <div className='w-full pc:border pc:border-[#dedede] pc:rounded-[10px] laptop:border laptop:border-[#dedede] laptop:rounded-[10px] bg-white' >
+            <div className='flex flex-col pc:gap-5 pc:p-5 laptop:gap-5 laptop:p-5 phone:gap-3 tablet:gap-3'>
+                <div className='flex justify-between items-center phone:px-4 tablet:px-4'>
                     <h4 className='text-[18px] font-bold'>Danh sách tin đăng</h4>
-                    <span className='text-sm'>{`Cập nhật: ${moment(moment(Date.now())).local().format('HH:mm DD/MM/YYYY')}`}</span>
+                    <span className='text-sm phone:hidden tablet:hidden'>{`Cập nhật: ${moment(moment(Date.now())).local().format('HH:mm DD/MM/YYYY')}`}</span>
                 </div>
-                <div className=' w-full flex items-center gap-3 h-[30px]'>
+                <div className=' w-full flex items-center gap-3 h-[35px] phone:bg-primary phone:px-4 tablet:bg-primary tablet:px-4'>
                     <span className='text-[13px]'>Sắp xếp:</span>
                     <span
-                        className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 0 ? 'bg-bg-[#e7f0f7] underline' : ''}`}
+                        className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 0 ? 'underline phone:font-semibold tablet:font-semibold' : ''}`}
                         onClick={() => setSort(0)}
                     >
                         Mặc định
                     </span>
                     <span
-                        className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 1 ? 'bg-bg-[#e7f0f7] underline' : ''}`}
+                        className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 1 ? 'underline phone:font-semibold tablet:font-semibold' : ''}`}
                         onClick={() => setSort(1)}
                     >
                         Mới nhất
                     </span>
                 </div>
             </div>
-            <div className='flex flex-col w-full'>
+            <div className='flex flex-col w-full phone:gap-2 phone:bg-[#f0f0f0] tablet:gap-2 tablet:bg-[#f0f0f0]'>
                 {
                     posts && posts?.length > 0 ? posts.map(item => (
                         <ListPostItem
@@ -64,8 +64,7 @@ const List = ({ categoryCode }) => {
                             images={JSON.parse(item?.imagesData?.images)}
                             acreage={item?.acreageNumber}
                             price={item?.priceNumber}
-                            // description={JSON.parse(item?.description)}
-                            description={item?.description}
+                            description={JSON.parse(item?.description)}
                             address={item?.address}
                             user={item?.userData}
                             title={item?.title}

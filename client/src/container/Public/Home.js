@@ -10,14 +10,14 @@ const Home = () => {
     const location = useLocation()
 
     return (
-        <div className=' bg-primary'>
+        <div className=' bg-primary relative h-screen overflow-auto'>
             <ScrollToTop />
             <Helmet>
                 <title>{title}</title>
             </Helmet>
             <TopBar />
             <Header />
-            <div className='max-w-1100 mx-auto mt-[10px] flex flex-col gap-5'>
+            <div className='pc:max-w-1100 laptop:max-w-1100 mx-auto pc:mt-[10px] laptop:mt-[10px] flex flex-col gap-5 phone:mt-[50px] tablet:mt-[50px]  phone:bg-white tablet:bg-white'>
                 {
                     location?.pathname !== `/${path.LIEN_HE}` && location?.pathname !== `/${path.BLOG}` && `/${location?.pathname.split('/')[1]}/${location?.pathname.split('/')[2]}` !== '/blog/chi-tiet' && (
                         <Search />
@@ -25,7 +25,7 @@ const Home = () => {
                 }
                 <Outlet />
             </div>
-            <div className='max-w-1100 mx-auto mt-[10px] flex flex-col gap-5 pb-10'>
+            <div className='max-w-1100 mx-auto pc:mt-[10px] laptop:mt-[10px] phone:mt-[5px] tablet:mt-[5px] flex flex-col gap-5 pb-10'>
                 <Intro />
                 <Contact />
             </div>

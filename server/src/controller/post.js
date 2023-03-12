@@ -144,6 +144,20 @@ export const approvePost = async (req, res) => {
     }
 }
 
+// ADMIN
+export const refusePost = async (req, res) => {
+    try {
+        const { postId } = req.query
+        const response = await postService.refusePostService(postId);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
 export const getCountPostByMonth = async (req, res) => {
     try {
         const { status, categoryCode } = req.query

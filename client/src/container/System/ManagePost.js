@@ -161,7 +161,7 @@ const ManagePost = () => {
                     {
                         row.statusCode === 'S2' && (
                             <button
-                                className='bg-yellow-500 p-2 rounded-[5px]'
+                                className='bg-green-500 p-2 rounded-[5px]'
                                 title='Xác nhận đã được thuê'
                                 onClick={() => handleUpdateStatusPost(row)}
                             >

@@ -20,7 +20,39 @@ module.exports = {
       maxWidth: {
         "600": "600px",
         "1100": "1100px",
-      }
+      },
+      screens: {
+        'phone': { 'min': '0', 'max': '576px' },
+        'tablet': { 'min': '577px', 'max': '992px' },
+        'laptop': { 'min': '993px', 'max': '1200px' },
+        'pc': '1201px',
+      },
+      keyframes: {
+        "slide-right": {
+          "0%": {
+            "-webkit-transform": "translateX(0)",
+            transform: "translateX(0)"
+          },
+          "100%": {
+            "-webkit-transform": "translateX(300px)",
+            transform: "translateX(300px)"
+          }
+        },
+        "slide-left": {
+          "0%": {
+            "-webkit-transform": "translateX(300px)",
+            transform: "translateX(300px)"
+          },
+          "100%": {
+            "-webkit-transform": "translateX(0)",
+            transform: "translateX(0)"
+          }
+        },
+      },
+      animation: {
+        "slide-right": "slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+        "slide-left": "slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+      },
     },
   },
   plugins: [

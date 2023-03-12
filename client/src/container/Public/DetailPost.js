@@ -10,7 +10,7 @@ import moment from 'moment';
 import { getNumberFromString } from '../../utils/fn';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/image/avatar-person.png';
-import zalo from '../../assets/image/zalo-icon.png';
+import zalo from '../../assets/icon/zalo-icon.png';
 import * as actions from '../../store/actions'
 import { path } from '../../utils/path';
 
@@ -82,7 +82,7 @@ const DetailPost = () => {
                             </p>
                         </span>
                         <div className='flex flex-col'>
-                            <div className='flex items-center gap-10'>
+                            <div className='flex items-center justify-between'>
                                 <span className='flex gap-2 items-center'>
                                     <GiPriceTag size={20} color='#aaaaaa' />
                                     <span className='text-[21px] text-[#16c784] font-semibold'>
@@ -121,14 +121,14 @@ const DetailPost = () => {
                     </div>
                     <div className='flex flex-col gap-5'>
                         <h3 className='text-[21px] font-semibold'>Thông tin mô tả</h3>
-                        <div className='flex flex-col gap-4 text-sm'>
+                        <div className='text-sm w-full flex flex-col gap-4'>
                             {
                                 detailPost?.description && JSON.parse(detailPost?.description)?.map((item, index) => (
-                                    <span
+                                    <p
                                         key={index}
                                     >
                                         {item}
-                                    </span>
+                                    </p>
                                 ))
                             }
                         </div>
