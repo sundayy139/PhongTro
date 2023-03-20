@@ -21,9 +21,9 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
 
     const addFixedToHeader = () => {
         if (window.scrollY > 70) {
-            headerRef.current.classList.add('fixed', 'top-0', 'left-0', 'right-0');
+            headerRef.current?.classList.add('fixed', 'top-0', 'left-0', 'right-0');
         } else {
-            headerRef.current.classList.remove('fixed', 'top-0', 'left-0', 'right-0')
+            headerRef.current?.classList.remove('fixed', 'top-0', 'left-0', 'right-0')
         }
     };
 
@@ -45,17 +45,19 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
 
     const handleClickProfile = () => {
         if (isLoggedIn) {
-            navigate(`he-thong`)
+            navigate(`/he-thong`)
         } else {
             navigate(path.LOGIN)
         }
     }
 
     const goLogin = useCallback(() => {
+        setIsShowMenuRes(false)
         navigate(path.LOGIN)
     })
 
     const goRegister = useCallback(() => {
+        setIsShowMenuRes(false)
         navigate(path.REGISTER)
     })
 
@@ -116,7 +118,7 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
                         >
                             <div className='w-full flex flex-col items-center gap-3 bg-[#3f51b5] p-5'>
                                 {
-                                    currentUserData ? (
+                                    currentUserData && isLoggedIn ? (
                                         <>
                                             <div className='w-16 h-16'>
                                                 <img className='w-full h-full rounded-full object-contain' src={currentUserData.avatar} />
@@ -174,6 +176,7 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
                                 <NavLink
                                     to={"/"}
                                     className={({ isActive }) => isActive ? isActiveStyleRes : isNotActiveStyleRes}
+                                    onClick={() => setIsShowMenuRes(false)}
                                 >
                                     Trang chủ
                                 </NavLink>
@@ -181,6 +184,7 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
                                     categories?.length > 0 && categories?.map((item) => (
                                         <NavLink
                                             key={item.code}
+                                            onClick={() => setIsShowMenuRes(false)}
                                             to={formatVietnameseToString(item.value)}
                                             className={({ isActive }) => isActive ? isActiveStyleRes : isNotActiveStyleRes}
                                         >
@@ -190,12 +194,14 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
                                 }
                                 <NavLink
                                     to={`/${path.BLOG}`}
+                                    onClick={() => setIsShowMenuRes(false)}
                                     className={({ isActive }) => isActive ? isActiveStyleRes : isNotActiveStyleRes}
                                 >
                                     Blog
                                 </NavLink>
                                 <NavLink
                                     to={`/${path.LIEN_HE}`}
+                                    onClick={() => setIsShowMenuRes(false)}
                                     className={({ isActive }) => isActive ? isActiveStyleRes : isNotActiveStyleRes}
                                 >
                                     Liên hệ

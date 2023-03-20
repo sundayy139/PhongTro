@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom'
 import notFound from '../../assets/image/not-found.png'
 import moment from 'moment'
 
-const List = ({ categoryCode }) => {
+const List = ({ categoryCode, isHideSort, favouritePost }) => {
     const dispatch = useDispatch();
     const [paramsSearch] = useSearchParams()
     const { posts } = useSelector(state => state.post)
@@ -28,9 +28,10 @@ const List = ({ categoryCode }) => {
 
         if (categoryCode) searchParamsQuery.categoryCode = categoryCode
         if (sort === 1) searchParamsQuery.order = ['createdAt', 'DESC']
+        if (favouritePost) searchParamsQuery.id = favouritePost
 
-        dispatch(actions.getPostsLimit(searchParamsQuery))
-    }, [paramsSearch, categoryCode, sort])
+        favouritePost ? dispatch(actions.getPostById(searchParamsQuery)) : dispatch(actions.getPostsLimit(searchParamsQuery))
+    }, [paramsSearch, categoryCode, sort, favouritePost])
 
     return (
         <div className='w-full pc:border pc:border-[#dedede] pc:rounded-[10px] laptop:border laptop:border-[#dedede] laptop:rounded-[10px] bg-white' >
@@ -39,21 +40,25 @@ const List = ({ categoryCode }) => {
                     <h4 className='text-[18px] font-bold'>Danh sách tin đăng</h4>
                     <span className='text-sm phone:hidden tablet:hidden'>{`Cập nhật: ${moment(moment(Date.now())).local().format('HH:mm DD/MM/YYYY')}`}</span>
                 </div>
-                <div className=' w-full flex items-center gap-3 h-[35px] phone:bg-primary phone:px-4 tablet:bg-primary tablet:px-4'>
-                    <span className='text-[13px]'>Sắp xếp:</span>
-                    <span
-                        className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 0 ? 'underline phone:font-semibold tablet:font-semibold' : ''}`}
-                        onClick={() => setSort(0)}
-                    >
-                        Mặc định
-                    </span>
-                    <span
-                        className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 1 ? 'underline phone:font-semibold tablet:font-semibold' : ''}`}
-                        onClick={() => setSort(1)}
-                    >
-                        Mới nhất
-                    </span>
-                </div>
+                {
+                    !isHideSort && (
+                        <div className=' w-full flex items-center gap-3 h-[35px] phone:bg-primary phone:px-4 tablet:bg-primary tablet:px-4'>
+                            <span className='text-[13px]'>Sắp xếp:</span>
+                            <span
+                                className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 0 ? 'underline phone:font-semibold tablet:font-semibold' : ''}`}
+                                onClick={() => setSort(0)}
+                            >
+                                Mặc định
+                            </span>
+                            <span
+                                className={`h-full text-[13px] flex items-center hover:underline px-2 text-[#333333] hover:bg-[#e7f0f7] rounded-[5px] bg-[#f5f5f5] cursor-pointer ${sort === 1 ? 'underline phone:font-semibold tablet:font-semibold' : ''}`}
+                                onClick={() => setSort(1)}
+                            >
+                                Mới nhất
+                            </span>
+                        </div>
+                    )
+                }
             </div>
             <div className='flex flex-col w-full phone:gap-2 phone:bg-[#f0f0f0] tablet:gap-2 tablet:bg-[#f0f0f0]'>
                 {
@@ -65,7 +70,7 @@ const List = ({ categoryCode }) => {
                             acreage={item?.acreageNumber}
                             price={item?.priceNumber}
                             description={JSON.parse(item?.description)}
-                            address={item?.address}
+                            address={`${item?.districtPostData?.value}, ${item?.provincePostData?.value}`}
                             user={item?.userData}
                             title={item?.title}
                             createdAt={item?.createdAt}

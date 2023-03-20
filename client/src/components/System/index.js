@@ -1,4 +1,4 @@
-export { default as Header } from './Header';
+export { default as HeaderSys } from './HeaderSys';
 export { default as Sidebar } from './Sidebar';
 export { default as User } from './User';
 export { default as Address } from './Address';
@@ -15,3 +15,4 @@ export { default as BreadCrumb } from './BreadCrumb';
 export { default as UpdateBlog } from './UpdateBlog';
 export { default as LineChart } from './LineChart';
 export { default as DoughnutChart } from './DoughnutChart';
+export { default as RichEdittor } from './RichEdittor';

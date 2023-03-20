@@ -4,7 +4,7 @@ import categoryRouter from './category'
 import postRouter from './post'
 import priceRouter from './price'
 import acreageRouter from './acreage'
-import provinceRouter from './province'
+import addressRouter from './address'
 import mailerRouter from './mailer'
 import userRouter from './user'
 import blogRouter from './blog'
@@ -18,7 +18,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/post', postRouter)
     app.use('/api/v1/price', priceRouter)
     app.use('/api/v1/acreage', acreageRouter)
-    app.use('/api/v1/province', provinceRouter)
+    app.use('/api/v1/address', addressRouter)
     app.use('/api/v1/mailer', mailerRouter)
     app.use('/api/v1/blog', blogRouter)
     app.use('/api/v1/feedback', feedbackRouter)

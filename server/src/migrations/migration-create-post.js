@@ -14,7 +14,16 @@ module.exports = {
             labelCode: {
                 type: Sequelize.STRING
             },
-            address: {
+            addressCode: {
+                type: Sequelize.STRING
+            },
+            wardCode: {
+                type: Sequelize.STRING
+            },
+            districtCode: {
+                type: Sequelize.STRING
+            },
+            provinceCode: {
                 type: Sequelize.STRING
             },
             categoryCode: {
@@ -30,9 +39,6 @@ module.exports = {
                 type: Sequelize.STRING
             },
             priceCode: {
-                type: Sequelize.STRING
-            },
-            provinceCode: {
                 type: Sequelize.STRING
             },
             acreageCode: {

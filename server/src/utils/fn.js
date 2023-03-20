@@ -1,4 +1,5 @@
 require('dotenv').config()
+const crypto = require('crypto');
 
 const formatString = (str) => {
     str = str.toLowerCase();
@@ -14,21 +15,18 @@ const formatString = (str) => {
     return str;
 }
 
-const generateCode = (value) => {
-    let output = ''
-    value = formatString(value)
-    let merge = value + process.env.SECRET_GENERATE
+export const generateCode = (str) => {
+    if (str) {
+        // Tạo một đối tượng băm dữ liệu MD5
+        const md5 = crypto.createHash('md5');
 
-    let length = merge.length
-    for (let i = 0; i < 4; i++) {
-        let index = i === 2 ? Math.floor(merge.length / 2 + length / 2) : Math.floor(length / 2)
-        output += merge.charAt(index)
-        length = index
+        // Mã hóa chuỗi đầu vào bằng hàm băm MD5
+        const hash = md5.update(str).digest('hex');
+
+        // Trả về 6 ký tự đầu tiên của chuỗi mã hóa
+        return hash.substring(0, 6).toUpperCase();
     }
-    return `${value.charAt(2)}${value.charAt(3)}${output}`.toUpperCase()
 }
-
-export default generateCode
 
 export const getNumberFromStringPrice = (string) => {
     let number = 0

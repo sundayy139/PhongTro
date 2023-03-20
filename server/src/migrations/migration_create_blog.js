@@ -17,9 +17,6 @@ module.exports = {
             userId: {
                 type: Sequelize.STRING
             },
-            descMarkdown: {
-                type: Sequelize.TEXT('LONG')
-            },
             descHTML: {
                 type: Sequelize.TEXT('LONG')
             },

@@ -3,32 +3,22 @@ require('dotenv').config()
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 import { v4 as generateId } from 'uuid'
-import generateCode from "../utils/fn";
+import { generateCode } from "../utils/fn";
 import moment from 'moment'
 
 // GET ALL POSTS
-export const getPostsService = () => {
+export const getPostsService = ({ ...query }, { priceNumber, acreageNumber }) => {
     return new Promise(async (resolve, reject) => {
+        const queries = { ...query }
+        if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber }
+        if (acreageNumber) queries.acreageNumber = { [Op.between]: acreageNumber }
+        // queries.expiredAt = { [Op.gte]: new Date() }
+        // queries.statusCode = 'S2'
         try {
             const posts = await db.Post.findAll({
-                where: {
-                    statusCode: 'S2',
-                },
+                where: queries,
                 raw: true,
                 nest: true,
-                attributes: [
-                    'id',
-                    "title",
-                    "description",
-                    "address",
-                    "acreageNumber",
-                    "priceNumber",
-                    "createdAt",
-                ],
-                include: [
-                    { model: db.Image, as: 'imagesData', attributes: ['images'] },
-                    { model: db.User, as: 'userData', attributes: ['name', 'avatar', 'zalo', 'phone'] },
-                ]
             })
             resolve({
                 err: posts ? 0 : 1,
@@ -47,8 +37,8 @@ export const getPostsLimitService = (page, { order, ...query }, { priceNumber, a
         const queries = { ...query }
         if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber }
         if (acreageNumber) queries.acreageNumber = { [Op.between]: acreageNumber }
-        queries.expiredAt = { [Op.gte]: new Date() }
-        queries.statusCode = 'S2'
+        // queries.expiredAt = { [Op.gte]: new Date() }
+        // queries.statusCode = 'S2'
         try {
             const posts = await db.Post.findAndCountAll({
                 where: queries,
@@ -57,17 +47,13 @@ export const getPostsLimitService = (page, { order, ...query }, { priceNumber, a
                 order: order ? [order] : '',
                 offset: (page - 1) * (+process.env.LIMIT) || 0,
                 limit: +process.env.LIMIT,
-                attributes: [
-                    'id',
-                    "title",
-                    "description",
-                    "address",
-                    "acreageNumber",
-                    "priceNumber",
-                    "createdAt",
-                ],
                 include: [
+                    { model: db.Address, as: 'addressPostData', attributes: ['value'] },
+                    { model: db.Ward, as: 'wardPostData', attributes: ['value'] },
+                    { model: db.District, as: 'districtPostData', attributes: ['value'] },
+                    { model: db.Province, as: 'provincePostData', attributes: ['value'] },
                     { model: db.Image, as: 'imagesData', attributes: ['images'] },
+                    { model: db.Category, as: 'categoryData', attributes: ['value'] },
                     { model: db.User, as: 'userData', attributes: ['name', 'avatar', 'zalo', 'phone'] },
                 ],
             })
@@ -87,12 +73,12 @@ export const getNewPostsService = () => {
     return new Promise(async (resolve, reject) => {
         try {
             const newposts = await db.Post.findAll({
-                where: {
-                    statusCode: 'S2',
-                    expiredAt: {
-                        [Op.gte]: new Date()
-                    }
-                },
+                // where: {
+                //     statusCode: 'S2',
+                //     expiredAt: {
+                //         [Op.gte]: new Date()
+                //     }
+                // },
                 raw: true,
                 nest: true,
                 limit: +process.env.LIMIT,
@@ -101,14 +87,18 @@ export const getNewPostsService = () => {
                     'id',
                     "title",
                     "description",
-                    "address",
                     "acreageNumber",
                     "priceNumber",
                     "createdAt",
                 ],
                 include: [
+                    { model: db.Address, as: 'addressPostData', attributes: ['value'] },
+                    { model: db.Ward, as: 'wardPostData', attributes: ['value'] },
+                    { model: db.District, as: 'districtPostData', attributes: ['value'] },
+                    { model: db.Province, as: 'provincePostData', attributes: ['value'] },
                     { model: db.Image, as: 'imagesData', attributes: ['images'] },
-                ]
+                    { model: db.User, as: 'userData', attributes: ['name', 'avatar', 'zalo', 'phone'] },
+                ],
             })
             resolve({
                 err: newposts ? 0 : 1,
@@ -121,17 +111,55 @@ export const getNewPostsService = () => {
     })
 }
 
-
-// GET POST BY ID
-export const getPostByIdService = (postId) => {
+// GET LABEL POST
+export const getLabelPostService = (categoryCode, provinceCode) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const post = await db.Post.findOne({
+            if (!categoryCode || !provinceCode) {
+                resolve({
+                    err: 1,
+                    msg: 'Có lỗi gì đó rồi',
+                })
+            } else {
+                const label = await db.Post.findAndCountAll({
+                    where: {
+                        categoryCode: categoryCode,
+                        provinceCode: provinceCode
+                    },
+                    raw: true,
+                    nest: true,
+                    attributes: ['labelCode'],
+                    group: ['labelCode', 'labelData.id'],
+                    include: [
+                        { model: db.Label, as: 'labelData' },
+
+                    ],
+                })
+                resolve({
+                    err: label ? 0 : 2,
+                    msg: label ? "Thành công" : "Không lấy được bài đăng",
+                    label
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+
+// GET POST BY ID
+export const getPostByIdService = (id, page) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const post = await db.Post.findAndCountAll({
                 where: {
-                    id: postId,
+                    id
                 },
                 raw: true,
                 nest: true,
+                offset: (page - 1) * (+process.env.LIMIT) || 0,
+                limit: +process.env.LIMIT,
                 include: [
                     { model: db.Image, as: 'imagesData', attributes: ['images'] },
                     {
@@ -139,9 +167,14 @@ export const getPostByIdService = (postId) => {
                             exclude: ['password']
                         }
                     },
-                    { model: db.Province, as: 'provinceData', attributes: ['code', 'value'] },
                     { model: db.Category, as: 'categoryData', attributes: ['code', 'value'] },
                     { model: db.Label, as: 'labelData', attributes: ['code', 'value'] },
+                    { model: db.Address, as: 'addressPostData', attributes: ['value'] },
+                    { model: db.Ward, as: 'wardPostData', attributes: ['value'] },
+                    { model: db.District, as: 'districtPostData', attributes: ['value'] },
+                    { model: db.Province, as: 'provincePostData', attributes: ['value'] },
+                    { model: db.Image, as: 'imagesData', attributes: ['images'] },
+                    { model: db.User, as: 'userData', attributes: ['name', 'avatar', 'zalo', 'phone', 'statusCode'] },
                 ]
             })
             resolve({
@@ -154,7 +187,6 @@ export const getPostByIdService = (postId) => {
         }
     })
 }
-
 
 // CREATE NEW POST
 export const createNewPostService = (body, id) => {
@@ -418,7 +450,7 @@ export const deletePostService = (postId, id) => {
 }
 
 // UPDATE STATUS POST
-export const updateStatusPostService = (postId, id) => {
+export const updateStatusPostService = (pId, id) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!postId || !id) {
@@ -453,6 +485,76 @@ export const updateStatusPostService = (postId, id) => {
     })
 }
 
+// FAVOURITE POST
+export const setFavouritePostService = (pId, id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!pId || !id) {
+                resolve({
+                    err: 1,
+                    msg: "Vui lòng điền đầy đủ thông tin",
+                })
+            } else {
+                const user = await db.Favourite.findOne({
+                    where: {
+                        userId: id
+                    }
+                })
+                if (user) {
+                    const postExists = user.postId.some(post => post === pId);
+                    if (!postExists) {
+
+                        const updatedPosts = [...user.postId, pId];
+                        user.update({ postId: updatedPosts });
+                    }
+                    resolve({
+                        err: 0,
+                        msg: "Thành công",
+                    })
+                } else {
+                    const favourite = await db.Favourite.create({
+                        userId: id,
+                        postId: [pId]
+                    })
+                    resolve({
+                        err: favourite ? 0 : 1,
+                        msg: favourite ? "Thành công" : "Thất bại",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+// FAVOURITE POST
+export const getFavouritePostService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!id) {
+                resolve({
+                    err: 1,
+                    msg: "Vui lòng điền đầy đủ thông tin",
+                })
+            } else {
+                const favourite = await db.Favourite.findAll({
+                    where: {
+                        userId: id
+                    }
+                })
+                resolve({
+                    err: favourite ? 0 : 1,
+                    msg: favourite ? "Thành công" : "Thất bại",
+                    favourite
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 // GET ALL POSTS ADMIN
 export const getPostsAdminService = () => {
     return new Promise(async (resolve, reject) => {
@@ -464,7 +566,7 @@ export const getPostsAdminService = () => {
                 include: [
                     { model: db.Image, as: 'imagesData', attributes: ['images'] },
                     { model: db.User, as: 'userData', attributes: { exclude: ['password'] } },
-                    { model: db.Province, as: 'provinceData', attributes: ['code', 'value'] },
+                    { model: db.Province, as: 'provincePostData', attributes: ['code', 'value'] },
                     { model: db.Category, as: 'categoryData', attributes: ['code', 'value'] },
                     { model: db.Label, as: 'labelData', attributes: ['code', 'value'] },
                 ]
@@ -586,7 +688,6 @@ export const getCountPostByMonthService = (status, categoryCode) => {
                 postCounts
             })
         } catch (e) {
-            console.log(e);
             reject(e);
         }
     })

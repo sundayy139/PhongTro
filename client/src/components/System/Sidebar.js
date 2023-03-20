@@ -32,7 +32,7 @@ const Sidebar = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(actions.logout())
-                navigate(path.LOGIN)
+                navigate('/')
             }
         })
 

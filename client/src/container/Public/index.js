@@ -11,3 +11,4 @@ export { default as Blog } from './Blog';
 export { default as DetailBlog } from './DetailBlog';
 export { default as ForgotPassword } from './ForgotPassword';
 export { default as ResetPassword } from './ResetPassword';
+export { default as Favourite } from './Favourite';

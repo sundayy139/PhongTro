@@ -13,6 +13,7 @@ export const path = {
     LIEN_HE: 'lien-he',
     SEARCH: 'tim-kiem',
     BLOG: 'blog',
+    TIN_DA_LUU: 'tin-da-luu',
     DETAIL_BLOG__BLOGID: "blog/chi-tiet/:blogId",
     DETAIL_POST: 'chi-tiet/*',
     DETAIL_POST__POSTID: "chi-tiet/:postId",

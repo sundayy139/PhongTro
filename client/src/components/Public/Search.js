@@ -4,6 +4,7 @@ import icons from '../../utils/icons';
 import { useSelector } from 'react-redux';
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { path } from '../../utils/path'
+import * as apis from '../../services'
 
 const { GrNext,
     BsSearch,
@@ -60,14 +61,14 @@ const Search = () => {
         })
 
         let titleSearch = `${queriesTextObj.category
-            ? `${queriesTextObj.category}`
+            ? `${queriesTextObj.category},`
             : ''} ${queriesTextObj.province
-                ? `Khu vực ${queriesTextObj.province}`
+                ? `${queriesTextObj.province},`
                 : ''} ${queriesTextObj.price
-                    ? `Giá ${queriesTextObj.price}`
+                    ? `Giá ${queriesTextObj.price},`
                     : ''} ${queriesTextObj.acreage
-                        ? `Diện tích ${queriesTextObj.acreage}`
-                        : ''}`
+                        ? `Diện tích ${queriesTextObj.acreage},`
+                        : ''} Mới nhất ${new Date().getFullYear()}`
         navigate({
             pathname: `/${path.SEARCH}`,
             search: createSearchParams(queriesCodeObj).toString(),
@@ -87,6 +88,7 @@ const Search = () => {
                         icAfter={queries.category ? <FiDelete size={15} color='#333333' /> : <GrNext size={15} color='#777777' />}
                         icBefore={<HiOutlineBuildingOffice size={15} color='#777777' />}
                         styleText={queries.category ? 'font-semibold text-black' : ''}
+                        onClick={() => setQueries(null)}
                     />
                 </span>
                 <span

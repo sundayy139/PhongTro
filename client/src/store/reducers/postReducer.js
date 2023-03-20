@@ -5,6 +5,7 @@ const initialState = {
     newPosts: [],
     postsUser: [],
     dataEdit: {},
+    favouritePost: [],
     msg: '',
     count: 0
 }
@@ -34,6 +35,19 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postsUser: action.posts || [],
+                msg: action.msg || '',
+            }
+        case actionsType.GET_POSTS_BY_ID:
+            return {
+                ...state,
+                posts: action.posts || [],
+                count: action.count || 0,
+                msg: action.msg || '',
+            }
+        case actionsType.GET_POSTS_FAVOURITES:
+            return {
+                ...state,
+                favouritePost: action.postId || [],
                 msg: action.msg || '',
             }
         case actionsType.SET_DATA_EDIT:

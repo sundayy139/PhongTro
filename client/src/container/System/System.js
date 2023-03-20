@@ -1,7 +1,8 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
 import { Outlet } from 'react-router-dom'
-import { Header, Sidebar } from '../../components/System/index'
+import { HeaderSys, Sidebar } from '../../components/System/index'
+import { TopBar } from '../../components/Public/index'
 import { Contact } from '../../components/System/index'
 
 const System = () => {
@@ -12,12 +13,17 @@ const System = () => {
             <Helmet>
                 <title>{title}</title>
             </Helmet>
-            <Header />
-            <div className='w-full h-full flex'>
-                <div className='w-[256px] h-full flex-none'>
+            <div className='phone:block tablet:block pc:hidden laptop:hidden'>
+                <TopBar />
+            </div>
+            <div className='pc:block laptop:block phone:hidden tablet:hidden'>
+                <HeaderSys />
+            </div>
+            <div className='w-full h-full flex phone:mt-[50px] tablet:mt-[50px]'>
+                <div className='w-[256px] h-full flex-none phone:hidden tablet:hidden'>
                     <Sidebar />
                 </div>
-                <div className='flex-auto bg-white h-[calc(100%-56px)] overflow-y-auto'>
+                <div className='flex-auto pc:bg-white laptop:bg-white phone:bg-[#f1f1f1] tablet:bg-[#f1f1f1] h-[calc(100%-56px)] overflow-y-auto'>
                     <Outlet />
                     <div className='w-full px-8 mb-[50px] mt-[100px]'>
                         <Contact />

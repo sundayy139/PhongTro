@@ -21,7 +21,7 @@ const Pagination = ({ count, data }) => {
 
     useEffect(() => {
 
-        let length = data?.length < process.env.REACT_APP_data_LIMIT ? process.env.REACT_APP_data_LIMIT : data?.length
+        let length = data?.length < process.env.REACT_APP_POSTS_LIMIT ? process.env.REACT_APP_POSTS_LIMIT : data?.length
         let maxPage = count > 0 ? Math.ceil(count / length) : 1
 
         let minPage = 1

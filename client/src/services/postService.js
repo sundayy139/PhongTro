@@ -1,12 +1,13 @@
 import axios from '../axios';
 import axiosDf from "axios"
 
-export const apiGetPosts = () => {
+export const apiGetPosts = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
                 method: "get",
                 url: "/api/v1/post/all",
+                params: query
             })
             resolve(res)
         } catch (error) {
@@ -118,13 +119,13 @@ export const apiDeletePost = (postId) => {
     })
 }
 
-export const apiGetPostById = (postId) => {
+export const apiGetPostById = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
                 method: "get",
                 url: "/api/v1/post/post-by-id",
-                params: { postId }
+                params: query
             })
             resolve(res)
         } catch (error) {
@@ -147,5 +148,50 @@ export const apiUpdateStatusPost = (postId) => {
         }
     })
 }
+
+export const apiGetLabels = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/post/label",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiSetFavouritePost = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "post",
+                url: "/api/v1/post/favourite",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetFavouritePost = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/post/favourite",
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 

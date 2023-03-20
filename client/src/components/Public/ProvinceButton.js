@@ -7,7 +7,7 @@ const ProvinceButton = ({ name, image, province, provinceCode, categoryCode }) =
     const navigate = useNavigate()
 
     const handleSearch = () => {
-        let titleSearch = name
+        let titleSearch = name + ' ' + province
 
         navigate({
             pathname: `/${path.SEARCH}`,

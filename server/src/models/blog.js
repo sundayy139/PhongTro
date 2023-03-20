@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     Blog.init({
         title: DataTypes.STRING,
         image: DataTypes.STRING,
-        descMarkdown: DataTypes.TEXT('LONG'),
         descHTML: DataTypes.TEXT('LONG'),
         userId: DataTypes.STRING,
     }, {

@@ -3,23 +3,28 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Contact, Header, Intro, ScrollToTop, Search, TopBar } from '../../components/Public/index';
 import { Helmet } from 'react-helmet'
 import { path } from '../../utils/path'
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../store/actions'
 
 const title = 'Trang chủ - Phòng trọ';
 
 const Home = () => {
     const location = useLocation()
+    const dispatch = useDispatch()
 
     return (
-        <div className=' bg-primary relative h-screen overflow-auto'>
+        <div className=' bg-primary relative overflow-y-auto'
+            onClick={() => dispatch(actions.setIsShowMenuManage(false))}
+        >
             <ScrollToTop />
             <Helmet>
                 <title>{title}</title>
             </Helmet>
             <TopBar />
             <Header />
-            <div className='pc:max-w-1100 laptop:max-w-1100 mx-auto pc:mt-[10px] laptop:mt-[10px] flex flex-col gap-5 phone:mt-[50px] tablet:mt-[50px]  phone:bg-white tablet:bg-white'>
+            <div className='pc:max-w-1100 laptop:max-w-1100 mx-auto pc:mt-[10px] laptop:mt-[10px] flex flex-col gap-5 phone:mt-[50px] tablet:mt-[50px] phone:bg-white tablet:bg-white'>
                 {
-                    location?.pathname !== `/${path.LIEN_HE}` && location?.pathname !== `/${path.BLOG}` && `/${location?.pathname.split('/')[1]}/${location?.pathname.split('/')[2]}` !== '/blog/chi-tiet' && (
+                    location?.pathname !== `/${path.LIEN_HE}` && location?.pathname !== `/${path.BLOG}` && `/${location?.pathname.split('/')[1]}/${location?.pathname.split('/')[2]}` !== '/blog/chi-tiet' && `/${location?.pathname.split('/')[1]}` !== '/chi-tiet' && location?.pathname !== `/${path.LOGIN}` && location?.pathname !== `/${path.REGISTER}` && location?.pathname !== `/${path.FORGOT_PASSWORD}` && `/${location?.pathname.split('/')[1]}` !== '/reset-password' && (
                         <Search />
                     )
                 }

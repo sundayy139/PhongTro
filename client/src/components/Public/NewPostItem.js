@@ -3,18 +3,18 @@ import moment from 'moment'
 import 'moment/locale/vi';
 import { Link } from 'react-router-dom';
 
-const ReleasePostItem = ({ img, title, createdAt, price, id, address }) => {
+const NewPostItem = ({ img, title, createdAt, price, id, address }) => {
     return (
         <div className='flex py-[10px] pc:gap-3 pc:border-b pc:border-b-[#eee] laptop:gap-3 laptop:border-b laptop:border-b-[#eee] phone:flex-col phone:gap-3 tablet:flex-col tablet:gap-3'>
             <Link
                 to={`/chi-tiet/${id}`}
-                className='pc:w-[65px] pc:h-[65px] laptop:w-[65px] laptop:h-[65px] flex-none cursor-pointer phone:w-[200px] phone:h-[200px] tablet:w-[200px] tablet:h-[200px]'
+                className='pc:w-[65px] pc:h-[65px] laptop:w-[65px] laptop:h-[65px] flex-none cursor-pointer phone:w-[150px] phone:h-[120px] tablet:w-[150px] tablet:h-[120px]'
             >
                 <img src={img}
                     className='w-full h-full object-cover rounded-[5px]'
                 />
             </Link>
-            <div className='flex flex-col flex-auto gap-[5px]'>
+            <div className='flex flex-col flex-auto gap-[5px] phone:max-w-[150px] tablet:max-w-[150px]'>
                 <Link
                     to={`/chi-tiet/${id}`}
                     className='text-sm text-[#055699] line-clamp-2 cursor-pointer hover:underline'
@@ -31,7 +31,7 @@ const ReleasePostItem = ({ img, title, createdAt, price, id, address }) => {
                         {moment(createdAt).locale('vi').fromNow()}
                     </span>
                     <span className='text-xs phone:text-[#777777] tablet:text-[#777777] pc:hidden laptop:hidden'>
-                        {`${address.split(',')[address.split(',').length - 2]}, ${address.split(',')[address.split(',').length - 1]}`}
+                        {address}
                     </span>
                 </div>
             </div>
@@ -39,4 +39,4 @@ const ReleasePostItem = ({ img, title, createdAt, price, id, address }) => {
     )
 }
 
-export default memo(ReleasePostItem)
+export default memo(NewPostItem)

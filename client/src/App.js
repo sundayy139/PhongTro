@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { path } from './utils/path';
-import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword } from './container/Public/index';
+import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword, Favourite } from './container/Public/index';
 import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsPost, StatisticsUser, Dashboard } from './container/System/index';
 import { Auth, IsAdmin } from './middleware/authMiddleware'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import *  as actions from './store/actions'
 function App() {
 
   const { isLoggedIn } = useSelector(state => state.auth)
+  const { flag } = useSelector(state => state.app)
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -17,7 +18,12 @@ function App() {
     dispatch(actions.getAcreages());
     dispatch(actions.getPrices());
     dispatch(actions.getProvinces());
+    dispatch(actions.getPostFavourite());
   }, [])
+
+  useEffect(() => {
+    dispatch(actions.getPostFavourite());
+  }, [flag])
 
   useEffect(() => {
     setTimeout(() => {
@@ -45,6 +51,7 @@ function App() {
           <Route path={path.BLOG} element={<Blog />} />
           <Route path={path.DETAIL_BLOG__BLOGID} element={<DetailBlog />} />
           <Route path={path.DETAIL_POST__POSTID} element={<DetailPost />} />
+          <Route path={path.TIN_DA_LUU} element={<Auth><Favourite /></Auth>} />
         </Route>
         <Route path={path.SYSTEM} element={<Auth><System /></Auth>}>
           <Route path={path.SYSTEM} element={<ManagePage />} />
@@ -61,7 +68,7 @@ function App() {
           <Route path={path.DASHBOARD} element={<Dashboard />} />
         </Route>
       </Routes>
-    </div>
+    </div >
   );
 }
 

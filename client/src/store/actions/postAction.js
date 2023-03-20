@@ -97,6 +97,54 @@ export const getPostsUser = () => async (dispatch) => {
     }
 }
 
+export const getPostById = (query) => async (dispatch) => {
+    try {
+        const res = await apis.apiGetPostById(query)
+        if (res.data.err === 0) {
+            dispatch({
+                type: actionsType.GET_POSTS_BY_ID,
+                posts: res.data.post?.rows,
+                count: res.data.post?.count
+            })
+        } else {
+            dispatch({
+                type: actionsType.GET_POSTS_BY_ID,
+                posts: null,
+                msg: res.data.msg
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionsType.GET_POSTS_BY_ID,
+            posts: null
+        })
+    }
+}
+
+export const getPostFavourite = () => async (dispatch) => {
+    try {
+        const res = await apis.apiGetFavouritePost()
+        if (res.data.err === 0) {
+            dispatch({
+                type: actionsType.GET_POSTS_FAVOURITES,
+                postId: res.data?.favourite[0]?.postId,
+            })
+        } else {
+            dispatch({
+                type: actionsType.GET_POSTS_FAVOURITES,
+                postId: null,
+                msg: res.data.msg
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionsType.GET_POSTS_FAVOURITES,
+            postId: null
+        })
+    }
+}
+
+
 export const setDataEdit = (dataEdit) => ({
     type: actionsType.SET_DATA_EDIT,
     dataEdit,

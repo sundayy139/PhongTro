@@ -56,9 +56,9 @@ const Contact = () => {
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
             </Helmet>
-            <h1 className='text-[28px] font-semibold my-2'>Liên hệ với chúng tôi</h1>
-            <div className='flex gap-10 pb-5 items-start'>
-                <div className='text-[17px] text-white bg-gradient-to-b  from-[#0039e4] to-[#04dbf1] flex flex-col gap-4 flex-1 p-8 rounded-[50px]'>
+            <h1 className='text-[28px] font-semibold my-2 phone:px-4 tablet:px-4'>Liên hệ với chúng tôi</h1>
+            <div className='flex gap-10 pb-5 items-start phone:flex-col tablet:flex-col'>
+                <div className='pc:text-[17px] laptop:text-[17px] phone:text-sm tablet:text-sm pc:text-white pc:bg-gradient-to-b pc:from-[#0039e4] pc:to-[#04dbf1] pc:p-8 pc:rounded-[50px] laptop:text-white laptop:bg-gradient-to-b laptop:from-[#0039e4] laptop:to-[#04dbf1] laptop:p-8 laptop:rounded-[50px] flex flex-col gap-4 flex-1 phone:py-5 phone:px-4 tablet:py-5 tablet:px-4'>
                     <h3 className='font-semibold text-lg'>Thông tin liên hệ</h3>
                     <p>Chúng tôi biết bạn có rất nhiều sự lựa chọn. Nhưng cảm ơn vì đã lựa chọn PhongTro123.Com</p>
                     {
@@ -72,7 +72,7 @@ const Contact = () => {
                         ))
                     }
                 </div>
-                <div className='flex-1 bg-white p-[30px] border border-[#dedede] rounded-[10px]'>
+                <div className='pc:flex-1 laptop:flex-1 phone:w-full tablet:w-full bg-white p-[30px] pc:border pc:border-[#dedede] pc:rounded-[10px] laptop:border laptoppc:border-[#dedede] laptop:rounded-[10px] phone:border-t-[5px] phone:border-t-[#f5f5f5] tablet:border-t-[5px] tablet:border-t-[#f5f5f5]'>
                     <h3 className='font-semibold text-lg mb-[15px]'>Liên hệ trực tuyến</h3>
                     <div className='flex flex-col gap-5'>
                         <InputForm
@@ -128,7 +128,7 @@ const Contact = () => {
                         <Button
                             text={'Gửi liên hệ'}
                             bgColor={'bg-secondary1'}
-                            textStyle={'text-white font-semibold'}
+                            textStyle={'text-white font-semibold py-[10px]'}
                             fullWidth
                             onClick={handleSubmit}
                             hover={'hover:bg-orange'}

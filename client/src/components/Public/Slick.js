@@ -1,41 +1,49 @@
-import React, { memo } from 'react'
-import LightGallery from 'lightgallery/react';
-import lgThumbnail from 'lightgallery/plugins/thumbnail';
-import lgZoom from 'lightgallery/plugins/zoom';
-import Slider from 'react-slick'
+import React, { memo, useEffect, useState } from 'react'
+import ImageGallery from 'react-image-gallery';
 
-const Slick = ({ images }) => {
-    const settings = {
-        lazyLoad: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
+const Slick = ({ imagesArr }) => {
+
+    const [images, setImages] = useState(imagesArr?.map((url) => ({
+        original: url,
+        thumbnail: url,
+    })));
+
+    useEffect(() => {
+    }, [])
+
+
+    const handleScreenChange = (fullscreenElement) => {
+        const imageElement = document.querySelectorAll('.image-gallery-image');
+        if (imageElement) {
+            if (fullscreenElement) {
+                for (let i = 0; i < imageElement.length; i++) {
+                    imageElement[i].style.height = 'calc(100vh - 80px)';
+                    imageElement[i].style.width = '100%';
+                }
+            } else {
+                for (let i = 0; i < imageElement.length; i++) {
+                    imageElement[i].style.height = '350px';
+                    imageElement[i].style.width = '100%';
+                }
+            }
+        }
     };
 
+    const customRenderItem = (item) => (
+        <img src={item.original} alt={item.originalAlt} className='image-gallery-image w-full h-[350px]' />
+    );
+
+
     return (
-        <Slider {...settings}>
-            {
-                images && images?.map((item, index) => (
-                    <div
-                        className='w-[500px] h-[320px] bg-black z-100 cursor-pointer px-10'
-                        key={index}
-                    >
-                        <LightGallery
-                            height='auto'
-                            speed={500}
-                            plugins={[lgThumbnail, lgZoom]}
-                        >
-                            <img
-                                alt="img"
-                                src={item}
-                                className='w-full h-full object-contain'
-                            />
-                        </LightGallery >
-                    </div >
-                ))
-            }
-        </Slider >
+        <div>
+            <ImageGallery
+                items={images}
+                showIndex
+                showFullscreenButton={true}
+                onScreenChange={handleScreenChange}
+                renderItem={customRenderItem}
+            />
+        </div>
     )
 }
 

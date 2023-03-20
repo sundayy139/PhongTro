@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Province.hasMany(models.Post, { foreignKey: 'provinceCode', as: 'provinceData' });
+            Province.hasMany(models.District, { foreignKey: 'provinceCode', as: 'provinceData' });
+            Province.hasMany(models.Post, { foreignKey: 'provinceCode', as: 'provincePostData' });
         }
     }
     Province.init({

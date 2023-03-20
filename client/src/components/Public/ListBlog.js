@@ -32,10 +32,10 @@ const List = ({ isRelease }) => {
     }, [paramsSearch])
 
     return (
-        <div className='w-full border border-[#dedede] bg-white rounded-[10px] ' >
+        <div className='w-full pc:border pc:border-[#dedede] pc:rounded-[10px] laptop:border laptop:border-[#dedede] laptop:rounded-[10px] bg-white ' >
             {
                 isRelease && (
-                    <h1 className='px-5 py-[15px] text-lg font-bold'>Có thể bạn quan tâm</h1>
+                    <h1 className='px-5 py-[15px] text-lg font-bold tablet:px-4 phone:px-4'>Có thể bạn quan tâm</h1>
                 )
             }
             <div className='flex flex-col w-full'>

@@ -6,7 +6,7 @@ const initialState = {
     acreages: [],
     provinces: [],
     curCategoryCode: null,
-    isOpenMenuResponse: 'false',
+    isShowMenuManage: false,
     flag: false,
     msg: ''
 }
@@ -41,6 +41,11 @@ const appReducer = (state = initialState, action) => {
             return {
                 ...state,
                 curCategoryCode: action.curCategoryCode || null
+            }
+        case actionsType.SET_IS_SHOW_MENU_MANAGE:
+            return {
+                ...state,
+                isShowMenuManage: action.flag
             }
         case actionsType.SET_FLAG:
             return {

@@ -48,7 +48,7 @@ export const apiGetProvinces = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/province/all",
+                url: "/api/v1/address/provinces",
             })
             resolve(res)
         } catch (error) {
@@ -56,6 +56,37 @@ export const apiGetProvinces = () => {
         }
     })
 }
+
+export const apiGetDistricts = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/address/districts",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetWards = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/address/wards",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 export const apiGetProvincesPublic = () => {
     return new Promise((resolve, reject) => {

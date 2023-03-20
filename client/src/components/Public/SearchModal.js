@@ -3,6 +3,7 @@ import { getNumberAcreage, getNumberPrice } from '../../utils/fn'
 import icons from '../../utils/icons'
 
 
+
 const { BsArrowLeft } = icons
 const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, range, defaultText }) => {
 
@@ -96,7 +97,6 @@ const SearchModal = ({ setIsShowModal, content, name, handleSubmit, queries, ran
             }
         )
     }
-
 
     return (
         <div

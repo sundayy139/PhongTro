@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
-import { BreadCrumb, Button, InputForm, Loading } from '../../components/System';
-import MdEditor from "react-markdown-editor-lite";
-import MarkdownIt from "markdown-it";
+import { BreadCrumb, Button, InputForm, Loading, RichEdittor } from '../../components/System';
 import { validate } from '../../utils/fn';
 import * as apis from '../../services/index'
 import Swal from 'sweetalert2';
@@ -11,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions'
 
 const title = 'Tạo mới Blog - Phòng trọ';
-const mdParser = new MarkdownIt();
 
 const CreateBlog = ({ isEdit, setIsShow }) => {
     const items = [
@@ -24,20 +21,13 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [payload, setPayload] = useState({
         descHTML: dataBlogEdit?.descHTML ? dataBlogEdit.descHTML : "",
-        descMarkdown: dataBlogEdit?.descMarkdown ? dataBlogEdit.descMarkdown : "",
         title: dataBlogEdit?.title ? dataBlogEdit.title : "",
         image: dataBlogEdit?.image ? dataBlogEdit.image : "",
     })
     const dispatch = useDispatch()
     const { flag } = useSelector(state => state.app)
 
-    const handleEditorChange = ({ html, text }) => {
-        setPayload({
-            ...payload,
-            descMarkdown: text,
-            descHTML: html,
-        });
-    };
+
 
     const handleChangeFiles = async (e) => {
         e.stopPropagation()
@@ -92,8 +82,8 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                 if (res?.data?.err === 0) {
                     setPayload({
                         descHTML: "",
-                        descMarkdown: "",
                         title: "",
+                        image: ""
                     })
                     Swal.fire({
                         position: 'center',
@@ -116,6 +106,8 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
             }
         }
     }
+
+
     return (
         <div className='px-8 py-4'>
             <Helmet>
@@ -182,15 +174,13 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                     </div>
                     <div className='text-sm flex flex-col gap-2'>
                         <span className='font-semibold'>Mô tả chi tiết</span>
-                        <MdEditor
-                            style={{ height: "500px" }}
-                            renderHTML={(text) => mdParser.render(text)}
-                            onChange={handleEditorChange}
-                            value={payload.descMarkdown}
+                        <RichEdittor
+                            payload={payload}
+                            setPayload={setPayload}
                         />
                         <small className='text-[10px] text-red-500'>
                             {
-                                invalidFileds?.some(item => item.name === 'descHTML' || item.name === 'descMarkdown') && invalidFileds?.find(item => item.name === 'descMarkdown')?.message
+                                invalidFileds?.some(item => item.name === 'descHTML') && invalidFileds?.find(item => item.name === 'descHTML')?.message
                             }
                         </small>
                     </div>

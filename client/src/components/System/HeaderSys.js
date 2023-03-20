@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { formatVietnameseToString } from '../../utils/fn'
 
 
-const Header = () => {
+const HeaderSys = () => {
     const { categories } = useSelector(state => state.app)
     return (
         <div className='w-full bg-secondary1 px-4  shadow-md'>
@@ -36,4 +36,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default HeaderSys

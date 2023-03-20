@@ -1,4 +1,4 @@
-import generateCode from "./fn"
+import { generateCode } from "./fn"
 
 const prices = [
     {

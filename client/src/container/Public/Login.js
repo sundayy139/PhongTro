@@ -34,7 +34,7 @@ const Login = () => {
     }
 
     return (
-        <div className='bg-white max-w-600 w-full p-[30px] pb-[100px] shadow-sm rounded-md mx-auto border boder-[#dedede]'>
+        <div className='bg-white max-w-600 w-full p-[30px] pb-[100px] mx-auto pc:shadow-sm pc:rounded-md pc:border pc:boder-[#dedede] laptop:shadow-sm laptop:rounded-md laptop:border laptop:boder-[#dedede]'>
             <Helmet>
                 <title>{title}</title>
             </Helmet>

@@ -1,14 +1,20 @@
 import icons from "./icons"
+import notepad from '../assets/icon/notepad.png'
+import user from '../assets/icon/user.png'
+import password from '../assets/icon/password.png'
+import chat from '../assets/icon/chat.png'
+import pencil from '../assets/icon/pencil.png'
+import heart from '../assets/icon/heart.png'
+import admin from '../assets/icon/admin.png'
+
 
 const {
     BsFillPenFill,
     FaUserCircle,
     GiNotebook,
-    MdAdminPanelSettings,
     BsFillChatFill,
     BsFillInfoCircleFill,
     BiNotepad,
-    FaLock,
     BsBookHalf,
     MdDashboard
 } = icons
@@ -19,13 +25,13 @@ export const text = {
 }
 
 
-export const location = [
+export const locationsCTPT = [
     {
         id: 'hcm',
         name: "Phòng trọ",
         province: 'Hồ Chí Minh',
         image: 'https://phongtro123.com/images/location_hcm.jpg',
-        provinceCode: 'CHNCT',
+        provinceCode: '55CB22',
         categoryCode: 'CTPT'
     },
     {
@@ -33,7 +39,7 @@ export const location = [
         name: "Phòng trọ",
         province: 'Hà Nội',
         image: 'https://phongtro123.com/images/location_hn.jpg',
-        provinceCode: 'NOPFU',
+        provinceCode: '06138F',
         categoryCode: 'CTPT'
     },
     {
@@ -41,8 +47,116 @@ export const location = [
         name: "Phòng trọ",
         province: 'Đà Nẵng',
         image: 'https://phongtro123.com/images/location_dn.jpg',
-        provinceCode: 'NAPEU',
-        categoryCode: 'CTPT'
+        provinceCode: '2C212F',
+        categoryCode: '2C212F'
+    }
+]
+
+export const locationsNCT = [
+    {
+        id: 'hcm',
+        name: "Cho thuê nhà",
+        province: 'Hồ Chí Minh',
+        image: 'https://phongtro123.com/images/location_hcm.jpg',
+        provinceCode: '55CB22',
+        categoryCode: 'NCT'
+    },
+    {
+        id: 'hn',
+        name: "Cho thuê nhà",
+        province: 'Hà Nội',
+        image: 'https://phongtro123.com/images/location_hn.jpg',
+        provinceCode: '06138F',
+        categoryCode: 'NCT'
+    },
+    {
+        id: 'dn',
+        name: "Cho thuê nhà",
+        province: 'Đà Nẵng',
+        image: 'https://phongtro123.com/images/location_dn.jpg',
+        provinceCode: '2C212F',
+        categoryCode: 'NCT'
+    }
+]
+
+export const locationsCTMB = [
+    {
+        id: 'hcm',
+        name: "Mặt bằng",
+        province: 'Hồ Chí Minh',
+        image: 'https://phongtro123.com/images/location_hcm.jpg',
+        provinceCode: '55CB22',
+        categoryCode: 'CTMB'
+    },
+    {
+        id: 'hn',
+        name: "Mặt bằng",
+        province: 'Hà Nội',
+        image: 'https://phongtro123.com/images/location_hn.jpg',
+        provinceCode: '06138F',
+        categoryCode: 'CTMB'
+    },
+    {
+        id: 'dn',
+        name: "Mặt bằng",
+        province: 'Đà Nẵng',
+        image: 'https://phongtro123.com/images/location_dn.jpg',
+        provinceCode: '2C212F',
+        categoryCode: 'CTMB'
+    }
+]
+
+export const locationsCTCH = [
+    {
+        id: 'hcm',
+        name: "Căn hộ",
+        province: 'Hồ Chí Minh',
+        image: 'https://phongtro123.com/images/location_hcm.jpg',
+        provinceCode: '55CB22',
+        categoryCode: 'CTCH'
+    },
+    {
+        id: 'hn',
+        name: "Căn hộ",
+        province: 'Hà Nội',
+        image: 'https://phongtro123.com/images/location_hn.jpg',
+        provinceCode: '06138F',
+        categoryCode: 'CTCH'
+    },
+    {
+        id: 'dn',
+        name: "Căn hộ",
+        province: 'Đà Nẵng',
+        image: 'https://phongtro123.com/images/location_dn.jpg',
+        provinceCode: '2C212F',
+        categoryCode: 'CTCH'
+    }
+]
+
+export const locationsTNOG = [
+    {
+        id: 'hcm',
+        name: "Ở ghép",
+        province: 'Hồ Chí Minh',
+        image: 'https://phongtro123.com/images/location_hcm.jpg',
+        provinceCode: '55CB22',
+        categoryCode: 'TNOG'
+    },
+    {
+        id: 'hn',
+        name: "Ở ghép",
+        province: 'Hà Nội',
+        image: 'https://phongtro123.com/images/location_hn.jpg',
+        provinceCode: '06138F',
+        categoryCode: 'TNOG'
+    },
+    {
+        id: 'dn',
+        name: "Ở ghép",
+        province: 'Đà Nẵng',
+        image: 'https://phongtro123.com/images/location_dn.jpg',
+        provinceCode: '2C212F',
+        categoryCode: 'TNOG'
     }
 ]
 
@@ -97,48 +211,62 @@ export const menuManage = [
         id: 1,
         text: "Đăng tin cho thuê",
         path: '/he-thong/dang-tin-moi',
-        icons: <BsFillPenFill size={16} />
+        image: pencil
     },
     {
         id: 2,
         text: "Quản lý tin đăng",
         path: '/he-thong/quan-ly-tin-dang',
-        icons: <GiNotebook size={16} />
+        image: notepad
 
     },
     {
         id: 3,
-        text: "Thông tin tài khoản",
-        path: '/he-thong/sua-thong-tin',
-        icons: <FaUserCircle size={16} />
-    },
-]
-
-export const menuAdmin = [
-    {
-        id: 1,
-        text: "Quản lý hệ thống (Admin)",
-        path: '/he-thong/quan-ly-he-thong',
-        icons: <MdAdminPanelSettings size={16} />
-    },
-    {
-        id: 2,
-        text: "Đăng tin cho thuê",
-        path: '/he-thong/dang-tin-moi',
-        icons: <BsFillPenFill size={16} />
-    },
-    {
-        id: 3,
-        text: "Quản lý tin đăng",
-        path: '/he-thong/quan-ly-tin-dang',
-        icons: <GiNotebook size={16} />
+        text: "Tin đã lưu",
+        path: '/tin-da-luu',
+        image: heart
 
     },
     {
         id: 4,
         text: "Thông tin tài khoản",
         path: '/he-thong/sua-thong-tin',
-        icons: <BsFillInfoCircleFill size={16} />
+        image: user
+    },
+]
+
+export const menuAdmin = [
+    {
+        id: 1,
+        text: "Đến trang Admin",
+        path: '/he-thong/quan-ly-he-thong',
+        image: admin
+    },
+    {
+        id: 2,
+        text: "Đăng tin cho thuê",
+        path: '/he-thong/dang-tin-moi',
+        image: pencil
+    },
+    {
+        id: 3,
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tin-dang',
+        image: notepad
+
+    },
+    {
+        id: 4,
+        text: "Tin đã lưu",
+        path: '/tin-da-luu',
+        image: heart
+
+    },
+    {
+        id: 5,
+        text: "Thông tin tài khoản",
+        path: '/he-thong/sua-thong-tin',
+        image: user
     },
 ]
 
@@ -148,26 +276,25 @@ export const menuManageSystem = [
         id: 1,
         text: "Quản lý tin đăng",
         path: '/he-thong/quan-ly-tin-dang',
-        icons: <GiNotebook size={16} />
-
+        image: notepad
     },
     {
         id: 2,
         text: "Thông tin tài khoản",
         path: '/he-thong/sua-thong-tin',
-        icons: <BsFillInfoCircleFill size={16} />
+        image: user
     },
     {
         id: 3,
         text: "Đổi mật khẩu",
         path: '/he-thong/doi-mat-khau',
-        icons: <FaLock size={16} />
+        image: password
     },
     {
         id: 4,
         text: "Liên hệ",
         path: '/lien-he',
-        icons: <BsFillChatFill size={16} />
+        image: chat
     },
 ]
 

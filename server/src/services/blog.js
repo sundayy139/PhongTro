@@ -1,4 +1,5 @@
 import db from "../models/index";
+import { v4 as generateId } from 'uuid'
 
 // GET ALL Blogs
 export const getBlogsService = (page) => {
@@ -62,8 +63,8 @@ export const getBlogByIdService = (id) => {
 export const createBlogService = (body, id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { descHTML, descMarkdown, image, title } = body
-            if (!id || !descHTML || !descMarkdown || !image || !title) {
+            const { descHTML, image, title } = body
+            if (!id || !descHTML || !image || !title) {
                 resolve({
                     err: 1,
                     msg: "Có lỗi gì đó rồi",
@@ -72,7 +73,6 @@ export const createBlogService = (body, id) => {
                 const blog = await db.Blog.create({
                     id: generateId(),
                     descHTML: descHTML,
-                    descMarkdown: descMarkdown,
                     userId: id,
                     image: image,
                     title: title
@@ -93,7 +93,7 @@ export const createBlogService = (body, id) => {
 export const updateBlogService = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { id, descHTML, descMarkdown, title, image } = payload
+            const { id, descHTML, title, image } = payload
             if (!id) {
                 resolve({
                     err: 1,
@@ -113,7 +113,6 @@ export const updateBlogService = (payload) => {
                 } else {
                     blog.title = title
                     blog.descHTML = descHTML
-                    blog.descMarkdown = descMarkdown
                     blog.image = image
 
                     await blog.save()

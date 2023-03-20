@@ -50,7 +50,7 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className='bg-white max-w-600 w-full p-[30px] pb-[100px] shadow-sm rounded-md mx-auto border boder-[#dedede]'>
+        <div className='bg-white max-w-600 w-full p-[30px] pb-[100px] mx-auto pc:shadow-sm pc:rounded-md pc:border pc:boder-[#dedede] laptop:shadow-sm laptop:rounded-md laptop:border laptop:boder-[#dedede]'>
             <Helmet>
                 <title>{title}</title>
             </Helmet>
@@ -79,7 +79,7 @@ const ForgotPassword = () => {
                 <Button
                     text={'Xác nhận'}
                     bgColor={'bg-secondary1'}
-                    textStyle={'text-white font-semibold'}
+                    textStyle={'text-white font-semibold py-[10px]'}
                     fullWidth
                     onClick={handleSubmit}
                     hover={'hover:bg-orange'}
