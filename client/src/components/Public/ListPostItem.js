@@ -13,17 +13,25 @@ import * as actions from '../../store/actions'
 const { BsTelephone, BsSuitHeart, BsSuitHeartFill } = icons
 
 const ListPostItem = ({ images, price, acreage, description, id, address, user, title, createdAt }) => {
-    const [isHoverHeart, setIsHoverHeart] = useState()
+    const [isHoverHeart, setIsHoverHeart] = useState(false)
     const { favouritePost } = useSelector(state => state.post)
     const { flag } = useSelector(state => state.app)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleClickHeart = async () => {
-        const res = await apis.apiSetFavouritePost({ postId: id })
-        if (res?.data?.err === 0) {
-            setIsHoverHeart(true)
-            dispatch(actions.setFlag(!flag))
+        if (isHoverHeart === false) {
+            const res = await apis.apiSetFavouritePost({ postId: id })
+            if (res?.data?.err === 0) {
+                setIsHoverHeart(true)
+                dispatch(actions.setFlag(!flag))
+            }
+        } else {
+            const res = await apis.apiRemoveFavouritePost({ postId: id })
+            if (res?.data?.err === 0) {
+                setIsHoverHeart(false)
+                dispatch(actions.setFlag(!flag))
+            }
         }
     }
 
@@ -42,7 +50,7 @@ const ListPostItem = ({ images, price, acreage, description, id, address, user, 
         <div className='w-full flex items-center px-5 py-[15px] pc:border-t pc:border-t-[#E13427] laptop:border-t laptop:border-t-[#E13427]
         phone:flex-col phone:gap-3 phone:bg-white phone:shadow-sm  tablet:flex-col tablet:gap-3 tablet:bg-white tablet:shadow-sm '>
             <div
-                className='pc:w-[240px] pc:h-[240px] pc:flex-none laptop:w-[240px] laptop:h-[240px] laptop:flex-none relative cursor-pointer phone:w-full phone:h-[300px] tablet:w-full tablet:h-[300px] '
+                className='pc:w-[200px] pc:h-[200px] pc:flex-none laptop:w-[200px] laptop:h-[200px] laptop:flex-none relative cursor-pointer phone:w-full phone:h-[300px] tablet:w-full tablet:h-[300px] '
             >
                 <img
                     src={images && images[0]}
@@ -68,16 +76,16 @@ const ListPostItem = ({ images, price, acreage, description, id, address, user, 
                     </span>
                 </span>
             </div>
-            <div className='pc:flex-auto pc:max-w-[calc(100%-256px)] pc:h-[240px] pc:ml-4 laptop:flex-auto laptop:max-w-[calc(100%-256px)] laptop:h-[240px] laptop:ml-4 flex flex-col pc:justify-between laptop:justify-between phone:gap-4 phone:w-full tablet:gap-4 tablet:w-full  items-start'>
+            <div className='pc:flex-auto pc:max-w-[calc(100%-216px)] pc:h-[200px] pc:ml-4 laptop:flex-auto laptop:max-w-[calc(100%-256px)] laptop:h-[240px] laptop:ml-4 flex flex-col pc:justify-between laptop:justify-between phone:gap-4 phone:w-full tablet:gap-4 tablet:w-full  items-start'>
                 <Link
                     to={`/chi-tiet/${id}`}
                     className='text-[#E13427] font-bold text-sm uppercase hover:underline cursor-pointer'
                 >
                     {title}
                 </Link>
-                <div className='w-full pc:flex pc:items-center pc:justify-between laptop:flex laptop:items-center laptop:justify-between'>
+                <div className='w-full pc:flex pc:items-center pc:justify-between laptop:flex laptop:items-center laptop:justify-between '>
                     <div className='flex items-center gap-4 justify-between phone:flex-col tablet:flex-col'>
-                        <div className='flex gap-4 items-center w-full'>
+                        <div className='flex gap-4 items-center'>
                             <span className='text-[17px] text-[#16c784] font-semibold whitespace-nowrap'>
                                 {
                                     price < 1 ? `${String(price * Math.pow(10, 6)).replace(/(.)(?=(\d{3})+$)/g, '$1.')} đồng/tháng` : `${price} triệu/tháng`

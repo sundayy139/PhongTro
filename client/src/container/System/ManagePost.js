@@ -11,6 +11,7 @@ import * as apis from '../../services/index';
 import logo from '../../assets/image/homestay.png';
 import Swal from 'sweetalert2';
 import { CSVLink } from 'react-csv'
+import { BottomBar } from '../../components/Public';
 
 const { BsFillPenFill, BsTrashFill, TiTick } = icons
 
@@ -79,7 +80,6 @@ const ManagePost = () => {
         setPostsFilter(result)
         setStatus('0')
     }, [search])
-
 
     useEffect(() => {
         if (+status === 1) {
@@ -264,7 +264,8 @@ const ManagePost = () => {
     }
 
     return (
-        <div className='px-8 py-4'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -272,10 +273,10 @@ const ManagePost = () => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>Quản lý tin đăng</h1>
-            <div className='py-6'>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Quản lý tin đăng</h1>
+            <div className='py-6 bg-white rounded-[5px]'>
                 {
-                    postsFilter && postsFilter.length > 0 && (
+                    postsFilter && (
                         <DataTable
                             columns={columns}
                             data={postsFilter}
@@ -283,14 +284,14 @@ const ManagePost = () => {
                             defaultSortFieldId
                             pagination={5}
                             highlightOnHover
-                            actions={
-                                <CSVLink
-                                    className='rounded-[5px] bg-blue-500 text-white text-sm py-1 px-2'
-                                    data={postsUser}
-                                >
-                                    Export
-                                </CSVLink>
-                            }
+                            // actions={
+                            //     <CSVLink
+                            //         className='rounded-[5px] bg-blue-500 text-white text-sm py-1 px-2'
+                            //         data={postsUser}
+                            //     >
+                            //         Export
+                            //     </CSVLink>
+                            // }
                             // selectableRows
                             // onSelectedRowsChange={(rows) => handleSelectedRowsChange(rows)}
                             selectableRowsHighlight

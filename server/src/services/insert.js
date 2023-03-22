@@ -119,7 +119,7 @@ export const insert = () => {
                         statusCode: 'S2',
                         priceNumber: +currentPrice,
                         acreageNumber: +areaCurrent,
-                        expiredAt: new Date()
+                        expiredAt: new Date(new Date().getTime() + (100 * 24 * 60 * 60 * 1000))
                     })
                 })
             })

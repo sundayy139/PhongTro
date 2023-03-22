@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BreadCrumb, Button, InputDisable, InputForm, Loading } from '../../components/System';
 import avatar from '../../assets/image/avatar-person.png'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,19 +10,21 @@ import Swal from 'sweetalert2';
 import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
 import { path } from '../../utils/path';
+import icons from '../../utils/icons'
 
-const title = 'Cập nhật thông tin cá nhân - Phòng trọ';
+const { BiArrowBack } = icons
 
 const ManageProfile = ({ isEdit, setIsShow }) => {
 
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Quản lý', link: '/he-thong' },
-        { title: 'Cập nhật thông tin cá nhân' }
+        { title: isEdit ? 'Cập nhật thông tin người dùng' : 'Cập nhật thông tin cá nhân' }
     ];
-
+    const navigate = useNavigate()
     const [invalidFileds, setInvalidFileds] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [title, setTitle] = useState([])
     const [userData, setUserData] = useState(null)
     const { currentUserData } = useSelector(state => state.user)
     const { dataUserEdit } = useSelector(state => state.admin)
@@ -53,6 +55,11 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
             status: userData?.status || 'S4',
         })
     }, [userData])
+
+    useEffect(() => {
+        isEdit ? setTitle('Chỉnh sửa thông tin người dùng - Phòng trọ') : setTitle('Cập nhật thông tin cá nhân - Phòng trọ')
+    }, [isEdit])
+
 
 
     const handleSubmit = async () => {
@@ -99,7 +106,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
         }
     }
     return (
-        <div className='px-8 py-4'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -107,12 +114,12 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>
                 {
                     isEdit ? 'Cập nhật thông tin người dùng' : 'Cập nhật thông tin cá nhân'
                 }
             </h1>
-            <div className='w-2/3 mx-auto flex flex-col gap-6 py-10'>
+            <div className='pc:w-2/3 pc:mx-auto pc:gap-6 pc:py-10 laptop:w-2/3 laptop:mx-auto laptop:gap-6 laptop:py-10 phone:w-full phone:gap-4 phone:py-4 tablet:w-full tablet:gap-4 tablet:py-4 flex flex-col bg-white rounded-[5px] phone:px-2 tablet:px-2'>
                 <InputDisable
                     label='Mã thành viên'
                     id='id'
@@ -167,8 +174,8 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                 />
                 {
                     !isEdit && (
-                        <div className='text-sm w-full flex items-center'>
-                            <div className='font-semibold w-[200px]'>
+                        <div className='flex gap-4 items-center text-sm'>
+                            <div className='font-semibold pc:w-[200px] laptop:w-[200px] phone:w-[100px] tablet:w-[100px]'>
                                 Mật khẩu
                             </div>
                             <Link
@@ -184,7 +191,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                     isEdit && (
                         <>
                             <div className='text-sm w-full flex items-center'>
-                                <div className='font-semibold w-[200px]'>
+                                <div className='font-semibold pc:w-[200px] laptop:w-[200px] phone:w-[100px] tablet:w-[100px]'>
                                     Vai trò
                                 </div>
                                 <select
@@ -205,7 +212,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                                 </select>
                             </div>
                             <div className='text-sm w-full flex items-center'>
-                                <div className='font-semibold w-[200px]'>
+                                <div className='font-semibold pc:w-[200px] laptop:w-[200px] phone:w-[100px] tablet:w-[100px]'>
                                     Trạng thái
                                 </div>
                                 <select
@@ -229,11 +236,11 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
 
                     )
                 }
-                <div className='text-sm w-full flex items-center'>
-                    <div className='font-semibold w-[200px] flex-none'>
+                <div className='text-sm w-full flex pc:items-center laptop:items-center phone:flex-col phone:gap-2 tablet:flex-col tablet:gap-2'>
+                    <div className='font-semibold pc:w-[200px] pc:flex-none laptop:w-[200px] laptop:flex-none'>
                         Ảnh đại diện
                     </div>
-                    <div className='flex flex-col gap-4 items-center'>
+                    <div className='flex flex-col gap-4 items-center '>
                         <div className='w-[140px] h-[140px] rounded-full border-[5px] border-[#fafafa] overflow-hidden flex items-center justify-center'>
                             {
                                 isLoading ? (
@@ -267,7 +274,26 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                         }
                     </small>
                 </div>
-                <div className='flex justify-center w-full mt-10'>
+                <div className='flex justify-center w-full mt-10 phone:hidden tablet:hidden'>
+                    <Button
+                        text={'Lưu & cập nhật'}
+                        textStyle={'text-[17px] text-white'}
+                        bgColor={'bg-[#007bff]'}
+                        fullWidth
+                        hover={'hover:bg-[#0069d9]'}
+                        onClick={handleSubmit}
+                    />
+                </div>
+                <div className='h-[55px] fixed bottom-0 left-0 right-0 shadow-custom bg-white flex gap-2 px-4 py-2 pc:hidden laptop:hidden z-[99999]'>
+                    <Button
+                        text={'Quay lại'}
+                        textStyle={'text-[17px] text-[#333333]'}
+                        bgColor={'bg-white'}
+                        fullWidth
+                        iconBefore={<BiArrowBack />}
+                        hover={'hover:bg-[#218838]'}
+                        onClick={() => navigate(-1)}
+                    />
                     <Button
                         text={'Lưu & cập nhật'}
                         textStyle={'text-[17px] text-white'}

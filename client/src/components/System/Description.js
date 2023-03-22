@@ -30,9 +30,9 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
     ]
 
     return (
-        <div className='flex flex-col gap-9'>
+        <div className='flex flex-col w-full pc:gap-9 laptop:gap-9 phone:gap-4 phone:px-2 phone:py-4 phone:bg-white phone:rounded-[5px] tablet:gap-4'>
             <h2 className='font-semibold text-2xl'>Thông tin mô tả</h2>
-            <div className='w-[50%]'>
+            <div className='pc:w-[50%] laptop:w-[50%] phone:w-ful tablet:w-full'>
                 <Select
                     label={"Loại danh mục"}
                     options={categories}
@@ -64,7 +64,7 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
                     required
                     type='text'
                     id='desc'
-                    className='outline-none border border-gray-300 p-2 rounded-[5px]'
+                    className='outline-none border border-gray-300 p-2 rounded-[5px] phone:font-semibold phone:text-[#007aff] phone:bg-[#e7f0fe] tablet:font-semibold tablet:text-[#007aff] tablet:bg-[#e7f0fe]'
                     value={payload.description}
                     onChange={(e) => setPayload(prev => ({ ...prev, description: e.target.value }))}
                 />
@@ -74,7 +74,7 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
                     }
                 </small>
             </div>
-            <div className='w-[50%] flex flex-col gap-9'>
+            <div className='pc:w-[50%] laptop:w-[50%] phone:w-ful tablet:w-full flex flex-col pc:gap-9 laptop:gap-9 phone:gap-4 tablet:gap-4'>
                 <InputDisable
                     label={"Thông tin liên hệ"}
                     value={dataEdit && Object.entries(dataEdit)?.length > 0 ? dataEdit?.userData?.name : currentUserData?.name}
@@ -121,7 +121,7 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
                     setInvalidFileds={setInvalidFileds}
                 />
             </div>
-            <div className='w-[50%]'>
+            <div className='pc:w-[50%] laptop:w-[50%] phone:w-ful tablet:w-full'>
                 <Select
                     label={"Đối tượng cho thuê"}
                     options={targets}

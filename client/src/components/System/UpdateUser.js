@@ -15,7 +15,7 @@ const UpdateUser = ({ setIsShow }) => {
             }}
         >
             <div
-                className='bg-white max-w-[1100px] h-4/5 w-full rounded-lg overflow-hidden py-4'
+                className='pc:bg-white laptop:bg-white phone:bg-[#f1f1f1] tablet:bg-[#f1f1f1] max-w-[1100px] w-full pc:h-4/5 pc:rounded-lg laptop:h-4/5 laptop:rounded-lg overflow-hidden phone:h-full tablet:h-full'
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className='overflow-y-auto w-full h-full'>

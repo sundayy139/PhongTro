@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
 import { BreadCrumb, Button, InputForm, Loading, RichEdittor } from '../../components/System';
@@ -7,6 +7,11 @@ import * as apis from '../../services/index'
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions'
+import { useNavigate } from 'react-router-dom';
+import icons from '../../utils/icons'
+
+
+const { BiArrowBack } = icons
 
 const title = 'Tạo mới Blog - Phòng trọ';
 
@@ -16,6 +21,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
         { title: 'Quản lý', link: '/he-thong' },
         { title: isEdit ? 'Chỉnh sửa blog' : 'Tạo mới blog' }
     ];
+    const navigate = useNavigate()
     const [invalidFileds, setInvalidFileds] = useState([])
     const { dataBlogEdit } = useSelector(state => state.admin)
     const [isLoading, setIsLoading] = useState(false)
@@ -107,9 +113,20 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
         }
     }
 
+    useEffect(() => {
+        if (isEdit === undefined) {
+            dispatch(actions.clearDataEdit())
+            setPayload({
+                title: '',
+                image: '',
+                descHTML: '',
+            })
+        }
+    }, [isEdit])
+
 
     return (
-        <div className='px-8 py-4'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -117,14 +134,14 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>
                 {
                     isEdit ? 'Chỉnh sửa blog' : 'Tạo mới blog'
                 }
             </h1>
-            <div className='py-4 flex flex-col gap-20'>
-                <div className='flex flex-col gap-10 w-full'>
-                    <div className='flex gap-10 items-start'>
+            <div className='py-4 flex flex-col gap-20 bg-white rounded-[5px] phone:px-2 tablet:px-2'>
+                <div className='flex flex-col w-full pc:gap-10 laptop:gap-10 phone:gap-4 tablet:gap-4'>
+                    <div className='flex pc:gap-10 pc:items-start laptop:gap-10 laptop:items-start phone:flex-col phone:gap-4 tablet:flex-col tablet:gap-4'>
                         <InputForm
                             label={"Tiêu đề"}
                             name={'title'}
@@ -185,7 +202,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                         </small>
                     </div>
                 </div>
-                <div className='flex justify-center'>
+                <div className='flex justify-center phone:hidden tablet:hidden'>
                     {
                         isEdit ? (
                             <Button
@@ -193,6 +210,39 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                                 textStyle={'text-[17px] text-white'}
                                 bgColor={'bg-[#28a745]'}
                                 fullWidth
+                                hover={'hover:bg-[#218838]'}
+                                onClick={handleSubmit}
+                            />
+                        ) : (
+                            <Button
+                                text={'Xác nhận'}
+                                textStyle={'text-[17px] text-white'}
+                                bgColor={'bg-[#28a745]'}
+                                fullWidth
+                                hover={'hover:bg-[#218838]'}
+                                onClick={handleSubmit}
+                            />
+                        )
+                    }
+                </div>
+                <div className='h-[55px] fixed bottom-0 left-0 right-0 shadow-custom bg-white flex gap-2 px-4 py-2 pc:hidden laptop:hidden z-[99999]'>
+                    <Button
+                        text={'Quay lại'}
+                        textStyle={'text-[17px] text-[#333333]'}
+                        bgColor={'bg-white'}
+                        fullWidth
+                        iconBefore={<BiArrowBack />}
+                        hover={'hover:bg-[#218838]'}
+                        onClick={() => navigate(-1)}
+                    />
+                    {
+                        isEdit ? (
+                            <Button
+                                text={'Cập nhật'}
+                                textStyle={'text-[17px] text-white'}
+                                bgColor={'bg-[#28a745]'}
+                                fullWidth
+                                iconBefore
                                 hover={'hover:bg-[#218838]'}
                                 onClick={handleSubmit}
                             />

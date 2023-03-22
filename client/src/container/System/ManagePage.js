@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Helmet } from 'react-helmet';
 import { BreadCrumb } from '../../components/System'
 import logo from '../../assets/image/homestay.png';
-import { menuManageSystem } from '../../utils/constant';
+import { menuManageAdmin, menuManageStatistic, menuManageSystem } from '../../utils/constant';
 import { Link, useNavigate } from 'react-router-dom';
 import icons from '../../utils/icons';
 import { path } from '../../utils/path';
@@ -11,6 +11,7 @@ import * as actions from '../../store/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import logoutIcon from '../../assets/icon/logout.png'
 import { getNumberFromString } from '../../utils/fn';
+import { BottomBar } from '../../components/Public';
 
 const { GrNext, MdLogout } = icons
 
@@ -20,6 +21,7 @@ const ManagePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { currentUserData } = useSelector(state => state.user)
+    const { isLoggedin } = useSelector(state => state.app)
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Trang quản lý' },
@@ -45,7 +47,8 @@ const ManagePage = () => {
     })
 
     return (
-        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-[10px] tablet:px-[10px]'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-[10px] tablet:px-[10px] relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -77,26 +80,101 @@ const ManagePage = () => {
                 >
                     Đăng tin mới
                 </Link>
-                <div className='pc:border laptop:border mt-4 phone:bg-white phone:rounded-[5px]'>
+                <div className='flex flex-col gap-2 w-full'>
+                    <div className='pc:border-t pc:border-l pc:border-r laptop:border-t laptop:border-l laptop:border-r mt-4 phone:bg-white phone:rounded-[5px] tablet:bg-white tablet:rounded-[5px]'>
+                        {
+                            currentUserData?.role === 'user' ? (
+                                <div>
+                                    {
+                                        menuManageSystem.map(item => (
+                                            <Link
+                                                key={item.id}
+                                                to={item.path}
+                                                className='p-4 text-sm flex items-center justify-between border-b'
+                                            >
+                                                <span className='flex items-center gap-3'>
+                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <span>
+                                                        {item.text}
+                                                    </span>
+                                                </span>
+                                                <GrNext size={16} />
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                            ) : currentUserData?.role === 'admin' ? (
+                                <div>
+                                    {
+                                        menuManageSystem.map(item => (
+                                            <Link
+                                                key={item.id}
+                                                to={item.path}
+                                                className='p-4 text-sm flex items-center justify-between border-b'
+                                            >
+                                                <span className='flex items-center gap-3'>
+                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <span>
+                                                        {item.text}
+                                                    </span>
+                                                </span>
+                                                <GrNext size={16} />
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                            ) : (
+                                null
+                            )
+                        }
+
+                    </div>
                     {
-                        menuManageSystem.map(item => (
-                            <Link
-                                key={item.id}
-                                to={item.path}
-                                className='p-4 text-sm flex items-center justify-between border-b'
-                            >
-                                <span className='flex items-center gap-3'>
-                                    <img src={item.image} className='w-4 h-4' />
-                                    <span>
-                                        {item.text}
-                                    </span>
-                                </span>
-                                <GrNext size={16} />
-                            </Link>
-                        ))
+                        currentUserData?.role === 'admin' && (
+                            <>
+                                <div className='pc:border-t pc:border-l pc:border-r laptop:border-t laptop:border-l laptop:border-r phone:bg-white phone:rounded-[5px] tablet:bg-white tablet:rounded-[5px]'>
+                                    {
+                                        menuManageAdmin.map(item => (
+                                            <Link
+                                                key={item.id}
+                                                to={item.path}
+                                                className='p-4 text-sm flex items-center justify-between border-b'
+                                            >
+                                                <span className='flex items-center gap-3'>
+                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <span>
+                                                        {item.text}
+                                                    </span>
+                                                </span>
+                                                <GrNext size={16} />
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                                <div className='pc:border-t pc:border-l pc:border-r laptop:border-t laptop:border-l laptop:border-r phone:bg-white phone:rounded-[5px] tablet:bg-white tablet:rounded-[5px]'>
+                                    {
+                                        menuManageStatistic.map(item => (
+                                            <Link
+                                                key={item.id}
+                                                to={item.path}
+                                                className='p-4 text-sm flex items-center justify-between border-b'
+                                            >
+                                                <span className='flex items-center gap-3'>
+                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <span>
+                                                        {item.text}
+                                                    </span>
+                                                </span>
+                                                <GrNext size={16} />
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                            </>
+                        )
                     }
                     <span
-                        className='p-4 text-sm flex items-center justify-between border-b last:border-none cursor-pointer'
+                        className='p-4 text-sm flex items-center justify-between border-b cursor-pointer pc:border laptop:border phone:bg-white phone:rounded-[5px] tablet:bg-white tablet:rounded-[5px]'
                         onClick={logout}
                     >
                         <span className='flex items-center gap-3'>

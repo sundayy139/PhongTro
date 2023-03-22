@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { Link } from 'react-router-dom';
-import { BreadCrumb, Button, DoughnutChart, InputDisable, InputForm, LineChart, Loading } from '../../components/System';
-import avatar from '../../assets/image/avatar-person.png'
+import { BreadCrumb, DoughnutChart, LineChart } from '../../components/System';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNumberFromString, validate } from '../../utils/fn';
+import { getNumberFromString } from '../../utils/fn';
 import * as apis from '../../services/index'
-import Swal from 'sweetalert2';
 import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
-import { path } from '../../utils/path';
 import icons from '../../utils/icons'
 import DataTable from "react-data-table-component";
 
@@ -101,7 +97,7 @@ const Dashboard = () => {
                     pointRadius: 5,
                 },
                 {
-                    label: 'người dùng mới',
+                    label: 'Người dùng mới',
                     data: count2,
                     fill: false,
                     borderColor: '#ff6384',
@@ -195,7 +191,7 @@ const Dashboard = () => {
     ]
 
     return (
-        <div className='px-8 py-4 w-full'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 w-full phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -203,9 +199,9 @@ const Dashboard = () => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>Tổng quan</h1>
-            <div className='w-full flex gap-6 py-10'>
-                <div className='flex w-1/3 flex-none flex-col gap-5 justify-between'>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Tổng quan</h1>
+            <div className='pc:py-5 pc:gap-6 laptop:gap-6 laptop:py-5 w-full phone:gap-4 phone:py-4 phone:flex-col tablet:gap-4 tablet:py-4 tablet:flex-col flex bg-white rounded-[5px] phone:px-2 tablet:px-2'>
+                <div className='flex pc:w-1/3 pc:flex-none pc:flex-col laptop:w-1/3 laptop:flex-none laptop:flex-col gap-5 justify-between'>
                     <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
                         <div className='flex justify-between items-center'>
                             <h3 className='text-sm'>Tổng người dùng</h3>
@@ -255,8 +251,8 @@ const Dashboard = () => {
                     }
                 </div>
             </div>
-            <div className=' w-full flex gap-5 '>
-                <div className='w-2/3 bg-primary rounded-[5px] px-4 py-5'>
+            <div className='pc:py-5 pc:gap-6 laptop:gap-6 laptop:py-5 w-full phone:gap-4 phone:py-4 phone:flex-col tablet:gap-4 tablet:py-4 tablet:flex-col flex bg-white rounded-[5px] phone:px-2 tablet:px-2 overflow-hidden'>
+                <div className='pc:w-1/2 laptop:w-1/2 flex-none h-auto bg-primary rounded-[5px]  pc:px-4 pc:py-5 laptop:px-4 laptop:py-5'>
                     {
                         usersData && (
                             <DataTable
@@ -272,7 +268,7 @@ const Dashboard = () => {
                         )
                     }
                 </div>
-                <div className='w-1/3 flex-none bg-primary rounded-[5px] px-4 py-5'>
+                <div className='flex-auto h-auto bg-primary rounded-[5px] pc:px-4 pc:py-5 laptop:px-4 laptop:py-5'>
                     {
                         Object.entries(chartData)?.length > 0 && (
                             <DoughnutChart

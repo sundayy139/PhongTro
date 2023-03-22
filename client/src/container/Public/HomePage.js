@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { ListPost, Pagination, Province, NewPost, Sidebar, SidebarItem } from '../../components/Public/index'
+import { ListPost, Pagination, Province, NewPost, Sidebar, SidebarItem, BottomBar } from '../../components/Public/index'
 import { text } from '../../utils/constant'
 import * as actions from '../../store/actions'
 import * as apis from '../../services'
@@ -42,7 +42,8 @@ const HomePage = () => {
         dispatch(actions.getNewPosts())
     }, [])
     return (
-        <div className='w-full flex flex-col gap-10'>
+        <div className='w-full flex flex-col gap-10 relative'>
+            <BottomBar />
             <div className='phone:text-white tablet:text-white tablet:px-4 phone:px-4'>
                 <div className='phone:bg-secondary1 tablet:bg-secondary1 phone:p-[10px] phone:rounded-[5px] tablet:p-[10px] tablet:rounded-[5px] '>
                     <h1 className='pc:text-[28px] laptop:text-[28px] phone:text-xl tablet:text-xl font-bold mb-2'>{text.HOME_TITLE}</h1>

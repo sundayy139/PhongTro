@@ -36,14 +36,16 @@ const Header = ({ isShowMenuRes, setIsShowMenuRes }) => {
     }, [])
 
     const handleClickManage = () => {
+        setIsShowMenuRes(false)
         if (isLoggedIn) {
-            navigate(`he-thong/${path.MANAGE_POST}`)
+            navigate(`/he-thong/${path.MANAGE_POST}`)
         } else {
             navigate(path.LOGIN)
         }
     }
 
     const handleClickProfile = () => {
+        setIsShowMenuRes(false)
         if (isLoggedIn) {
             navigate(`/he-thong`)
         } else {

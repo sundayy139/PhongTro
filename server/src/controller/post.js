@@ -91,6 +91,20 @@ export const setFavouritePost = async (req, res) => {
     }
 }
 
+export const removeFavourite = async (req, res) => {
+    try {
+        const { id } = req.user
+        const { postId } = req.query
+        const response = await postService.removeFavouriteService(postId, id);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error
+        })
+    }
+}
+
 export const getFavouritePost = async (req, res) => {
     try {
         const { id } = req.user

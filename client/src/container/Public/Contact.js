@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, InputForm } from '../../components/Public/index'
+import { BottomBar, Button, InputForm } from '../../components/Public/index'
 import { contactInfo } from '../../utils/constant'
 import { validate } from '../../utils/fn'
 import logo from '../../assets/image/homestay.png';
@@ -51,7 +51,8 @@ const Contact = () => {
     }
 
     return (
-        <div className=''>
+        <div className='relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />

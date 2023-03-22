@@ -6,7 +6,13 @@ import chat from '../assets/icon/chat.png'
 import pencil from '../assets/icon/pencil.png'
 import heart from '../assets/icon/heart.png'
 import admin from '../assets/icon/admin.png'
-
+import homeBb from '../assets/icon/home-black.png'
+import plusBb from '../assets/icon/plus.png'
+import notepadBb from '../assets/icon/notepad-black.png'
+import heartBb from '../assets/icon/heart-black.png'
+import userBb from '../assets/icon/user-black.png'
+import dashboard from '../assets/icon/dashboard.png'
+import blog from '../assets/icon/blogging.png'
 
 const {
     BsFillPenFill,
@@ -239,7 +245,7 @@ export const menuAdmin = [
     {
         id: 1,
         text: "Đến trang Admin",
-        path: '/he-thong/quan-ly-he-thong',
+        path: '/he-thong',
         image: admin
     },
     {
@@ -270,6 +276,45 @@ export const menuAdmin = [
     },
 ]
 
+export const menuBottomBar = [
+    {
+        id: 1,
+        text: "Trang chủ",
+        path: '/',
+        image: homeBb,
+        isPrimary: false
+    },
+    {
+        id: 2,
+        text: "Yêu thích",
+        path: '/tin-da-luu',
+        image: heartBb,
+        isPrimary: false
+    },
+    {
+        id: 3,
+        text: "Đăng tin",
+        path: '/he-thong/dang-tin-moi',
+        image: plusBb,
+        isPrimary: true
+
+    },
+    {
+        id: 4,
+        text: "Quản lý tin",
+        path: '/he-thong/quan-ly-tin-dang',
+        image: notepadBb,
+        isPrimary: false
+
+    },
+    {
+        id: 5,
+        text: "Cá nhân",
+        path: '/he-thong',
+        image: userBb,
+        isPrimary: false
+    },
+]
 
 export const menuManageSystem = [
     {
@@ -280,21 +325,69 @@ export const menuManageSystem = [
     },
     {
         id: 2,
-        text: "Thông tin tài khoản",
+        text: "Sửa thông tin cá nhân",
         path: '/he-thong/sua-thong-tin',
         image: user
     },
     {
         id: 3,
+        text: "Tin đã lưu",
+        path: '/tin-da-luu',
+        image: heart
+    },
+    {
+        id: 4,
         text: "Đổi mật khẩu",
         path: '/he-thong/doi-mat-khau',
         image: password
     },
     {
-        id: 4,
+        id: 5,
         text: "Liên hệ",
         path: '/lien-he',
         image: chat
+    },
+]
+
+export const menuManageAdmin = [
+    {
+        id: 1,
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tat-ca-tin-dang',
+        image: notepad
+    },
+    {
+        id: 2,
+        text: "Quản lý người dùng",
+        path: '/he-thong/quan-ly-nguoi-dung',
+        image: user
+    },
+    {
+        id: 3,
+        text: "Quản lý Blog",
+        path: '/he-thong/quan-ly-blog',
+        image: blog
+    },
+]
+
+export const menuManageStatistic = [
+    {
+        id: 1,
+        text: "Thống kê tổng quan",
+        path: '/he-thong/thong-ke/tong-quan',
+        image: dashboard
+    },
+    {
+        id: 2,
+        text: "Thống kê tin đăng",
+        path: '/he-thong/thong-ke/tin-dang',
+        image: notepad
+    },
+    {
+        id: 3,
+        text: "Thống kê người dùng",
+        path: '/he-thong/thong-ke/nguoi-dung',
+        image: user
     },
 ]
 
@@ -346,6 +439,7 @@ export const menuManageSidebarAdmin = [
         icons: <BsBookHalf size={16} />
     },
 ]
+
 export const menuStatisticsSidebarAdmin = [
     {
         id: 1,

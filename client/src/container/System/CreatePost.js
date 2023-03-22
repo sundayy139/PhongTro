@@ -12,18 +12,19 @@ import Swal from 'sweetalert2'
 import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
 import { Map } from '../../components/Public';
+import { useNavigate } from 'react-router-dom';
 
 
-const { BsTrashFill } = icons
+const { BsTrashFill, BiArrowBack } = icons
 
-const title = 'Đăng tin mới - Phòng trọ';
 
 const CreatePost = ({ isEdit, setIsShow }) => {
     const { prices, acreages, categories } = useSelector(state => state.app)
     const { dataEdit } = useSelector(state => state.post)
+    const navigate = useNavigate()
     const [payload, setPayload] = useState(() => {
         const initialData = {
-            address: dataEdit?.address ? dataEdit.address : '',
+            address: dataEdit?.addressPostData ? `${dataEdit?.addressPostData?.value}, ${dataEdit?.wardPostData?.value}, ${dataEdit?.districtPostData?.value}, ${dataEdit?.provincePostData?.value}` : '',
             categoryCode: dataEdit?.categoryCode ? dataEdit.categoryCode : '',
             title: dataEdit?.title ? dataEdit.title : '',
             priceNumber: dataEdit?.priceNumber ? dataEdit.priceNumber * Math.pow(10, 6) : '',
@@ -42,6 +43,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
 
     const [invalidFileds, setInvalidFileds] = useState([])
     const [imagesPreview, setImagesPreview] = useState([])
+    const [title, setTitle] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const { flag } = useSelector(state => state.app)
@@ -182,6 +184,11 @@ const CreatePost = ({ isEdit, setIsShow }) => {
         }
     }, [dataEdit])
 
+    useEffect(() => {
+        dataEdit ? setTitle('Chỉnh sửa tin - Phòng trọ') : setTitle('Đăng tin mới - Phòng trọ')
+    }, [dataEdit])
+
+
 
     const items = [
         { title: 'Trang chủ', link: '/' },
@@ -189,8 +196,29 @@ const CreatePost = ({ isEdit, setIsShow }) => {
         { title: isEdit ? 'Chỉnh sửa tin' : 'Đăng tin mới' }
     ];
 
+    useEffect(() => {
+        if (isEdit === undefined) {
+            dispatch(actions.clearDataEdit())
+            setPayload({
+                address: '',
+                categoryCode: '',
+                title: '',
+                priceNumber: '',
+                acreageNumber: '',
+                priceCode: '',
+                acreageCode: '',
+                images: '',
+                description: '',
+                target: '',
+                expired: ''
+            })
+            setImagesPreview([])
+        }
+    }, [isEdit])
+
+
     return (
-        <div className='px-8 py-4'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -198,13 +226,13 @@ const CreatePost = ({ isEdit, setIsShow }) => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[500] text-[35px] py-4 border-b border-gray-200'>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>
                 {
                     !isEdit ? 'Đăng tin mới' : "Chỉnh sửa tin"
                 }
             </h1>
-            <div className='py-4 flex gap-10'>
-                <div className='flex flex-col gap-14 flex-auto'>
+            <div className='py-4 flex pc:gap-10 laptop:gap-10 phone:flex-col tablet:flex-col'>
+                <div className='flex flex-col pc:gap-14 laptop:gap-14 phone:gap-5 tablet:gap-5 flex-auto mb-10'>
                     <Address
                         payload={payload}
                         setPayload={setPayload}
@@ -217,8 +245,8 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         invalidFileds={invalidFileds}
                         setInvalidFileds={setInvalidFileds}
                     />
-                    <div className='flex flex-col gap-4'>
-                        <h2 className='text-2xl font-semibold mb-2'>Hình ảnh</h2>
+                    <div className='flex flex-col w-full gap-4 phone:px-2 phone:py-4 phone:bg-white phone:rounded-[5px]'>
+                        <h2 className='font-semibold pc:text-2xl laptop:text-2xl phone:text-xl tablet:text-xl'>Hình ảnh</h2>
                         <p className='text-sm'>Cập nhật hình ảnh rõ ràng sẽ cho thuê nhanh hơn</p>
                         <div className='w-full border-[2px] border-dashed rounded-md h-[200px] text-sm'>
                             <label
@@ -288,7 +316,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                             </div>
                         )
                     }
-                    <div className='flex justify-center'>
+                    <div className='flex justify-center phone:hidden tablet:hidden'>
                         {
                             isEdit ? (
                                 <Button
@@ -312,7 +340,40 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         }
                     </div>
                 </div>
-                <div className='w-[30%] flex-none flex flex-col gap-10'>
+                <div className='h-[55px] fixed bottom-0 left-0 right-0 shadow-custom bg-white flex gap-2 px-4 py-2 pc:hidden laptop:hidden z-[99999]'>
+                    <Button
+                        text={'Quay lại'}
+                        textStyle={'text-[17px] text-[#333333]'}
+                        bgColor={'bg-white'}
+                        fullWidth
+                        iconBefore={<BiArrowBack />}
+                        hover={'hover:bg-[#218838]'}
+                        onClick={() => navigate(-1)}
+                    />
+                    {
+                        isEdit ? (
+                            <Button
+                                text={'Cập nhật'}
+                                textStyle={'text-[17px] text-white'}
+                                bgColor={'bg-[#28a745]'}
+                                fullWidth
+                                iconBefore
+                                hover={'hover:bg-[#218838]'}
+                                onClick={handleSubmit}
+                            />
+                        ) : (
+                            <Button
+                                text={'Xác nhận'}
+                                textStyle={'text-[17px] text-white'}
+                                bgColor={'bg-[#28a745]'}
+                                fullWidth
+                                hover={'hover:bg-[#218838]'}
+                                onClick={handleSubmit}
+                            />
+                        )
+                    }
+                </div>
+                <div className='w-[30%] flex flex-col gap-5 flex-auto mb-[50px] phone:hidden tablet:hidden'>
                     <div className='w-full h-[400px]'>
                         <Map
                             address={payload.address}

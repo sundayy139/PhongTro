@@ -32,7 +32,7 @@ const ScrollToTop = () => {
         <>
             {isVisible && (
                 <div
-                    className=" pc:w-[60px] pc:h-[60px] laptop:w-[60px] laptop:h-[60px] phone:w-[40px] phone:h-[40px] tablet:w-[40px] tablet:h-[40px] bg-secondary2 fixed bottom-20 right-10 cursor-pointer rounded-full shadow-md flex items-center justify-center z-[9999]"
+                    className=" pc:w-[60px] pc:h-[60px] laptop:w-[60px] laptop:h-[60px] phone:w-[40px] phone:h-[40px] tablet:w-[40px] tablet:h-[40px] bg-secondary2 fixed bottom-20 right-10 cursor-pointer rounded-full shadow-md flex items-center justify-center z-[1000]"
                     onClick={scrollToTop}>
                     <AiOutlineArrowUp size={30} color='white' />
                 </div>

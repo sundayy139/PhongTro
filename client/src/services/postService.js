@@ -179,6 +179,21 @@ export const apiSetFavouritePost = (query) => {
     })
 }
 
+export const apiRemoveFavouritePost = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "put",
+                url: "/api/v1/post/remove-favourite",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 export const apiGetFavouritePost = () => {
     return new Promise((resolve, reject) => {
         try {

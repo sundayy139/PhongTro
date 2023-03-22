@@ -13,6 +13,7 @@ import moment from 'moment';
 import { removeVietnameseTones } from '../../utils/fn';
 import * as apis from '../../services/index'
 import Swal from 'sweetalert2';
+import { BottomBar } from '../../components/Public';
 
 const title = 'Quản lý blog - Phòng trọ';
 const { BsFillPenFill, BsTrashFill } = icons
@@ -147,7 +148,8 @@ const ManageBlog = () => {
     ]
 
     return (
-        <div className='px-8 py-4'>
+        <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
@@ -155,7 +157,7 @@ const ManageBlog = () => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[500] text-[35px] border-b border-gray-200 py-4'>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>
                 Quản lý blog
             </h1>
             <div>

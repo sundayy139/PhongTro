@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { AddressMenu, ListPost, Pagination, NewPost, Sidebar } from '../../components/Public/index'
+import { AddressMenu, ListPost, Pagination, NewPost, Sidebar, BottomBar } from '../../components/Public/index'
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux';
@@ -101,6 +101,9 @@ const SearchDetail = () => {
 
     return (
         <div className='w-full flex flex-col gap-4'>
+            <div className='w-full h-full relative pc:hidden laptop:hidden'>
+                <BottomBar />
+            </div>
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />

@@ -137,7 +137,7 @@ const TopBar = () => {
                                 {
                                     isShowMenuManage && currentUserData?.role === 'user'
                                         ? (
-                                            <div className='absolute left-0 top-full bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2'>
+                                            <div className='absolute left-0 top-full bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'>
                                                 {menuManage?.map(item => (
                                                     <Link
                                                         key={item.id}
@@ -158,7 +158,7 @@ const TopBar = () => {
                                             </div>
                                         ) : isShowMenuManage && currentUserData?.role === 'admin'
                                             ? (
-                                                <div className='absolute left-0 min-w-[200px] top-full bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2'>
+                                                <div className='absolute left-0 min-w-[200px] top-full bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'>
                                                     {menuAdmin?.map(item => (
                                                         <Link
                                                             key={item.id}

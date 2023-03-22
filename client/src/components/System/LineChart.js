@@ -2,14 +2,6 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
-// const footer = (tooltipItems) => {
-//     let sum = 0;
-
-//     tooltipItems.forEach(function (tooltipItem) {
-//         sum += tooltipItem.parsed.y;
-//     });
-//     return 'Tổng: ' + sum;
-// };
 
 const LineChart = ({ data, text }) => {
     return (
@@ -19,7 +11,7 @@ const LineChart = ({ data, text }) => {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'right',
+                        position: 'bottom',
                     },
                     title: {
                         display: true,

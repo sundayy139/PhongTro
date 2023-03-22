@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom'
 import * as apis from '../../services';
 import logo from '../../assets/image/homestay.png';
-import { ListBlog, NewPost, Sidebar } from '../../components/Public';
+import { BottomBar, ListBlog, NewPost, Sidebar } from '../../components/Public';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions'
 
@@ -34,7 +34,8 @@ const DetailBlog = () => {
     }, [detailBlog])
 
     return (
-        <div>
+        <div className='relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />

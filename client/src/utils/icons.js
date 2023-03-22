@@ -23,7 +23,7 @@ import {
 }
     from 'react-icons/bs';
 import { GrNext } from 'react-icons/gr';
-import { BiNotepad } from 'react-icons/bi';
+import { BiNotepad, BiArrowBack } from 'react-icons/bi';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { TiTick, TiTimes } from 'react-icons/ti';
 import { GiPriceTag } from 'react-icons/gi';
@@ -82,7 +82,8 @@ const icons = {
     MdDonutLarge,
     MdDashboard,
     TiTimes,
-    RxHamburgerMenu
+    RxHamburgerMenu,
+    BiArrowBack
 }
 
 export default icons

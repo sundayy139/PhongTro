@@ -84,7 +84,7 @@ const DetailPost = () => {
 
     return (
         <div className='flex gap-5 phone:flex-col tablet:flex-col relative'>
-            <div className='w-full h-[50px] fixed left-0 bottom-0 z-[9999] bg-white flex gap-2 shadow-md px-4 py-2 pc:hidden laptop:hidden'>
+            <div className='w-full h-[50px] fixed left-0 bottom-0 z-[9999] bg-white flex gap-2 shadow-custom px-4 py-2 pc:hidden laptop:hidden'>
                 <Button
                     text={detailPost?.userData?.phone}
                     fullWidth
@@ -227,8 +227,8 @@ const DetailPost = () => {
                             <div className="relative overflow-x-auto">
                                 <table className="w-full text-sm text-left">
                                     <tbody>
-                                        <tr className="bg-white ">
-                                            <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777]">
+                                        <tr className="bg-white">
+                                            <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777] w-1/3">
                                                 Mã tin:
                                             </td>
                                             <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3">
@@ -284,11 +284,11 @@ const DetailPost = () => {
                             <div className="relative overflow-x-auto">
                                 <table className="w-full text-sm text-left">
                                     <tbody>
-                                        <tr className="bg-white ">
-                                            <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777]">
+                                        <tr className="bg-white">
+                                            <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777] w-1/3">
                                                 Liên hệ:
                                             </td>
-                                            <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 ">
+                                            <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3">
                                                 {detailPost?.userData?.name}
                                             </td>
                                         </tr>

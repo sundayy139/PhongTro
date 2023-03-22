@@ -1,36 +1,70 @@
-import React, { memo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { memo, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import icons from '../../utils/icons'
 import { Button } from './index'
 import moment from 'moment'
 import 'moment/locale/vi';
+import * as apis from '../../services'
+import * as actions from '../../store/actions'
+import { useDispatch, useSelector } from 'react-redux'
 import avatar from '../../assets/image/avatar-person.png'
 import zalo from '../../assets/icon/zalo-icon.png';
 
-const { BsStarFill, BsTelephone, BsMessenger, BsSuitHeart, BsSuitHeartFill } = icons
+
+const { BsStarFill, BsTelephone, BsSuitHeart, BsSuitHeartFill } = icons
 
 const RelatePostItem = ({ images, price, acreage, description, id, address, user, title, createdAt }) => {
     const [isHoverHeart, setIsHoverHeart] = useState()
+    const navigate = useNavigate()
+    const { favouritePost } = useSelector(state => state.post)
+    const { flag } = useSelector(state => state.app)
+    const dispatch = useDispatch()
+
+    const handleClickHeart = async () => {
+        if (isHoverHeart === false) {
+            const res = await apis.apiSetFavouritePost({ postId: id })
+            if (res?.data?.err === 0) {
+                setIsHoverHeart(true)
+                dispatch(actions.setFlag(!flag))
+            }
+        } else {
+            const res = await apis.apiRemoveFavouritePost({ postId: id })
+            if (res?.data?.err === 0) {
+                setIsHoverHeart(false)
+                dispatch(actions.setFlag(!flag))
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (favouritePost && favouritePost.includes(id)) {
+            setIsHoverHeart(true)
+        }
+
+    }, [favouritePost])
+
+    const handleClickImage = () => {
+        navigate(`/chi-tiet/${id}`)
+    }
+
     return (
         <div className='flex items-center pc:px-5 pc:py-[15px] laptop:px-5 laptop:py-[15px] pc:border-t pc:border-t-[#055699] laptop:border-t laptop:border-t-[#055699]
         phone:flex-col phone:gap-3 phone:bg-white phone:py-[10px] tablet:flex-col tablet:gap-3 tablet:bg-white tablet:py-[10px]'>
-            <Link
-                to={`/chi-tiet/${id}`}
+            <div
                 className='pc:w-[170px] pc:h-[170px] laptop:w-[170px] laptop:h-[170px] flex-none cursor-pointer phone:w-[150px] phone:h-[120px] tablet:w-[150px] tablet:h-[120px] relative'
             >
                 <img
                     src={images && images[0]}
                     alt='image'
                     className='rounded-md w-full h-full object-cover'
+                    onClick={handleClickImage}
                 />
                 <span className='absolute bottom-[6px] left-[6px] right-[10px] text-[12px] text-white flex items-center justify-between'>
                     <span className=' p-[3px] bg-[rgba(0,0,0,0.5)] rounded-[4px]'>
                         {`${images?.length} ảnh`}
                     </span>
                     <span
-                        onMouseEnter={() => setIsHoverHeart(true)}
-                        onMouseLeave={() => setIsHoverHeart(false)}
-                        onClick={() => setIsHoverHeart(true)}
+                        onClick={handleClickHeart}
                     >
                         {
                             isHoverHeart ? (
@@ -42,7 +76,7 @@ const RelatePostItem = ({ images, price, acreage, description, id, address, user
                         }
                     </span>
                 </span>
-            </Link>
+            </div>
             <div className='pc:flex-auto pc:h-[170px] pc:ml-4 laptop:flex-auto laptop:h-[170px] laptop:ml-4 flex flex-col pc:justify-between laptop:justify-between phone:gap-[5px] phone:max-w-[150px] tablet:gap-[5px] tablet:max-w-[150px] items-start'>
                 <Link
                     to={`/chi-tiet/${id}`}

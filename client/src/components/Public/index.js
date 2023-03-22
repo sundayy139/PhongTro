@@ -26,3 +26,4 @@ export { default as BlogItem } from './BlogItem';
 export { default as ListBlog } from './ListBlog';
 export { default as AddressMenu } from './AddressMenu';
 export { default as ScrollToTop } from './ScrollToTop';
+export { default as BottomBar } from './BottomBar';

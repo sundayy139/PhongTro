@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ListBlog, NewPost, Pagination, Sidebar } from '../../components/Public'
+import { BottomBar, ListBlog, NewPost, Pagination, Sidebar } from '../../components/Public'
 import * as actions from '../../store/actions'
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
@@ -17,7 +17,8 @@ const Blog = () => {
     }, [])
 
     return (
-        <div>
+        <div className='relative'>
+            <BottomBar />
             <h1 className='text-[28px] font-bold pb-4 phone:px-4 phone:border-b-[5px] phone:border-b-[#f5f5f5] tablet:px-4 tablet:border-b-[5px] tablet:border-b-[#f5f5f5]'>Blog</h1>
             <Helmet>
                 <title>{title}</title>

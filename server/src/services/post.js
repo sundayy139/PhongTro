@@ -12,13 +12,22 @@ export const getPostsService = ({ ...query }, { priceNumber, acreageNumber }) =>
         const queries = { ...query }
         if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber }
         if (acreageNumber) queries.acreageNumber = { [Op.between]: acreageNumber }
-        // queries.expiredAt = { [Op.gte]: new Date() }
-        // queries.statusCode = 'S2'
+        queries.expiredAt = { [Op.gte]: new Date() }
+        queries.statusCode = 'S2'
         try {
             const posts = await db.Post.findAll({
                 where: queries,
                 raw: true,
                 nest: true,
+                include: [
+                    { model: db.Address, as: 'addressPostData', attributes: ['value'] },
+                    { model: db.Ward, as: 'wardPostData', attributes: ['value'] },
+                    { model: db.District, as: 'districtPostData', attributes: ['value'] },
+                    { model: db.Province, as: 'provincePostData', attributes: ['value'] },
+                    { model: db.Image, as: 'imagesData', attributes: ['images'] },
+                    { model: db.Category, as: 'categoryData', attributes: ['value'] },
+                    { model: db.User, as: 'userData', attributes: ['name', 'avatar', 'zalo', 'phone'] },
+                ],
             })
             resolve({
                 err: posts ? 0 : 1,
@@ -37,8 +46,8 @@ export const getPostsLimitService = (page, { order, ...query }, { priceNumber, a
         const queries = { ...query }
         if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber }
         if (acreageNumber) queries.acreageNumber = { [Op.between]: acreageNumber }
-        // queries.expiredAt = { [Op.gte]: new Date() }
-        // queries.statusCode = 'S2'
+        queries.expiredAt = { [Op.gte]: new Date() }
+        queries.statusCode = 'S2'
         try {
             const posts = await db.Post.findAndCountAll({
                 where: queries,
@@ -73,12 +82,12 @@ export const getNewPostsService = () => {
     return new Promise(async (resolve, reject) => {
         try {
             const newposts = await db.Post.findAll({
-                // where: {
-                //     statusCode: 'S2',
-                //     expiredAt: {
-                //         [Op.gte]: new Date()
-                //     }
-                // },
+                where: {
+                    statusCode: 'S2',
+                    expiredAt: {
+                        [Op.gte]: new Date()
+                    }
+                },
                 raw: true,
                 nest: true,
                 limit: +process.env.LIMIT,
@@ -147,7 +156,6 @@ export const getLabelPostService = (categoryCode, provinceCode) => {
     })
 }
 
-
 // GET POST BY ID
 export const getPostByIdService = (id, page) => {
     return new Promise(async (resolve, reject) => {
@@ -202,7 +210,10 @@ export const createNewPostService = (body, id) => {
                 address,
                 province,
                 target,
-                expired
+                expired,
+                images,
+                priceCode,
+                acreageCode
             } = body
 
             if (!categoryCode || !target || !expired || !description || !id || !priceNumber || !acreageNumber || !title || !label || !address || !province) {
@@ -212,57 +223,112 @@ export const createNewPostService = (body, id) => {
                 })
             } else {
                 const imagesId = generateId()
-                const labelCode = generateCode(body.label)
-                const provinceCode = generateCode(body.province)
+                const labelCode = generateCode(label)
+                const provinceCode = generateCode(province)
                 const desc = description.split("\n")
+                const district = address.split(',')[address.split(',').length - 2].trim()
+                const districtCode = generateCode(address.split(',')[address.split(',').length - 2].trim())
+                const ward = address.split(',')[address.split(',').length - 3].trim()
+                const wardCode = generateCode(address.split(',')[address.split(',').length - 3].trim())
+                const addresscf = address.split(',')[address.split(',').length - 4].trim()
+                const addresscfCode = generateCode(address.split(',')[address.split(',').length - 4].trim())
+
                 const existingLabel = await db.Label.findOne({
                     where: {
-                        value: body.label
+                        value: label
                     }
                 })
 
                 if (!existingLabel) {
                     await db.Label.create({
                         code: labelCode,
-                        value: body.label
+                        value: label
                     })
                 }
 
                 const existingProvince = await db.Province.findOne({
                     where: {
-                        value: body.province
+                        value: province
                     }
                 })
 
                 if (!existingProvince) {
                     await db.Province.create({
                         code: provinceCode,
-                        value: body.province
+                        value: province
+                    })
+                }
+
+                const existingDistrict = await db.District.findOne({
+                    where: {
+                        value: district
+                    }
+                })
+
+                if (!existingDistrict) {
+                    await db.District.create({
+                        code: districtCode,
+                        value: district,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    })
+                }
+
+                const existingWard = await db.Ward.findOne({
+                    where: {
+                        value: ward
+                    }
+                })
+
+                if (!existingWard) {
+                    await db.Ward.create({
+                        code: wardCode,
+                        value: ward,
+                        districtCode: existingDistrict ? existingDistrict.code : districtCode,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    })
+                }
+
+                const existingAddress = await db.Address.findOne({
+                    where: {
+                        value: addresscf,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    }
+                })
+
+                if (!existingAddress) {
+                    await db.Address.create({
+                        code: addresscfCode,
+                        value: addresscf,
+                        wardCode: existingWard ? existingWard.code : wardCode,
+                        districtCode: existingDistrict ? existingDistrict.code : districtCode,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
                     })
                 }
 
                 await db.Image.create({
                     id: imagesId,
-                    images: JSON.stringify(body.images)
+                    images: JSON.stringify(images)
                 })
 
                 const newPosts = await db.Post.create({
                     id: generateId(),
-                    title: body.title,
+                    title: title,
                     labelCode: existingLabel ? existingLabel.code : labelCode,
-                    address: body.address || null,
-                    categoryCode: body.categoryCode,
+                    addressCode: existingAddress ? existingAddress.code : addresscfCode,
+                    wardCode: existingWard ? existingWard.code : wardCode,
+                    districtCode: existingDistrict ? existingDistrict.code : districtCode,
+                    provinceCode: existingProvince ? existingProvince.code : provinceCode,
+                    categoryCode: categoryCode,
                     description: JSON.stringify(desc) || null,
                     userId: id,
                     imageId: imagesId,
-                    priceCode: body.priceCode || null,
-                    acreageCode: body.acreageCode || null,
-                    provinceCode: existingProvince ? existingProvince.code : provinceCode,
+                    priceCode: priceCode || null,
+                    acreageCode: acreageCode || null,
                     statusCode: 'S1',
-                    target: body?.target,
-                    priceNumber: body.priceNumber / Math.pow(10, 6),
-                    acreageNumber: body.acreageNumber,
-                    expiredAt: new Date(Date.now() + body.expired * 24 * 60 * 60 * 1000)
+                    target: target,
+                    priceNumber: priceNumber / Math.pow(10, 6),
+                    acreageNumber: acreageNumber,
+                    expiredAt: new Date(Date.now() + expired * 24 * 60 * 60 * 1000)
                 })
 
                 resolve({
@@ -288,7 +354,13 @@ export const getPostsUserService = (userId) => {
                 nest: true,
                 order: [["createdAt", "DESC"]],
                 include: [
+                    { model: db.Address, as: 'addressPostData', attributes: ['value'] },
+                    { model: db.Ward, as: 'wardPostData', attributes: ['value'] },
+                    { model: db.District, as: 'districtPostData', attributes: ['value'] },
+                    { model: db.Province, as: 'provincePostData', attributes: ['value'] },
                     { model: db.Image, as: 'imagesData', attributes: ['images'] },
+                    { model: db.Category, as: 'categoryData', attributes: ['value'] },
+                    { model: db.User, as: 'userData', attributes: ['name', 'avatar', 'zalo', 'phone'] },
                 ],
             })
             resolve({
@@ -332,6 +404,12 @@ export const updatePostService = (body, id) => {
                 const labelCode = generateCode(label)
                 const provinceCode = generateCode(province)
                 const desc = description.split("\n")
+                const district = address.split(',')[address.split(',').length - 2].trim()
+                const districtCode = generateCode(address.split(',')[address.split(',').length - 2].trim())
+                const ward = address.split(',')[address.split(',').length - 3].trim()
+                const wardCode = generateCode(address.split(',')[address.split(',').length - 3].trim())
+                const addresscf = address.split(',')[address.split(',').length - 4].trim()
+                const addresscfCode = generateCode(address.split(',')[address.split(',').length - 4].trim())
                 const existingLabel = await db.Label.findOne({
                     where: {
                         value: label
@@ -358,11 +436,58 @@ export const updatePostService = (body, id) => {
                     })
                 }
 
+                const existingDistrict = await db.District.findOne({
+                    where: {
+                        value: district
+                    }
+                })
+
+                if (!existingDistrict) {
+                    await db.District.create({
+                        code: districtCode,
+                        value: district,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    })
+                }
+
+                const existingWard = await db.Ward.findOne({
+                    where: {
+                        value: ward
+                    }
+                })
+
+                if (!existingWard) {
+                    await db.Ward.create({
+                        code: wardCode,
+                        value: ward,
+                        districtCode: existingDistrict ? existingDistrict.code : districtCode,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    })
+                }
+
+                const existingAddress = await db.Address.findOne({
+                    where: {
+                        value: addresscf,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    }
+                })
+
+                if (!existingAddress) {
+                    await db.Address.create({
+                        code: addresscfCode,
+                        value: addresscf,
+                        wardCode: existingWard ? existingWard.code : wardCode,
+                        districtCode: existingDistrict ? existingDistrict.code : districtCode,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode
+                    })
+                }
+
                 const post = await db.Post.findOne({
                     where: {
                         id: postId
                     }
                 })
+
                 if (!post) {
                     resolve({
                         err: 2,
@@ -380,12 +505,14 @@ export const updatePostService = (body, id) => {
                     const updatePost = await db.Post.update({
                         title: title,
                         labelCode: existingLabel ? existingLabel.code : labelCode,
-                        address: address,
+                        addressCode: existingAddress ? existingAddress.code : addresscfCode,
+                        wardCode: existingWard ? existingWard.code : wardCode,
+                        districtCode: existingDistrict ? existingDistrict.code : districtCode,
+                        provinceCode: existingProvince ? existingProvince.code : provinceCode,
                         categoryCode: categoryCode,
                         description: JSON.stringify(desc),
                         priceCode: priceCode,
                         acreageCode: acreageCode,
-                        provinceCode: existingProvince ? existingProvince.code : provinceCode,
                         target: target,
                         priceNumber: +priceNumber / Math.pow(10, 6),
                         acreageNumber: acreageNumber,
@@ -485,7 +612,7 @@ export const updateStatusPostService = (pId, id) => {
     })
 }
 
-// FAVOURITE POST
+// SET FAVOURITE POST
 export const setFavouritePostService = (pId, id) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -528,7 +655,44 @@ export const setFavouritePostService = (pId, id) => {
     })
 }
 
-// FAVOURITE POST
+// SET FAVOURITE POST
+export const removeFavouriteService = (pId, id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!pId || !id) {
+                resolve({
+                    err: 1,
+                    msg: "Vui lòng điền đầy đủ thông tin",
+                })
+            } else {
+                const user = await db.Favourite.findOne({
+                    where: {
+                        userId: id
+                    }
+                })
+                if (user) {
+                    let newArrPost = []
+                    let arr = user.postId
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i] !== pId) {
+                            newArrPost.push(arr[i]);
+                        }
+                    }
+
+                    user.update({ postId: newArrPost });
+                    resolve({
+                        err: 0,
+                        msg: "Thành công",
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+//GET FAVOURITE POST
 export const getFavouritePostService = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -565,6 +729,9 @@ export const getPostsAdminService = () => {
                 order: [['statusCode', 'ASC']],
                 include: [
                     { model: db.Image, as: 'imagesData', attributes: ['images'] },
+                    { model: db.Address, as: 'addressPostData', attributes: ['value'] },
+                    { model: db.Ward, as: 'wardPostData', attributes: ['value'] },
+                    { model: db.District, as: 'districtPostData', attributes: ['value'] },
                     { model: db.User, as: 'userData', attributes: { exclude: ['password'] } },
                     { model: db.Province, as: 'provincePostData', attributes: ['code', 'value'] },
                     { model: db.Category, as: 'categoryData', attributes: ['code', 'value'] },
@@ -651,7 +818,6 @@ export const refusePostService = (postId) => {
         }
     })
 }
-
 
 // GET POST BY MONTH ADMIN
 export const getCountPostByMonthService = (status, categoryCode) => {

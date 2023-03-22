@@ -18,7 +18,7 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
                 value={value || ''}
                 onChange={(e) => setValue(e.target.value)}
                 id='select-address'
-                className='outline-none border border-gray-300 p-2 rounded-[5px]'
+                className='outline-none border border-gray-300 p-2 rounded-[5px] phone:font-semibold phone:text-[#007aff] phone:bg-[#e7f0fe] tablet:font-semibold tablet:text-[#007aff] tablet:bg-[#e7f0fe]'
                 onFocus={() => setInvalidFileds([])}
             >
                 <option

@@ -17,6 +17,7 @@ router.put('/update-post', postController.updatePost)
 router.delete('/delete-post', postController.deletePost)
 router.put('/update-status-post', postController.updateStatusPost)
 router.post('/favourite', postController.setFavouritePost)
+router.put('/remove-favourite', postController.removeFavourite)
 router.get('/favourite', postController.getFavouritePost)
 
 router.use(verifyAdmin)

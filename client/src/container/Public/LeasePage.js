@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { ListPost, Pagination, Province, NewPost, Sidebar } from '../../components/Public/index'
+import { ListPost, Pagination, Province, NewPost, Sidebar, BottomBar } from '../../components/Public/index'
 import { formatVietnameseToString } from '../../utils/fn'
 import * as actions from '../../store/actions'
 import logo from '../../assets/image/homestay.png';
@@ -34,7 +34,8 @@ const LeasePage = () => {
     }, [])
 
     return (
-        <div className='w-full flex flex-col gap-4'>
+        <div className='w-full flex flex-col gap-4 relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
