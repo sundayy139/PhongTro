@@ -5,7 +5,6 @@ export { default as Address } from './Address';
 export { default as Description } from './Description';
 export { default as Select } from './Select';
 export { default as InputDisable } from './InputDisable';
-export { default as Contact } from './Contact';
 export { default as InputForm } from './InputForm';
 export { default as Button } from './Button';
 export { default as Loading } from './Loading';

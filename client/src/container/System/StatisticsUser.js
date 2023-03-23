@@ -3,6 +3,7 @@ import * as apis from '../../services/index'
 import { Helmet } from 'react-helmet'
 import logo from '../../assets/image/homestay.png';
 import { BreadCrumb, LineChart } from '../../components/System';
+import { BottomBar } from '../../components/Public';
 
 
 const title = 'Thống kê người dùng - Phòng trọ';
@@ -135,6 +136,7 @@ const StatisticsUser = () => {
 
     return (
         <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />

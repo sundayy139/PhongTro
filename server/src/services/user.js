@@ -139,7 +139,7 @@ export const getCountUserByMonthService = (status) => {
 
             const results = await db.User.findAll({
                 attributes: [
-                    [sequelize.fn('DATE_FORMAT', sequelize.col('createdAt'), '%m/%Y'), 'month'],
+                    [sequelize.literal(`to_char("createdAt", 'MM/YYYY')`), 'month'],
                     [sequelize.fn('count', sequelize.col('id')), 'count']
                 ],
                 group: ['month'],

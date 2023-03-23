@@ -835,13 +835,14 @@ export const getCountPostByMonthService = (status, categoryCode) => {
 
             const results = await db.Post.findAll({
                 attributes: [
-                    [sequelize.fn('DATE_FORMAT', sequelize.col('createdAt'), '%m/%Y'), 'month'],
+                    [sequelize.literal(`to_char("createdAt", 'MM/YYYY')`), 'month'],
                     [sequelize.fn('count', sequelize.col('id')), 'count']
                 ],
                 group: ['month'],
                 raw: true,
                 where: queries
             });
+
             results.forEach(post => {
                 const resultItem = postCounts.find(item => item.month === post.month);
                 if (resultItem) {

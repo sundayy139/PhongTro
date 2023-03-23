@@ -222,7 +222,7 @@ export const getCountPostByMonth = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             err: -1,
-            msg: 'Fail at post controller' + error
+            msg: 'Fail at post controller' + error + '1'
         })
     }
 }

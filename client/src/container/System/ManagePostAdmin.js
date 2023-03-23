@@ -318,7 +318,7 @@ const ManagePostAdmin = () => {
                             selectableRowsHighlight
                             subHeader
                             subHeaderComponent={
-                                <div className='w-full flex items-center justify-between mb-4'>
+                                <div className='w-full flex pc:items-center pc:justify-between laptop:items-center laptop:justify-between mb-4 phone:flex-col gap-2'>
                                     <input
                                         type='text'
                                         className='outline-none border border-gray-300 p-2 rounded-[5px] text-sm min-w-[300px]'

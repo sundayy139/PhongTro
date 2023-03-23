@@ -8,6 +8,7 @@ import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
 import icons from '../../utils/icons'
 import DataTable from "react-data-table-component";
+import { BottomBar } from '../../components/Public';
 
 const { FaUserCircle } = icons
 
@@ -192,6 +193,7 @@ const Dashboard = () => {
 
     return (
         <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 w-full phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
+            <BottomBar />
             <Helmet>
                 <title>{title}</title>
                 <link rel="icon" href={logo} />
