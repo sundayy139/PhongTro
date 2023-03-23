@@ -24,7 +24,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/feedback', feedbackRouter)
 
     return app.use('/', (req, res) => {
-        res.send('server on ...')
+        res.send('server on ...!')
     })
 }
 
