@@ -58,8 +58,8 @@ const ManagePage = () => {
                     items={items}
                 />
             </div>
-            <div className='my-4'>
-                <div className='pc:hidden laptop:hidden flex flex-col gap-4 mb-4'>
+            <div className='phone:py-4 phone:mb-10 tablet:mb-10 tablet:py-4'>
+                <div className='pc:hidden laptop:hidden flex flex-col gap-4 mb-4 '>
                     <div className='flex gap-5 items-center'>
                         <img src={currentUserData?.avatar} className='w-[45px] h-[45px] object-cover rounded-full' />
                         <strong className='text-[28px]'>{currentUserData?.name}</strong>

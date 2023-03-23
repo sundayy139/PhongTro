@@ -160,7 +160,7 @@ const ManageBlog = () => {
             <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>
                 Quản lý blog
             </h1>
-            <div>
+            <div className='py-6 bg-white rounded-[5px] phone:mb-10 tablet:mb-10'>
                 <DataTable
                     columns={columns}
                     data={blogFilter}

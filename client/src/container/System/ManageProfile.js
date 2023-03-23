@@ -119,7 +119,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                     isEdit ? 'Cập nhật thông tin người dùng' : 'Cập nhật thông tin cá nhân'
                 }
             </h1>
-            <div className='pc:w-2/3 pc:mx-auto pc:gap-6 pc:py-10 laptop:w-2/3 laptop:mx-auto laptop:gap-6 laptop:py-10 phone:w-full phone:gap-4 phone:py-4 tablet:w-full tablet:gap-4 tablet:py-4 flex flex-col bg-white rounded-[5px] phone:px-2 tablet:px-2'>
+            <div className='pc:w-2/3 pc:mx-auto pc:gap-6 pc:py-10 laptop:w-2/3 laptop:mx-auto laptop:gap-6 laptop:py-10 phone:w-full phone:gap-4 phone:py-4 tablet:w-full tablet:gap-4 tablet:py-4 flex flex-col bg-white rounded-[5px] phone:px-2 tablet:px-2 phone:mb-10 tablet:mb-10'>
                 <InputDisable
                     label='Mã thành viên'
                     id='id'

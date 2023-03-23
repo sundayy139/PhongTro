@@ -231,7 +231,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                     !isEdit ? 'Đăng tin mới' : "Chỉnh sửa tin"
                 }
             </h1>
-            <div className='py-4 flex pc:gap-10 laptop:gap-10 phone:flex-col tablet:flex-col'>
+            <div className='py-4 flex pc:gap-10 laptop:gap-10 phone:flex-col tablet:flex-col phone:mb-10 tablet:mb-10'>
                 <div className='flex flex-col pc:gap-14 laptop:gap-14 phone:gap-5 tablet:gap-5 flex-auto mb-10'>
                     <Address
                         payload={payload}

@@ -303,7 +303,7 @@ const ManagePostAdmin = () => {
                 items={items}
             />
             <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Quản lý tin đăng</h1>
-            <div className='py-6'>
+            <div className='py-6 bg-white rounded-[5px] phone:mb-10 tablet:mb-10'>
                 {
                     postsFilter && (
                         <DataTable
@@ -318,7 +318,7 @@ const ManagePostAdmin = () => {
                             selectableRowsHighlight
                             subHeader
                             subHeaderComponent={
-                                <div className='w-full flex pc:items-center pc:justify-between laptop:items-center laptop:justify-between mb-4 phone:flex-col gap-2'>
+                                <div className='w-full flex pc:items-center pc:justify-between laptop:items-center laptop:justify-between mb-4 phone:flex-col gap-2 phone:mb-10 tablet:mb-10'>
                                     <input
                                         type='text'
                                         className='outline-none border border-gray-300 p-2 rounded-[5px] text-sm min-w-[300px]'

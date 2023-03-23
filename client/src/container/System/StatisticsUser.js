@@ -145,7 +145,7 @@ const StatisticsUser = () => {
                 items={items}
             />
             <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Thống kê người dùng</h1>
-            <div className='pc:gap-10 pc:py-10 laptop:gap-10 laptop:py-10 phone:w-full phone:gap-8 phone:py-4 tablet:w-full tablet:gap-8 tablet:py-4 flex flex-col bg-white rounded-[5px] phone:px-2 tablet:px-2'>
+            <div className='pc:gap-10 pc:py-10 laptop:gap-10 laptop:py-10 phone:w-full phone:mb-10 tablet:mb-10 phone:gap-8 phone:py-4 tablet:w-full tablet:gap-8 tablet:py-4 flex flex-col bg-white rounded-[5px] phone:px-2 tablet:px-2'>
                 <div className='w-full border p-5 bg-primary rounded-[5px]'>
                     {
                         Object.entries(chartData1)?.length > 0 && (

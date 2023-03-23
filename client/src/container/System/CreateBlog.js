@@ -139,7 +139,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                     isEdit ? 'Chỉnh sửa blog' : 'Tạo mới blog'
                 }
             </h1>
-            <div className='py-4 flex flex-col gap-20 bg-white rounded-[5px] phone:px-2 tablet:px-2'>
+            <div className='py-6 flex flex-col gap-20 bg-white rounded-[5px] phone:px-2 tablet:px-2 phone:mb-10 tablet:mb-10'>
                 <div className='flex flex-col w-full pc:gap-10 laptop:gap-10 phone:gap-4 tablet:gap-4'>
                     <div className='flex pc:gap-10 pc:items-start laptop:gap-10 laptop:items-start phone:flex-col phone:gap-4 tablet:flex-col tablet:gap-4'>
                         <InputForm
