@@ -1,9 +1,12 @@
 import React, { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import bgSupport from '../../assets/image/support-bg.jpg'
 import { supportText } from '../../utils/constant'
+import { path } from '../../utils/path'
 import { Button } from './index'
 
 const Contact = () => {
+    const navigate = useNavigate()
     return (
         <div className='w-full bg-white pc:rounded-[10px] pc:border-[7px] pc:border-[#dedede] pc:border-dashed pc:pt-[40px] pc:p-[70px] pc:text-center laptop:rounded-[10px] laptop:border-[7px] laptop:border-[#dedede] laptop:border-dashed laptop:pt-[40px] laptop:p-[70px] laptop:text-center text-[#333333]
         phone:px-4 phone:py-10 tablet:px-4 tablet:py-10'>
@@ -44,6 +47,7 @@ const Contact = () => {
                             textStyle={'text-white text-sm font-semibold py-[10px]'}
                             bgColor={"bg-secondary1"}
                             fullWidth
+                            onClick={() => navigate(`/${path.LIEN_HE}`)}
                         />
                     </div>
                 </div>

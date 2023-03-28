@@ -1,11 +1,23 @@
 import React, { memo } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { textIntro } from '../../utils/constant'
 import icons from '../../utils/icons'
+import { path } from '../../utils/path'
 import { Button } from './index'
 
 const { BsStarFill } = icons
 
 const Intro = () => {
+    const navigate = useNavigate()
+    const { isLoggedIn } = useSelector(state => state.auth)
+    const handleClick = () => {
+        if (!isLoggedIn) {
+            navigate(`/${path.LOGIN}`)
+        } else {
+            navigate(`/he-thong/${path.CREATE_POST}`)
+        }
+    }
     return (
         <div className='w-full bg-white pc:rounded-[10px] pc:border pc:border-[#dedede] pc:pt-[40px] pc:p-[70px] pc:text-center laptop:rounded-[10px] laptop:border laptop:border-[#dedede] laptop:pt-[40px] laptop:p-[70px] laptop:text-center text-[#333333]
          phone:px-4 phone:py-10 tablet:px-4 tablet:py-10'>
@@ -67,6 +79,7 @@ const Intro = () => {
                         textStyle={'text-sm font-semibold text-white py-[10px]'}
                         hover={'shadow-md'}
                         fullWidth
+                        onClick={handleClick}
                     />
                 </div>
             </div>

@@ -9,29 +9,35 @@ import * as actions from '../../store/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import avatar from '../../assets/image/avatar-person.png'
 import zalo from '../../assets/icon/zalo-icon.png';
+import { path } from '../../utils/path'
 
 
-const { BsStarFill, BsTelephone, BsSuitHeart, BsSuitHeartFill } = icons
+const { BsTelephone, BsSuitHeart, BsSuitHeartFill } = icons
 
 const RelatePostItem = ({ images, price, acreage, description, id, address, user, title, createdAt }) => {
     const [isHoverHeart, setIsHoverHeart] = useState()
     const navigate = useNavigate()
     const { favouritePost } = useSelector(state => state.post)
+    const { isLoggedIn } = useSelector(state => state.auth)
     const { flag } = useSelector(state => state.app)
     const dispatch = useDispatch()
 
     const handleClickHeart = async () => {
-        if (isHoverHeart === false) {
-            const res = await apis.apiSetFavouritePost({ postId: id })
-            if (res?.data?.err === 0) {
-                setIsHoverHeart(true)
-                dispatch(actions.setFlag(!flag))
-            }
+        if (!isLoggedIn) {
+            navigate(`/${path.LOGIN}`)
         } else {
-            const res = await apis.apiRemoveFavouritePost({ postId: id })
-            if (res?.data?.err === 0) {
-                setIsHoverHeart(false)
-                dispatch(actions.setFlag(!flag))
+            if (isHoverHeart === false) {
+                const res = await apis.apiSetFavouritePost({ postId: id })
+                if (res?.data?.err === 0) {
+                    setIsHoverHeart(true)
+                    dispatch(actions.setFlag(!flag))
+                }
+            } else {
+                const res = await apis.apiRemoveFavouritePost({ postId: id })
+                if (res?.data?.err === 0) {
+                    setIsHoverHeart(false)
+                    dispatch(actions.setFlag(!flag))
+                }
             }
         }
     }

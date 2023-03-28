@@ -15,24 +15,24 @@ const Map = ({ address }) => {
     const [addressFinal, setAddressFinal] = useState(null)
 
     useEffect(() => {
-        address && setAddressFinal(address)
+        setAddressFinal(address)
     }, [address])
 
-    useEffect(() => {
-        const getCoords = async () => {
-            const results = await geocodeByAddress(addressFinal)
-            const latlng = await getLatLng(results[0])
-            setCoords({ lat: latlng.lat, lng: latlng.lng })
-        }
+    const getCoords = async (addressPost) => {
+        const results = await geocodeByAddress(addressPost)
+        const latlng = await getLatLng(results[0])
+        setCoords({ lat: latlng.lat, lng: latlng.lng })
+    }
 
+    useEffect(() => {
         if (addressFinal) {
-            getCoords()
+            getCoords(addressFinal)
         } else {
             navigator.geolocation.getCurrentPosition((e) => {
                 setCoords({ lat: e.coords.latitude, lng: e.coords.longitude })
             })
         }
-    }, [addressFinal])
+    }, [addressFinal, address])
 
     return (
         <div className='w-full h-full relative'>
@@ -43,19 +43,23 @@ const Map = ({ address }) => {
                     </div>
                 )
             }
-            <GoogleMapReact
-                bootstrapURLKeys={{ key: process.env.REACT_APP_API_MAP_KEY }}
-                defaultCenter={coords}
-                defaultZoom={15}
-                center={coords}
-            >
-                <AnyReactComponent
-                    lat={coords?.lat}
-                    lng={coords?.lng}
-                    icon={<MdLocationOn size={30} color='red' />}
-                    text={address}
-                />
-            </GoogleMapReact>
+            {
+                coords && Object.keys(coords).length > 0 && (
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: process.env.REACT_APP_API_MAP_KEY }}
+                        defaultCenter={coords}
+                        defaultZoom={15}
+                        center={coords}
+                    >
+                        <AnyReactComponent
+                            lat={coords?.lat}
+                            lng={coords?.lng}
+                            icon={<MdLocationOn size={30} color='red' />}
+                            text={address}
+                        />
+                    </GoogleMapReact>
+                )
+            }
         </div>
     )
 }

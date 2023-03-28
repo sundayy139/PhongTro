@@ -76,7 +76,7 @@ const ManagePage = () => {
                 </div>
                 <Link
                     to={`/he-thong/${path.CREATE_POST}`}
-                    className='bg-[#dc3545] inline-block text-center text-sm text-white p-2 w-full rounded-[5px]'
+                    className='bg-[#dc3545] inline-block text-center text-sm text-white p-2 w-full rounded-[5px] pc:my-4 laptop:my-4'
                 >
                     Đăng tin mới
                 </Link>

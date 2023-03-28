@@ -59,13 +59,13 @@ function App() {
           <Route path={path.MANAGE_POST} element={<ManagePost />} />
           <Route path={path.MANAGE_PROFILE} element={<ManageProfile />} />
           <Route path={path.CHANGE_PASSWORD} element={<ChangePassword />} />
-          <Route path={path.MANAGE_USERS} element={<ManageUser />} />
-          <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
-          <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
-          <Route path={path.MANAGE_POSTS_ADMIN} element={<ManagePostAdmin />} />
-          <Route path={path.STATISTICS_POST} element={<StatisticsPost />} />
-          <Route path={path.STATISTICS_USER} element={<StatisticsUser />} />
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.MANAGE_USERS} element={<IsAdmin><ManageUser /></IsAdmin>} />
+          <Route path={path.MANAGE_BLOG} element={<IsAdmin><ManageBlog /></IsAdmin>} />
+          <Route path={path.CREATE_BLOG} element={<IsAdmin><CreateBlog /></IsAdmin>} />
+          <Route path={path.MANAGE_POSTS_ADMIN} element={<IsAdmin><ManagePostAdmin /></IsAdmin>} />
+          <Route path={path.STATISTICS_POST} element={<IsAdmin><StatisticsPost /></IsAdmin>} />
+          <Route path={path.STATISTICS_USER} element={<IsAdmin><StatisticsUser /></IsAdmin>} />
+          <Route path={path.DASHBOARD} element={<IsAdmin><Dashboard /></IsAdmin>} />
         </Route>
       </Routes>
     </div >

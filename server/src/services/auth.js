@@ -33,6 +33,9 @@ export const registerService = (body) => {
                     statusCode: 'S4',
                     avatar: 'https://phongtro123.com/images/default-user.png'
                 })
+
+                await mailService.sendMailRegister(body.email, body.name)
+
                 resolve({
                     err: 0,
                     msg: "Đăng ký tài khoản thành công",
