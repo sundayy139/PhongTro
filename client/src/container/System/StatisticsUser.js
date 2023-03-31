@@ -28,7 +28,7 @@ const StatisticsUser = () => {
 
     useEffect(() => {
         const fetchDataNewUser = async () => {
-            const res = await apis.apiGetUserByMonth()
+            const res = await apis.apiGetCountUserByMonth()
             if (res?.data?.err === 0) {
                 const data = res?.data.userCounts
                 const month = data.map(obj => obj.month)
@@ -38,7 +38,7 @@ const StatisticsUser = () => {
             };
         }
         const fetchDataUserBlocked = async () => {
-            const res = await apis.apiGetUserByMonth({ status: 'S5' })
+            const res = await apis.apiGetCountUserByMonth({ status: 'S6' })
             if (res?.data?.err === 0) {
                 const data = res?.data.userCounts
                 const count = data.map(obj => obj.count)
@@ -82,7 +82,7 @@ const StatisticsUser = () => {
 
     useEffect(() => {
         const fetchDataNewUser = async () => {
-            const res = await apis.apiGetUserByDay({ startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountUserByDay({ startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.userCounts
                 const date = data.map(obj => obj.date)
@@ -92,7 +92,7 @@ const StatisticsUser = () => {
             };
         }
         const fetchDataUserBlocked = async () => {
-            const res = await apis.apiGetUserByDay({ status: 'S5', startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountUserByDay({ status: 'S6', startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.userCounts
                 const count = data.map(obj => obj.count)

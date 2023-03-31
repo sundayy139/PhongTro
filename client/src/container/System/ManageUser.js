@@ -103,10 +103,10 @@ const ManageUser = () => {
 
     useEffect(() => {
         if (+status === 1) {
-            const activeUser = usersData?.filter(item => item.status === 'S4')
+            const activeUser = usersData?.filter(item => item.statusCode === 'S5')
             setUsersFilter(activeUser)
         } else if (+status === 2) {
-            const activeUser = usersData?.filter(item => item.status === 'S5')
+            const activeUser = usersData?.filter(item => item.statusCode === 'S6')
             setUsersFilter(activeUser)
         } else if (+status === 0) {
             setUsersFilter(usersData)
@@ -189,18 +189,17 @@ const ManageUser = () => {
         },
         {
             name: "Trạng thái",
-            selector: (row) => row.statusCode === 'S5'
-                ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[100px]'>
+            selector: (row) => row.statusCode === 'S6'
+                ? <div className='bg-red-500 text-[10px] text-white p-2 text-center rounded-md font-medium min-w-[100px]'>
                     Ngừng hoạt động
                 </div>
-                : row.statusCode === 'S4'
-                    ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[100px]'>
+                : row.statusCode === 'S5'
+                    ? <div className='bg-green-500 text-[10px] text-white p-2 text-center  rounded-md font-medium min-w-[100px]'>
                         Đang hoạt động
                     </div>
                     : '',
             minWidth: '150px'
         },
-
     ]
 
     return (
@@ -255,7 +254,7 @@ const ManageUser = () => {
                                         <option
                                             value='2'
                                         >
-                                            Bị khóa
+                                            Ngừng hoạt động
                                         </option>
                                     </select>
                                 </div>

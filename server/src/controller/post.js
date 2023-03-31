@@ -240,5 +240,17 @@ export const getCountPostByDay = async (req, res) => {
     }
 }
 
+export const getPostByMonth = async (req, res) => {
+    try {
+        const { status, categoryCode, month, year } = req.query
+        const response = await postService.getPostByMonthService(status, categoryCode, month, year);
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: 'Fail at post controller' + error + '1'
+        })
+    }
+}
 
 

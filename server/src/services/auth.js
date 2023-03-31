@@ -30,7 +30,7 @@ export const registerService = (body) => {
                     role: body.role,
                     zalo: body.phone,
                     password: hashPassword(body.password),
-                    statusCode: 'S4',
+                    statusCode: 'S5',
                     avatar: 'https://phongtro123.com/images/default-user.png'
                 })
 
@@ -59,7 +59,7 @@ export const loginService = (body) => {
             if (user) {
                 let check = bcrypt.compareSync(body.password, user.password);
                 if (check) {
-                    if (user.statusCode === 'S4') {
+                    if (user.statusCode === 'S5') {
                         const token = jwt.sign({ id: user.id, phone: user.phone, role: user.role }, process.env.SECRET_KEY, { expiresIn: "5d" })
                         resolve({
                             err: 0,

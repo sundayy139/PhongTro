@@ -88,7 +88,12 @@ const ManagePost = () => {
         } else if (+status === 2) {
             const expiredPost = postsUser?.filter(item => moment(moment.utc(item.expiredAt)).local().unix() < moment(new Date).unix())
             setPostsFilter(expiredPost)
-        } else if (+status === 0) {
+        }
+        else if (+status === 3) {
+            const expiredPost = postsUser?.filter(item => item.statusCode === 'S4')
+            setPostsFilter(expiredPost)
+        }
+        else if (+status === 0) {
             setPostsFilter(postsUser)
         }
     }, [status])
@@ -221,7 +226,7 @@ const ManagePost = () => {
                     ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                         Chưa cho thuê
                     </div>
-                    : row.statusCode === 'S6'
+                    : row.statusCode === 'S4'
                         ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                             Đã cho thuê
                         </div>
@@ -324,6 +329,11 @@ const ManagePost = () => {
                                             value='2'
                                         >
                                             Hết hạn
+                                        </option>
+                                        <option
+                                            value='3'
+                                        >
+                                            Đã được thuê
                                         </option>
                                     </select>
                                 </div>

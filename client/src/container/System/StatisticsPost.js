@@ -39,7 +39,7 @@ const StatisticsPost = () => {
 
     useEffect(() => {
         const fetchDataNewPost = async () => {
-            const res = await apis.apiGetPostByMonth({ categoryCode: selected1 })
+            const res = await apis.apiGetCountPostByMonth({ categoryCode: selected1 })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -49,7 +49,7 @@ const StatisticsPost = () => {
             };
         }
         const fetchDataPostApprove = async () => {
-            const res = await apis.apiGetPostByMonth({ status: 'S2', categoryCode: selected1 })
+            const res = await apis.apiGetCountPostByMonth({ status: 'S2', categoryCode: selected1 })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -58,7 +58,7 @@ const StatisticsPost = () => {
         }
 
         const fetchDataPostRefuse = async () => {
-            const res = await apis.apiGetPostByMonth({ status: 'S3', categoryCode: selected1 })
+            const res = await apis.apiGetCountPostByMonth({ status: 'S3', categoryCode: selected1 })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -67,7 +67,7 @@ const StatisticsPost = () => {
         }
 
         const fetchDataPostPending = async () => {
-            const res = await apis.apiGetPostByMonth({ status: 'S1', categoryCode: selected1 })
+            const res = await apis.apiGetCountPostByMonth({ status: 'S1', categoryCode: selected1 })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -76,7 +76,7 @@ const StatisticsPost = () => {
         }
 
         const fetchDataPostSuccess = async () => {
-            const res = await apis.apiGetPostByMonth({ status: 'S6', categoryCode: selected1 })
+            const res = await apis.apiGetCountPostByMonth({ status: 'S4', categoryCode: selected1 })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -153,7 +153,7 @@ const StatisticsPost = () => {
 
     useEffect(() => {
         const fetchDataNewPost = async () => {
-            const res = await apis.apiGetPostByDay({ categoryCode: selected2, startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountPostByDay({ categoryCode: selected2, startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -163,7 +163,7 @@ const StatisticsPost = () => {
             };
         }
         const fetchDataPostApprove = async () => {
-            const res = await apis.apiGetPostByDay({ status: 'S2', categoryCode: selected2, startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountPostByDay({ status: 'S2', categoryCode: selected2, startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -172,7 +172,7 @@ const StatisticsPost = () => {
         }
 
         const fetchDataPostRefuse = async () => {
-            const res = await apis.apiGetPostByDay({ status: 'S3', categoryCode: selected2, startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountPostByDay({ status: 'S3', categoryCode: selected2, startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -181,7 +181,7 @@ const StatisticsPost = () => {
         }
 
         const fetchDataPostPending = async () => {
-            const res = await apis.apiGetPostByDay({ status: 'S1', categoryCode: selected2, startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountPostByDay({ status: 'S1', categoryCode: selected2, startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -190,7 +190,7 @@ const StatisticsPost = () => {
         }
 
         const fetchDataPostSuccess = async () => {
-            const res = await apis.apiGetPostByDay({ status: 'S6', categoryCode: selected2, startDate: startDate, endDate: endDate })
+            const res = await apis.apiGetCountPostByDay({ status: 'S4', categoryCode: selected2, startDate: startDate, endDate: endDate })
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)

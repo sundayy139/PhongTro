@@ -137,7 +137,7 @@ const TopBar = () => {
                                 {
                                     isShowMenuManage && currentUserData?.role === 'user'
                                         ? (
-                                            <div className='absolute left-0 top-full bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'>
+                                            <div className='absolute left-0 top-full min-w-[200px] bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'>
                                                 {menuManage?.map(item => (
                                                     <Link
                                                         key={item.id}

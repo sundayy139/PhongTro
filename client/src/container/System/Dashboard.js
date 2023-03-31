@@ -6,11 +6,12 @@ import { getNumberFromString } from '../../utils/fn';
 import * as apis from '../../services/index'
 import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
-import icons from '../../utils/icons'
 import DataTable from "react-data-table-component";
 import { BottomBar } from '../../components/Public';
+import notepad from '../../assets/icon/notepad.png';
+import user from '../../assets/icon/user.png';
+import tick from '../../assets/icon/verified.png';
 
-const { FaUserCircle } = icons
 
 const title = 'Tổng quan - Phòng trọ';
 
@@ -48,6 +49,13 @@ const Dashboard = () => {
     const [count1, setCount1] = useState('')
     const [label1, setLabel1] = useState('')
     const [count2, setCount2] = useState('')
+    const [postCurrentMonth, setPostCurrentMonth] = useState(null)
+    const [postLastMonth, setPostLastMonth] = useState(null)
+    const [userCurrentMonth, setUserCurrentMonth] = useState(null)
+    const [userLastMonth, setUserLastMonth] = useState(null)
+    const [postSuccessCurrentMonth, setPostSuccessCurrentMonth] = useState(null)
+    const [postSuccessLastMonth, setPostSuccessLastMonth] = useState(null)
+    const [totalPostSuccess, setTotalPostSuccess] = useState(null)
     const [chartData, setChartData] = useState([]);
     const [chartData1, setChartData1] = useState([]);
     const { allPostsUser, usersData } = useSelector(state => state.admin)
@@ -60,7 +68,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchDataNewPost = async () => {
-            const res = await apis.apiGetPostByMonth()
+            const res = await apis.apiGetCountPostByMonth()
             if (res?.data?.err === 0) {
                 const data = res?.data.postCounts
                 const count = data.map(obj => obj.count)
@@ -71,7 +79,7 @@ const Dashboard = () => {
         }
 
         const fetchDataNewUser = async () => {
-            const res = await apis.apiGetUserByMonth()
+            const res = await apis.apiGetCountUserByMonth()
             if (res?.data?.err === 0) {
                 const data = res?.data.userCounts
                 const count = data.map(obj => obj.count)
@@ -178,18 +186,85 @@ const Dashboard = () => {
         },
         {
             name: "Trạng thái",
-            selector: (row) => row.status === 'S5'
-                ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[100px]'>
+            selector: (row) => row.statusCode === 'S6'
+                ? <div className='bg-red-500 text-[10px] text-white p-2 text-center rounded-md font-medium min-w-[100px]'>
                     Ngừng hoạt động
                 </div>
-                : row.status === 'S4'
-                    ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[100px]'>
+                : row.statusCode === 'S5'
+                    ? <div className='bg-green-500 text-[10px] text-white p-2 text-center rounded-md font-medium min-w-[100px]'>
                         Đang hoạt động
                     </div>
                     : '',
             minWidth: '150px'
         },
     ]
+
+    useEffect(() => {
+        const fetchDataPostCurrentMonth = async () => {
+            const res = await apis.apiGetPostByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
+            if (res?.data?.err === 0) {
+                setPostCurrentMonth(res?.data?.posts?.length + 1)
+            };
+        }
+
+        const fetchDataPostLastMonth = async () => {
+            const res = await apis.apiGetPostByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() })
+            if (res?.data?.err === 0) {
+                setPostLastMonth(res?.data?.posts?.length + 1)
+            };
+        }
+
+        fetchDataPostCurrentMonth()
+        fetchDataPostLastMonth()
+
+    }, [])
+
+    useEffect(() => {
+        const fetchDataUserCurrentMonth = async () => {
+            const res = await apis.apiGetUserByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
+            if (res?.data?.err === 0) {
+                setUserCurrentMonth(res?.data?.users?.length + 1)
+            };
+        }
+
+        const fetchDataUserLastMonth = async () => {
+            const res = await apis.apiGetUserByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() })
+            if (res?.data?.err === 0) {
+                setUserLastMonth(res?.data?.users?.length + 1)
+            };
+        }
+
+        fetchDataUserCurrentMonth()
+        fetchDataUserLastMonth()
+
+    }, [])
+
+    useEffect(() => {
+        if (allPostsUser) {
+            const result = allPostsUser.filter(item => item.statusCode === 'S4')
+            setTotalPostSuccess(result)
+        }
+    }, [allPostsUser])
+
+    useEffect(() => {
+        const fetchDataPostSuccessCurrentMonth = async () => {
+            const res = await apis.apiGetPostByMonth({ status: 'S4', year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
+            if (res?.data?.err === 0) {
+                setPostSuccessCurrentMonth(res?.data?.posts?.length + 1)
+            };
+        }
+
+        const fetchDataPostSuccessLastMonth = async () => {
+            const res = await apis.apiGetPostByMonth({ status: 'S4', year: new Date().getFullYear(), month: new Date().getMonth() })
+            if (res?.data?.err === 0) {
+                setPostSuccessLastMonth(res?.data?.posts?.length + 1)
+            };
+        }
+
+        fetchDataPostSuccessCurrentMonth()
+        fetchDataPostSuccessLastMonth()
+
+    }, [])
 
     return (
         <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:mb-10 w-full phone:relative tablet:px-2 tablet:py-4 tablet:mb-10 tablet:relative'>
@@ -207,37 +282,60 @@ const Dashboard = () => {
                     <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
                         <div className='flex justify-between items-center'>
                             <h3 className='text-sm'>Tổng người dùng</h3>
-                            <FaUserCircle size={25} color='#cca752' />
+                            <img src={user} className='w-6 h-6 object-contain' />
                         </div>
                         <i className='text-2xl text-center'>
                             {usersData?.length}
                         </i>
                         <div className='flex items-center justify-between text-sm'>
-                            <i>14%</i>
+                            <i>
+                                {
+                                    userCurrentMonth && userLastMonth && userCurrentMonth > userLastMonth
+                                        ?
+                                        `Tăng ${Math.round(userCurrentMonth / userLastMonth)}%`
+                                        : `Giảm ${Math.round(userLastMonth / userCurrentMonth)}%`
+                                }
+                            </i>
                             <span>So với tháng trước</span>
                         </div>
                     </div>
                     <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
                         <div className='flex justify-between items-center'>
                             <h3 className='text-sm'>Tổng tin đăng</h3>
-                            <FaUserCircle size={25} color='#cca752' />
+                            <img src={notepad} className='w-6 h-6 object-contain' />
                         </div>
                         <i className='text-2xl text-center'>
                             {allPostsUser?.length}
                         </i>
                         <div className='flex items-center justify-between text-sm'>
-                            <i>14%</i>
+                            <i>
+                                {
+                                    postCurrentMonth && postLastMonth && postCurrentMonth > postLastMonth
+                                        ?
+                                        `Tăng ${Math.round(postCurrentMonth / postLastMonth)}%`
+                                        : `Giảm ${Math.round(postLastMonth / postCurrentMonth)}%`
+                                }
+                            </i>
                             <span>So với tháng trước</span>
                         </div>
                     </div>
                     <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
                         <div className='flex justify-between items-center'>
-                            <h3 className='text-sm'>Tổng người dùng</h3>
-                            <FaUserCircle size={25} color='#cca752' />
+                            <h3 className='text-sm'>Tổng tin hoàn thành</h3>
+                            <img src={tick} className='w-6 h-6 object-contain' />
                         </div>
-                        <i className='text-2xl text-center'>123</i>
+                        <i className='text-2xl text-center'>
+                            {totalPostSuccess?.length}
+                        </i>
                         <div className='flex items-center justify-between text-sm'>
-                            <i>14%</i>
+                            <i>
+                                {
+                                    postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
+                                        ?
+                                        `Tăng ${Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%`
+                                        : `Giảm ${Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%`
+                                }
+                            </i>
                             <span>So với tháng trước</span>
                         </div>
                     </div>

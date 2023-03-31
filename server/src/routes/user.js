@@ -13,5 +13,6 @@ router.get('/get-users', userController.getUsers)
 router.delete('/delete-user', userController.deleteUser)
 router.get('/get-count-user-by-month', userController.getCountUserByMonth)
 router.get('/get-count-user-by-day', userController.getCountUserByDay)
+router.get('/get-user-by-month', userController.getUserByMonth)
 
 export default router

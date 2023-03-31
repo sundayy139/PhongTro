@@ -52,7 +52,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
             avatar: userData?.avatar || '',
             id: userData?.id || '',
             role: userData?.role || '',
-            status: userData?.status || 'S4',
+            status: userData?.status || 'S5',
         })
     }, [userData])
 
@@ -221,12 +221,12 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                                     onChange={(e) => setPayload({ ...payload, status: e.target.value })}
                                 >
                                     <option
-                                        value='S4'
+                                        value='S5'
                                     >
                                         Đang hoạt động
                                     </option>
                                     <option
-                                        value='S5'
+                                        value='S6'
                                     >
                                         Ngừng hoạt động
                                     </option>

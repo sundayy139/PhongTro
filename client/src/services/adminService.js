@@ -118,7 +118,7 @@ export const apiUpdateBlogAdmin = (payload) => {
     })
 }
 
-export const apiGetUserByMonth = (query) => {
+export const apiGetCountUserByMonth = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
@@ -133,7 +133,7 @@ export const apiGetUserByMonth = (query) => {
     })
 }
 
-export const apiGetUserByDay = (query) => {
+export const apiGetCountUserByDay = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
@@ -148,7 +148,22 @@ export const apiGetUserByDay = (query) => {
     })
 }
 
-export const apiGetPostByMonth = (query) => {
+export const apiGetUserByMonth = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/user/get-user-by-month",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetCountPostByMonth = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
@@ -163,12 +178,28 @@ export const apiGetPostByMonth = (query) => {
     })
 }
 
-export const apiGetPostByDay = (query) => {
+export const apiGetCountPostByDay = (query) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
                 method: "get",
                 url: "/api/v1/post/get-count-post-by-day",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+export const apiGetPostByMonth = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/post/get-post-by-month",
                 params: query
             })
             resolve(res)

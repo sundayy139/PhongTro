@@ -52,7 +52,7 @@ export const updateUserProfileService = (payload) => {
                     user.zalo = payload.zalo
                     user.role = payload.role
                     user.avatar = payload.avatar
-                    user.status = payload.status
+                    user.statusCode = payload.status
 
                     await user.save()
                     resolve({
@@ -124,7 +124,7 @@ export const deleteUserService = (id) => {
     })
 }
 
-// GET USER BY MONTH ADMIN
+// GET COUNT USER BY MONTH ADMIN
 export const getCountUserByMonthService = (status) => {
     return new Promise(async (resolve, reject) => {
         const queries = {}
@@ -163,7 +163,7 @@ export const getCountUserByMonthService = (status) => {
     })
 }
 
-// GET USER BY DAY ADMIN
+// GET COUNT USER BY DAY ADMIN
 export const getCountUserByDayService = (status, startDate, endDate, categoryCode) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -200,6 +200,38 @@ export const getCountUserByDayService = (status, startDate, endDate, categoryCod
                 msg: userCounts ? "Thành công" : "Không lấy được",
                 userCounts
             })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+// GET USER BY MONTH ADMIN
+export const getUserByMonthService = (status, month, year) => {
+    return new Promise(async (resolve, reject) => {
+        const queries = {}
+        if (status) queries.statusCode = status
+        try {
+            if (!month && !year) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const users = await db.User.findAll({
+                    where: sequelize.and(
+                        sequelize.where(sequelize.fn('date_part', 'year', sequelize.col('createdAt')), year),
+                        sequelize.where(sequelize.fn('date_part', 'month', sequelize.col('createdAt')), month),
+                        queries
+                    ),
+                });
+
+                resolve({
+                    err: users ? 0 : 2,
+                    msg: users ? "Thành công" : "Không lấy được bài đăng",
+                    users
+                })
+            }
         } catch (e) {
             reject(e);
         }

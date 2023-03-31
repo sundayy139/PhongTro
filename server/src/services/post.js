@@ -577,7 +577,7 @@ export const deletePostService = (postId, id) => {
 }
 
 // UPDATE STATUS POST
-export const updateStatusPostService = (pId, id) => {
+export const updateStatusPostService = (postId, id) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!postId || !id) {
@@ -598,7 +598,7 @@ export const updateStatusPostService = (pId, id) => {
                         msg: "Không tìm thấy bài đăng",
                     })
                 } else {
-                    post.statusCode = 'S6'
+                    post.statusCode = 'S4'
                     await post.save()
                     resolve({
                         err: 0,
@@ -819,7 +819,7 @@ export const refusePostService = (postId) => {
     })
 }
 
-// GET POST BY MONTH ADMIN
+// GET COUNT POST BY MONTH ADMIN
 export const getCountPostByMonthService = (status, categoryCode) => {
     return new Promise(async (resolve, reject) => {
         const queries = {}
@@ -860,7 +860,7 @@ export const getCountPostByMonthService = (status, categoryCode) => {
     })
 }
 
-// GET POST BY DAY ADMIN
+// GET COUNT POST BY DAY ADMIN
 export const getCountPostByDayService = (status, startDate, endDate, categoryCode) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -897,6 +897,40 @@ export const getCountPostByDayService = (status, startDate, endDate, categoryCod
                 msg: postCounts ? "Thành công" : "Không lấy được bài đăng",
                 postCounts
             })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+
+// GET POST BY MONTH ADMIN
+export const getPostByMonthService = (status, categoryCode, month, year) => {
+    return new Promise(async (resolve, reject) => {
+        const queries = {}
+        if (status) queries.statusCode = status
+        if (categoryCode) queries.categoryCode = categoryCode
+        try {
+            if (!month && !year) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const posts = await db.Post.findAll({
+                    where: sequelize.and(
+                        sequelize.where(sequelize.fn('date_part', 'year', sequelize.col('createdAt')), year),
+                        sequelize.where(sequelize.fn('date_part', 'month', sequelize.col('createdAt')), month),
+                        queries
+                    ),
+                });
+
+                resolve({
+                    err: posts ? 0 : 2,
+                    msg: posts ? "Thành công" : "Không lấy được bài đăng",
+                    posts
+                })
+            }
         } catch (e) {
             reject(e);
         }

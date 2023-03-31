@@ -93,7 +93,7 @@ export const insert = () => {
                         avatar: 'https://phongtro123.com/images/default-user.png',
                         phone: item?.contact?.content?.find(i => i.name === "Điện thoại:")?.content,
                         zalo: item?.contact?.content?.find(i => i.name === "Zalo")?.content,
-                        statusCode: 'S4'
+                        statusCode: 'S5'
                     })
 
                     await db.Image.create({

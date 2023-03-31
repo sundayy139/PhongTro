@@ -1,4 +1,3 @@
-import icons from "./icons"
 import notepad from '../assets/icon/notepad.png'
 import user from '../assets/icon/user.png'
 import password from '../assets/icon/password.png'
@@ -12,18 +11,10 @@ import notepadBb from '../assets/icon/notepad-black.png'
 import heartBb from '../assets/icon/heart-black.png'
 import userBb from '../assets/icon/user-black.png'
 import dashboard from '../assets/icon/dashboard.png'
-import blog from '../assets/icon/blogging.png'
+import blog from '../assets/icon/blog.png'
+import profile from '../assets/icon/notification.png'
+import tick from '../assets/icon/verified.png'
 
-const {
-    BsFillPenFill,
-    FaUserCircle,
-    GiNotebook,
-    BsFillChatFill,
-    BsFillInfoCircleFill,
-    BiNotepad,
-    BsBookHalf,
-    MdDashboard
-} = icons
 
 export const text = {
     HOME_TITLE: 'Kênh thông tin Phòng Trọ số 1 Việt Nam',
@@ -396,26 +387,26 @@ export const menuManageSidebar = [
         id: 1,
         text: "Đăng tin cho thuê",
         path: '/he-thong/dang-tin-moi',
-        icons: <BsFillPenFill size={16} />
+        images: pencil
     },
     {
         id: 2,
         text: "Quản lý tin đăng",
         path: '/he-thong/quan-ly-tin-dang',
-        icons: <GiNotebook size={16} />
+        images: notepad
 
     },
     {
         id: 3,
         text: "Sửa thông tin cá nhân",
         path: '/he-thong/sua-thong-tin',
-        icons: <BsFillInfoCircleFill size={16} />
+        images: profile
     },
     {
         id: 4,
         text: "Liên hệ",
         path: '/lien-he',
-        icons: <BsFillChatFill size={16} />
+        images: chat
     }
 ]
 
@@ -424,19 +415,19 @@ export const menuManageSidebarAdmin = [
         id: 1,
         text: "Người dùng",
         path: '/he-thong/quan-ly-nguoi-dung',
-        icons: <FaUserCircle size={16} />
+        images: user
     },
     {
         id: 2,
         text: "Tin đăng",
         path: '/he-thong/quan-ly-tat-ca-tin-dang',
-        icons: <BiNotepad size={16} />
+        images: notepad
     },
     {
         id: 3,
         text: "Blog",
         path: '/he-thong/quan-ly-blog',
-        icons: <BsBookHalf size={16} />
+        images: blog
     },
 ]
 
@@ -445,19 +436,19 @@ export const menuStatisticsSidebarAdmin = [
         id: 1,
         text: "Tổng quan",
         path: '/he-thong/thong-ke/tong-quan',
-        icons: <MdDashboard size={16} />
+        images: dashboard
     },
     {
         id: 2,
-        text: "Tin đăng",
-        path: '/he-thong/thong-ke/tin-dang',
-        icons: <BiNotepad size={16} />
+        text: "Người dùng",
+        path: '/he-thong/thong-ke/nguoi-dung',
+        images: user
     },
     {
         id: 3,
-        text: "Người dùng",
-        path: '/he-thong/thong-ke/nguoi-dung',
-        icons: <FaUserCircle size={16} />
+        text: "Tin đăng",
+        path: '/he-thong/thong-ke/tin-dang',
+        images: notepad
     },
 ]
 
