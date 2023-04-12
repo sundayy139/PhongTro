@@ -11,3 +11,6 @@ export { default as ManageBlog } from './ManageBlog';
 export { default as StatisticsPost } from './StatisticsPost';
 export { default as StatisticsUser } from './StatisticsUser';
 export { default as Dashboard } from './Dashboard';
+export { default as Payment } from './Payment';
+export { default as PaymentSuccess } from './PaymentSuccess';
+export { default as PayHistory } from './PayHistory';

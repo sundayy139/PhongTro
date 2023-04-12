@@ -25,8 +25,13 @@ const User = () => {
                 </div>
             </div>
             <span className='flex items-center text-sm'>Mã tài khoản:
-                <span className='font-semibold ml-[3px] w-[124px] inline-block overflow-hidden whitespace-nowrap text-ellipsis'>
+                <span className='font-semibold ml-1 w-[124px] inline-block overflow-hidden whitespace-nowrap text-ellipsis'>
                     {currentUserData?.id ? getNumberFromString(currentUserData?.id) : ''}
+                </span>
+            </span>
+            <span className='flex items-center text-sm'>TK chính:
+                <span className='font-semibold ml-1 w-[124px] inline-block overflow-hidden whitespace-nowrap text-ellipsis'>
+                    {`${currentUserData?.balance.toLocaleString('vi-VN')} VNĐ`}
                 </span>
             </span>
         </div>

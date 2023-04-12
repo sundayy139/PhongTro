@@ -6,9 +6,9 @@ import { useSearchParams } from 'react-router-dom'
 import notFound from '../../assets/image/not-found.png'
 import moment from 'moment'
 
-const List = ({ categoryCode, isHideSort, favouritePost }) => {
+const ListPost = ({ categoryCode, isHideSort, favouritePost }) => {
     const dispatch = useDispatch();
-    const [paramsSearch] = useSearchParams()
+    const [paramsSearch, setParamsSearch] = useSearchParams()
     const { posts } = useSelector(state => state.post)
     const [sort, setSort] = useState(0)
     useEffect(() => {
@@ -16,7 +16,6 @@ const List = ({ categoryCode, isHideSort, favouritePost }) => {
         for (let entry of paramsSearch.entries()) {
             params.push(entry)
         }
-
         let searchParamsQuery = {}
         params.forEach(i => {
             if (Object.keys(searchParamsQuery)?.some(item => item === i[0])) {
@@ -92,4 +91,4 @@ const List = ({ categoryCode, isHideSort, favouritePost }) => {
     )
 }
 
-export default List
+export default ListPost

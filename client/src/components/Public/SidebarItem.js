@@ -8,16 +8,19 @@ import canho from '../../assets/icon/flat.png'
 import matbang from '../../assets/icon/store.png'
 import oghep from '../../assets/icon/group.png'
 import { path } from '../../utils/path'
+import { useDispatch } from 'react-redux'
+import * as actions from '../../store/actions'
 
 const { GrNext } = icons
 
 const SidebarItem = ({ content, title, double, type }) => {
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
 
     const handleFilter = (code) => {
         navigate({
-            pathname: location?.pathname,
+            pathname: location?.pathname !== `/${path.SEARCH}` ? location?.pathname : `/`,
             search: createSearchParams({
                 [type]: code,
             }).toString()
@@ -37,6 +40,7 @@ const SidebarItem = ({ content, title, double, type }) => {
                 [type]: item.code,
             }).toString()
         }, { state: { titleSearch } })
+        dispatch(actions.setSearchTitle(titleSearch))
     }
 
     return (

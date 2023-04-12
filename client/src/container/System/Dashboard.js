@@ -203,14 +203,14 @@ const Dashboard = () => {
         const fetchDataPostCurrentMonth = async () => {
             const res = await apis.apiGetPostByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
             if (res?.data?.err === 0) {
-                setPostCurrentMonth(res?.data?.posts?.length + 1)
+                setPostCurrentMonth(res?.data?.posts?.length > 0 ? res?.data?.posts?.length : res?.data?.posts?.length + 1)
             };
         }
 
         const fetchDataPostLastMonth = async () => {
             const res = await apis.apiGetPostByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() })
             if (res?.data?.err === 0) {
-                setPostLastMonth(res?.data?.posts?.length + 1)
+                setPostLastMonth(res?.data?.posts?.length > 0 ? res?.data?.posts?.length : res?.data?.posts?.length + 1)
             };
         }
 
@@ -223,14 +223,14 @@ const Dashboard = () => {
         const fetchDataUserCurrentMonth = async () => {
             const res = await apis.apiGetUserByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
             if (res?.data?.err === 0) {
-                setUserCurrentMonth(res?.data?.users?.length + 1)
+                setUserCurrentMonth(res?.data?.users?.length > 0 ? res?.data?.users?.length : res?.data?.users?.length + 1)
             };
         }
 
         const fetchDataUserLastMonth = async () => {
             const res = await apis.apiGetUserByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() })
             if (res?.data?.err === 0) {
-                setUserLastMonth(res?.data?.users?.length + 1)
+                setUserLastMonth(res?.data?.users?.length > 0 ? res?.data?.users?.length : res?.data?.users?.length + 1)
             };
         }
 
@@ -250,14 +250,14 @@ const Dashboard = () => {
         const fetchDataPostSuccessCurrentMonth = async () => {
             const res = await apis.apiGetPostByMonth({ status: 'S4', year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
             if (res?.data?.err === 0) {
-                setPostSuccessCurrentMonth(res?.data?.posts?.length + 1)
+                setPostSuccessCurrentMonth(res?.data?.posts?.length > 0 ? res?.data?.posts?.length : res?.data?.posts?.length + 1)
             };
         }
 
         const fetchDataPostSuccessLastMonth = async () => {
             const res = await apis.apiGetPostByMonth({ status: 'S4', year: new Date().getFullYear(), month: new Date().getMonth() })
             if (res?.data?.err === 0) {
-                setPostSuccessLastMonth(res?.data?.posts?.length + 1)
+                setPostSuccessLastMonth(res?.data?.posts?.length > 0 ? res?.data?.posts?.length : res?.data?.posts?.length + 1)
             };
         }
 

@@ -51,6 +51,30 @@ export const getPostsLimit = (query) => async (dispatch) => {
     }
 }
 
+export const getPostsReleaseLimit = (query) => async (dispatch) => {
+    try {
+        const res = await apis.apiGetPostsLimit(query)
+        if (res.data.err === 0) {
+            dispatch({
+                type: actionsType.GET_RELATE_POSTS_LIMIT,
+                posts: res.data.posts?.rows,
+                count: res.data.posts?.count
+            })
+        } else {
+            dispatch({
+                type: actionsType.GET_RELATE_POSTS_LIMIT,
+                posts: null,
+                msg: res.data.msg
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionsType.GET_RELATE_POSTS_LIMIT,
+            posts: null
+        })
+    }
+}
+
 export const getNewPosts = () => async (dispatch) => {
     try {
         const res = await apis.apiGetNewPosts()
@@ -153,4 +177,9 @@ export const setDataEdit = (dataEdit) => ({
 export const clearDataEdit = () => ({
     type: actionsType.CLEAR_DATA_EDIT,
     dataEdit: null,
+})
+
+export const setSearchTitle = (title) => ({
+    type: actionsType.SET_SEARCH_TITLE,
+    title,
 })

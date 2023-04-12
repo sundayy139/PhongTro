@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { SearchItem, Button, SearchModal } from './index';
 import icons from '../../utils/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { path } from '../../utils/path'
-import * as apis from '../../services'
+import * as actions from '../../store/actions'
 
 const { GrNext,
     BsSearch,
@@ -19,6 +19,7 @@ const Search = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
     const { provinces, prices, acreages, categories } = useSelector(state => state.app)
     const [isShowModal, setIsShowModal] = useState(false)
     const [content, setContent] = useState([])
@@ -73,6 +74,9 @@ const Search = () => {
             pathname: `/${path.SEARCH}`,
             search: createSearchParams(queriesCodeObj).toString(),
         }, { state: { titleSearch } })
+
+        // set title search
+        dispatch(actions.setSearchTitle(titleSearch))
     }
 
     return (

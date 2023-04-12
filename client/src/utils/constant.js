@@ -14,6 +14,9 @@ import dashboard from '../assets/icon/dashboard.png'
 import blog from '../assets/icon/blog.png'
 import profile from '../assets/icon/notification.png'
 import tick from '../assets/icon/verified.png'
+import dollar from '../assets/icon/dollar.png'
+import card from '../assets/icon/debit-cards.png'
+import historypay from '../assets/icon/history-bank.png'
 
 
 export const text = {
@@ -219,13 +222,20 @@ export const menuManage = [
     },
     {
         id: 3,
+        text: "Nạp tiền",
+        path: '/he-thong/nap-tien',
+        image: card
+
+    },
+    {
+        id: 4,
         text: "Tin đã lưu",
         path: '/tin-da-luu',
         image: heart
 
     },
     {
-        id: 4,
+        id: 5,
         text: "Thông tin tài khoản",
         path: '/he-thong/sua-thong-tin',
         image: user
@@ -250,17 +260,21 @@ export const menuAdmin = [
         text: "Quản lý tin đăng",
         path: '/he-thong/quan-ly-tin-dang',
         image: notepad
-
     },
     {
         id: 4,
-        text: "Tin đã lưu",
-        path: '/tin-da-luu',
-        image: heart
-
+        text: "Nạp tiền",
+        path: '/he-thong/nap-tien',
+        image: card
     },
     {
         id: 5,
+        text: "Tin đã lưu",
+        path: '/tin-da-luu',
+        image: heart
+    },
+    {
+        id: 6,
         text: "Thông tin tài khoản",
         path: '/he-thong/sua-thong-tin',
         image: user
@@ -322,18 +336,30 @@ export const menuManageSystem = [
     },
     {
         id: 3,
+        text: "Nạp tiền tài khoản",
+        path: '/he-thong/nap-tien',
+        image: dollar
+    },
+    {
+        id: 4,
+        text: "Lịch sử nạp tiền",
+        path: '/he-thong/lich-su-nap-tien',
+        image: historypay
+    },
+    {
+        id: 5,
         text: "Tin đã lưu",
         path: '/tin-da-luu',
         image: heart
     },
     {
-        id: 4,
+        id: 6,
         text: "Đổi mật khẩu",
         path: '/he-thong/doi-mat-khau',
         image: password
     },
     {
-        id: 5,
+        id: 7,
         text: "Liên hệ",
         path: '/lien-he',
         image: chat
@@ -394,16 +420,27 @@ export const menuManageSidebar = [
         text: "Quản lý tin đăng",
         path: '/he-thong/quan-ly-tin-dang',
         images: notepad
-
     },
     {
         id: 3,
+        text: "Nạp tiền tài khoản",
+        path: '/he-thong/nap-tien',
+        images: dollar
+    },
+    {
+        id: 4,
+        text: "Lịch sử nạp tiền",
+        path: '/he-thong/lich-su-nap-tien',
+        images: historypay
+    },
+    {
+        id: 5,
         text: "Sửa thông tin cá nhân",
         path: '/he-thong/sua-thong-tin',
         images: profile
     },
     {
-        id: 4,
+        id: 6,
         text: "Liên hệ",
         path: '/lien-he',
         images: chat
@@ -479,4 +516,43 @@ export const contactInfo = [
         info: 'LD-06.04, Toà nhà Lexington Residence, Số 67 Mai Chí Thọ, Phường An Phú, Quận 2, Tp. Hồ Chí Minh.',
     },
 
+]
+
+
+export const inputPayment = [
+    {
+        id: 1,
+        value: 50000,
+        text: '50.000',
+    },
+    {
+        id: 2,
+        value: 100000,
+        text: '100.000',
+    },
+    {
+        id: 3,
+        value: 200000,
+        text: '200.000',
+    },
+    {
+        id: 4,
+        value: 500000,
+        text: '500.000',
+    },
+    {
+        id: 5,
+        value: 1000000,
+        text: '1.000.000',
+    },
+    {
+        id: 6,
+        value: 2000000,
+        text: '2.000.000',
+    },
+    {
+        id: 7,
+        value: 5000000,
+        text: '5.000.000',
+    },
 ]

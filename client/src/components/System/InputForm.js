@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputForm = ({ id, label, value, setValue, name, invalidFileds, setInvalidFileds, symbol, isRow }) => {
+const InputForm = ({ id, label, value, setValue, name, invalidFileds, setInvalidFileds, symbol, isRow, disabled }) => {
     return (
         <div className={isRow ? 'flex pc:items-center laptop:items-center w-full text-sm whitespace-nowrap phone:flex-col phone:gap-2 tablet:flex-col tablet:gap-2' : "text-sm w-full flex flex-col gap-2"}>
             <label
@@ -12,6 +12,7 @@ const InputForm = ({ id, label, value, setValue, name, invalidFileds, setInvalid
             <div className='w-full mt-1 relative'>
                 <div className='relative'>
                     <input
+                        disabled={disabled ? true : false}
                         type={name === 'priceNumber' || name === 'acreageNumber' || name === 'expired'
                             ? 'number'
                             : name === 'oldPassword' || name === 'newPassword' || name === 'confirmPassword'

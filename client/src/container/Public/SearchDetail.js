@@ -15,7 +15,7 @@ const SearchDetail = () => {
     const [data2, setData2] = useState()
     const [name, setName] = useState()
     const [paramsObj, setParamsObj] = useState()
-    const { count, posts, newPosts } = useSelector(state => state.post)
+    const { count, posts, newPosts, searchTitle } = useSelector(state => state.post)
 
     useEffect(() => {
         const params = {};
@@ -109,7 +109,7 @@ const SearchDetail = () => {
                 <link rel="icon" href={logo} />
             </Helmet>
             <div className='tablet:px-4 phone:px-4'>
-                <h1 className='pc:text-[28px] laptop:text-[28px] phone:text-xl tablet:text-xl font-bold mb-2'>{`Kết quả tìm kiếm: ${location.state?.titleSearch}`} </h1>
+                <h1 className='pc:text-[28px] laptop:text-[28px] phone:text-xl tablet:text-xl font-bold mb-2'>{`Kết quả tìm kiếm: ${searchTitle}`} </h1>
                 <p className='text-sm phone:text-[#777777] tablet:text-[#777777]'>Cho thuê phòng trọ - Kênh thông tin số 1 về phòng trọ giá rẻ, phòng trọ sinh viên, phòng trọ cao cấp mới nhất năm 2023. Tất cả nhà trọ cho thuê giá tốt nhất tại Việt Nam.</p>
             </div>
             {

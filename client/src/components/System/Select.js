@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, setInvalidFileds }) => {
+const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, setInvalidFileds, disabled }) => {
 
     const handleTextErr = () => {
         let invalidName = invalidFileds?.find(item => item.name === type)
@@ -15,6 +15,7 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
                 {label}
             </label>
             <select
+                disabled={disabled ? true : false}
                 value={value || ''}
                 onChange={(e) => setValue(e.target.value)}
                 id='select-address'
@@ -36,7 +37,7 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
                                         ? item?.district_id
                                         : type === "ward"
                                             ? item?.ward_id
-                                            : type === "categoryCode" || type === "target"
+                                            : type === "categoryCode" || type === "target" || type === "type"
                                                 ? item?.id
                                                 : ''
                             }
@@ -47,7 +48,7 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
                                         ? item?.district_id
                                         : type === "ward"
                                             ? item?.ward_id
-                                            : type === "categoryCode" || type === "target"
+                                            : type === "categoryCode" || type === "target" || type === "type"
                                                 ? item?.code
                                                 : ''
                             }
@@ -59,7 +60,7 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
                                         ? item?.district_name
                                         : type === "ward"
                                             ? item?.ward_name
-                                            : type === "categoryCode" || type === "target"
+                                            : type === "categoryCode" || type === "target" || type === "type"
                                                 ? item?.value
                                                 : ''
                             }

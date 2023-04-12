@@ -36,7 +36,8 @@ const CreatePost = ({ isEdit, setIsShow }) => {
             target: dataEdit?.target ? dataEdit.target : '',
             expired: dataEdit?.expiredAt
                 ? (new Date(Math.abs(new Date(dataEdit?.expiredAt) - new Date(dataEdit?.createdAt))).getDate() - 1)
-                : ''
+                : '',
+            type: dataEdit?.order ? dataEdit.order : '',
         }
         return initialData
     })
@@ -59,10 +60,11 @@ const CreatePost = ({ isEdit, setIsShow }) => {
             ...payload,
             priceCode: priceCode,
             acreageCode: acreageCode,
-            label: `${categories?.find(item => item.code = payload?.categoryCode)?.value} ${payload?.address?.split(', ')[payload?.address?.split(',')?.length - 2]}`,
+            label: `${categories?.find(item => item.code === payload?.categoryCode)?.value} ${payload?.address?.split(', ')[payload?.address?.split(',')?.length - 2]}`,
             province: arrProvinceString[arrProvinceString?.length - 1].includes('Thành phố')
                 ? arrProvinceString[arrProvinceString?.length - 1].replace('Thành phố ', '')
                 : arrProvinceString[arrProvinceString?.length - 1].replace('Tỉnh ', ''),
+            pricePerDay: +payload.type === 1 ? 2000 : +payload.type === 2 ? 10000 : +payload.type === 3 ? 20000 : ''
         }
 
         let invalid = validate(finalPayload, setInvalidFileds)
@@ -109,7 +111,8 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         images: '',
                         description: '',
                         target: '',
-                        expired: ''
+                        expired: '',
+                        type: ''
                     })
                     setImagesPreview([])
                     Swal.fire({
@@ -133,6 +136,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
             }
         }
     }
+
 
     const handleChangeFiles = async (e) => {
         e.stopPropagation()
@@ -210,7 +214,8 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                 images: '',
                 description: '',
                 target: '',
-                expired: ''
+                expired: '',
+                type: ''
             })
             setImagesPreview([])
         }
@@ -244,6 +249,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         setPayload={setPayload}
                         invalidFileds={invalidFileds}
                         setInvalidFileds={setInvalidFileds}
+                        isEdit={isEdit}
                     />
                     <div className='flex flex-col w-full gap-4 phone:px-2 phone:py-4 phone:bg-white phone:rounded-[5px]'>
                         <h2 className='font-semibold pc:text-2xl laptop:text-2xl phone:text-xl tablet:text-xl'>Hình ảnh</h2>

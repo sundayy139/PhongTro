@@ -73,13 +73,13 @@ const DetailPost = () => {
         detailPost && dispatch(actions.getPostsLimit({ categoryCode: detailPost?.categoryCode, districtCode: detailPost.districtCode, provinceCode: detailPost.provinceCode }))
     }, [detailPost])
 
-
     const handleFilterLabel = (data) => {
         const titleSearch = data?.labelData?.value
         navigate({
             pathname: `/${path.SEARCH}`,
             search: createSearchParams({ labelCode: data?.labelData?.code }).toString(),
         }, { state: { titleSearch } })
+        dispatch(actions.setSearchTitle(titleSearch))
     }
 
     return (
@@ -188,8 +188,8 @@ const DetailPost = () => {
                                     {detailPost?.userData?.name}
                                 </h4>
                                 <span className='flex items-center text-sm'>
-                                    <BsDot size={24} color={detailPost?.userData?.statusCode === 'S5' ? '#14c683' : '#e13427'} />
-                                    <span>{detailPost?.userData?.statusCode === 'S5' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</span>
+                                    <BsDot size={24} color={detailPost?.userData?.statusCode === 'S4' ? '#14c683' : '#e13427'} />
+                                    <span>{detailPost?.userData?.statusCode === 'S4' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</span>
                                 </span>
                                 <div className='flex gap-2 items-center w-full text-sm text-[#777777]'>
                                     <span
@@ -379,8 +379,8 @@ const DetailPost = () => {
                         {detailPost?.userData?.name}
                     </h4>
                     <span className='flex items-center text-sm'>
-                        <BsDot size={24} color={detailPost?.userData?.statusCode === 'S5' ? '#14c683' : '#e13427'} />
-                        <span>{detailPost?.userData?.statusCode === 'S5' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</span>
+                        <BsDot size={24} color={detailPost?.userData?.statusCode === 'S4' ? '#14c683' : '#e13427'} />
+                        <span>{detailPost?.userData?.statusCode === 'S4' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</span>
                     </span>
                     <div className='flex flex-col gap-2 w-full'>
                         <Button

@@ -2,10 +2,13 @@ import actionsType from "../actions/actionsType";
 
 const initialState = {
     posts: [],
+    allPosts: [],
     newPosts: [],
     postsUser: [],
     dataEdit: {},
     favouritePost: [],
+    relatePosts: [],
+    searchTitle: '',
     msg: '',
     count: 0
 }
@@ -15,13 +18,20 @@ const postReducer = (state = initialState, action) => {
         case actionsType.GET_POSTS:
             return {
                 ...state,
-                posts: action.posts || [],
+                allPosts: action.posts || [],
                 msg: action.msg || '',
             }
         case actionsType.GET_POSTS_LIMIT:
             return {
                 ...state,
                 posts: action.posts || [],
+                msg: action.msg || '',
+                count: action.count || 0
+            }
+        case actionsType.GET_RELATE_POSTS_LIMIT:
+            return {
+                ...state,
+                relatePosts: action.posts || [],
                 msg: action.msg || '',
                 count: action.count || 0
             }
@@ -59,6 +69,11 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataEdit: null,
+            }
+        case actionsType.SET_SEARCH_TITLE:
+            return {
+                ...state,
+                searchTitle: action.title,
             }
         default:
             return state;

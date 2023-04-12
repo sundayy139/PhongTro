@@ -164,3 +164,73 @@ export const removeVietnameseTones = (str) => {
     str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
     return str;
 }
+
+export const convertToText = (number) => {
+    const ones = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
+    const tens = ['', 'mười', 'hai mươi', 'ba mươi', 'bốn mươi', 'năm mươi', 'sáu mươi', 'bảy mươi', 'tám mươi', 'chín mươi'];
+    const scales = ['', ' nghìn', ' triệu', ' tỷ', ' nghìn tỷ', ' triệu tỷ'];
+
+    if (isNaN(number)) {
+        return '';
+    }
+
+    if (number === 0) {
+        return 'Không đồng';
+    }
+
+    if (number < 0) {
+        return 'Số tiền âm';
+    }
+
+    let result = '';
+    let scaleIndex = 0;
+
+    while (number > 0) {
+        const threeDigits = number % 1000;
+        const onesText = ones[threeDigits % 10];
+        const tensText = tens[Math.floor(threeDigits / 10) % 10];
+        const hundredsText = ones[Math.floor(threeDigits / 100)];
+
+        let scaleText = '';
+        if (threeDigits !== 0) {
+            scaleText = scales[scaleIndex];
+            if (scaleIndex > 0) {
+                scaleText += ' ';
+            }
+        }
+
+        let currentText = '';
+        if (hundredsText) {
+            currentText += hundredsText + ' trăm ';
+        }
+
+        if (tensText === 'mười' && onesText !== '') {
+            currentText += 'mười ';
+        } else {
+            currentText += tensText;
+            if (tensText && onesText) {
+                currentText += ' ';
+            }
+            if (onesText !== '' && tensText !== 'mười') {
+                currentText += onesText;
+            }
+        }
+
+        if (currentText !== '') {
+            result = currentText + scaleText + result;
+        }
+
+        scaleIndex++;
+        number = Math.floor(number / 1000);
+    }
+
+    return result.trim() + ' đồng';
+}
+
+export const formatMoney = (value) => {
+    value = value.replace(/\D/g, ''); // loại bỏ tất cả các ký tự không phải là số
+    value = value.replace(/^0+/, ''); // loại bỏ các số 0 đứng đầu tiên
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // thêm dấu . phân cách giữa các nghìn
+
+    return value
+}

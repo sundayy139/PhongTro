@@ -3,30 +3,43 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Select, InputDisable, InputForm } from './index'
 
-const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) => {
+const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds, isEdit }) => {
     const { categories } = useSelector(state => state.app)
     const { currentUserData } = useSelector(state => state.user)
     const { dataEdit } = useSelector(state => state.post)
     const [categoryCode, setCategoryCode] = useState(payload?.categoryCode)
     const [targetCode, setTargetCode] = useState(payload?.target)
+    const [typeCode, setTypeCode] = useState(payload?.type)
 
     useEffect(() => {
         setPayload((prev) => ({
             ...prev,
             categoryCode: categoryCode,
-            target: targetCode
+            target: targetCode,
+            type: typeCode
         }))
-    }, [categoryCode, targetCode])
+    }, [categoryCode, targetCode, typeCode])
 
     useEffect(() => {
         payload.categoryCode === undefined || payload.categoryCode === '' && setCategoryCode('')
         payload.target === undefined || payload.target === '' && setTargetCode('')
     }, [payload.categoryCode, payload.target])
 
+    useEffect(() => {
+        payload.categoryCode === undefined || payload.categoryCode === '' && setCategoryCode('')
+        payload.type === undefined || payload.type === '' && setTypeCode('')
+    }, [payload.categoryCode, payload.type])
+
     const targets = [
         { id: 1, code: 'Tất cả', value: 'Tất cả' },
         { id: 2, code: 'Nam', value: 'Nam' },
         { id: 3, code: 'Nữ', value: 'Nữ' },
+    ]
+
+    const types = [
+        { id: 1, value: 'Tin thường (2.000đ/ngày)', code: 1 },
+        { id: 2, value: 'Tin VIP (10.000đ/ngày)', code: 2 },
+        { id: 3, value: 'Tin PROVIP (20.000đ/ngày)', code: 3 },
     ]
 
     return (
@@ -99,7 +112,6 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
                         Nhập đầy đủ số, ví dụ 1 triệu thì nhập là 1000000
                     </small>
                 </div>
-
                 <InputForm
                     label={"Diện tích"}
                     name={'acreageNumber'}
@@ -110,8 +122,18 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds }) =
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
-
+                <Select
+                    disabled={isEdit ? true : false}
+                    label={"Loại tin"}
+                    options={types}
+                    type={'type'}
+                    value={typeCode}
+                    setValue={setTypeCode}
+                    invalidFileds={invalidFileds}
+                    setInvalidFileds={setInvalidFileds}
+                />
                 <InputForm
+                    disabled={isEdit ? true : false}
                     label={"Số ngày hiển thị tin"}
                     name={'expired'}
                     id='expired'

@@ -1,42 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RelatePostItem } from './index'
 import * as actions from '../../store/actions'
-import { useSearchParams } from 'react-router-dom'
 import notFound from '../../assets/image/not-found.png'
 
-const ReleasePost = ({ categoryCode }) => {
+const ReleasePost = () => {
     const dispatch = useDispatch();
-    const [paramsSearch] = useSearchParams()
-    const { posts } = useSelector(state => state.post)
+    const { relatePosts, posts } = useSelector(state => state.post)
     useEffect(() => {
-        let params = []
-        for (let entry of paramsSearch.entries()) {
-            params.push(entry)
-        }
-
-        let searchParamsQuery = {}
-        params.forEach(i => {
-            if (Object.keys(searchParamsQuery)?.some(item => item === i[0])) {
-                searchParamsQuery[i[0]] = [...searchParamsQuery[i[0]], i[1]]
-            } else {
-                searchParamsQuery = { ...searchParamsQuery, [i[0]]: [i[1]] }
-            }
-        })
-
-        if (categoryCode) searchParamsQuery.categoryCode = categoryCode
-
-        dispatch(actions.getPostsLimit(searchParamsQuery))
-    }, [paramsSearch, categoryCode])
+        dispatch(actions.getPostsReleaseLimit({ categoryCode: posts[0]?.categoryCode, districtCode: posts[0]?.districtPostData.code, provinceCode: posts[0]?.provincePostData.code }))
+    }, [posts])
 
     return (
         <div className='w-full pc:border pc:border-[#dedede] pc:rounded-[10px] laptop:border laptop:border-[#dedede] laptop:rounded-[10px] bg-white px-4 py-5' >
             <h3 className='text-xl font-semibold mb-2'>
-                {`${posts[0]?.categoryData?.value} ${posts[0]?.districtPostData?.value}, ${posts[0]?.provincePostData?.value}`}
+                {`${relatePosts[0]?.categoryData?.value} ${relatePosts[0]?.districtPostData?.value}, ${relatePosts[0]?.provincePostData?.value}`}
             </h3>
             <div className='flex w-full pc:flex-col laptop:flex-col phone:gap-4 tablet:gap-4 phone:overflow-x-auto tablet:overflow-x-auto'>
                 {
-                    posts && posts?.length > 0 ? posts.map(item => (
+                    relatePosts && relatePosts?.length > 0 ? relatePosts.map(item => (
                         <RelatePostItem
                             key={item.id}
                             id={item?.id}

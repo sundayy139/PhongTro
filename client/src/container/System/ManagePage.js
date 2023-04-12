@@ -13,7 +13,7 @@ import logoutIcon from '../../assets/icon/logout.png'
 import { getNumberFromString } from '../../utils/fn';
 import { BottomBar } from '../../components/Public';
 
-const { GrNext, MdLogout } = icons
+const { GrNext } = icons
 
 const title = 'Quản lý - Phòng trọ';
 const ManagePage = () => {
@@ -21,7 +21,6 @@ const ManagePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { currentUserData } = useSelector(state => state.user)
-    const { isLoggedin } = useSelector(state => state.app)
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Trang quản lý' },
@@ -64,14 +63,25 @@ const ManagePage = () => {
                         <img src={currentUserData?.avatar} className='w-[45px] h-[45px] object-cover rounded-full' />
                         <strong className='text-[28px]'>{currentUserData?.name}</strong>
                     </div>
-                    <div
-                        className='w-1/2 px-4 py-3 flex flex-col text-white rounded-[5px] bg-gradient-to-tr from-[#004aba] via-[#00b1d0] to-[#a8eb12] cursor-pointer'
-                        onClick={() => navigate(`/he-thong/${path.MANAGE_PROFILE}`)}
-                    >
-                        <span className='text-sm'>Mã thành viên</span>
-                        <span className='text-[23px] font-bold'>
-                            {getNumberFromString(currentUserData?.id)}
-                        </span>
+                    <div className='flex gap-3'>
+                        <div
+                            className='w-1/2 px-4 py-3 flex flex-col text-white rounded-[5px] bg-gradient-to-tr from-[#004aba] via-[#00b1d0] to-[#a8eb12] cursor-pointer'
+                            onClick={() => navigate(`/he-thong/${path.MANAGE_PROFILE}`)}
+                        >
+                            <span className='text-sm'>Mã thành viên</span>
+                            <span className='text-[23px] font-bold'>
+                                {getNumberFromString(currentUserData?.id)}
+                            </span>
+                        </div>
+                        <div
+                            className='w-1/2 px-4 py-3 flex flex-col justify-between text-white rounded-[5px] bg-gradient-to-tr from-[#cd158d] via-[#9a69dc] to-[#049bff] cursor-pointer'
+                            onClick={() => navigate(`/he-thong/${path.PAYMENT}`)}
+                        >
+                            <span className='text-sm'>Số dư</span>
+                            <span className='text-lg font-bold'>
+                                {`${currentUserData?.balance.toLocaleString('vi-VN')} VNĐ`}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <Link

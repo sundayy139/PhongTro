@@ -26,6 +26,9 @@ export const path = {
     MANAGE_PROFILE: 'sua-thong-tin',
     CHANGE_PASSWORD: 'doi-mat-khau',
     FORGOT_PASSWORD: 'quen-mat-khau',
+    PAYMENT: 'nap-tien',
+    PAYMENT_RETURN: 'nap-tien/vnpay-return',
+    PAYMENT_HISTORY: 'lich-su-nap-tien',
     RESET_PASSWORD: 'reset-password/:token',
 
     MANAGE_USERS: 'quan-ly-nguoi-dung',

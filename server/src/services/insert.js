@@ -93,7 +93,8 @@ export const insert = () => {
                         avatar: 'https://phongtro123.com/images/default-user.png',
                         phone: item?.contact?.content?.find(i => i.name === "Điện thoại:")?.content,
                         zalo: item?.contact?.content?.find(i => i.name === "Zalo")?.content,
-                        statusCode: 'S5'
+                        statusCode: 'S5',
+                        balance: 0
                     })
 
                     await db.Image.create({
@@ -119,7 +120,8 @@ export const insert = () => {
                         statusCode: 'S2',
                         priceNumber: +currentPrice,
                         acreageNumber: +areaCurrent,
-                        expiredAt: new Date(new Date().getTime() + (100 * 24 * 60 * 60 * 1000))
+                        expiredAt: new Date(new Date().getTime() + (100 * 24 * 60 * 60 * 1000)),
+                        order: 1
                     })
                 })
             })

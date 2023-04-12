@@ -9,17 +9,15 @@ import { Helmet } from 'react-helmet'
 
 const LeasePage = () => {
     const dispatch = useDispatch()
-    const { categories } = useSelector(state => state.app)
+    const { categories, curCategoryCode } = useSelector(state => state.app)
     const { count, posts, newPosts } = useSelector(state => state.post)
     const location = useLocation()
-    const [categoryCode, setCategoryCode] = useState('')
     const [categoryInfo, setCategoryInfo] = useState(null)
     const [title, setTitle] = useState('')
 
     useEffect(() => {
         const category = categories?.find(item => `/${formatVietnameseToString(item.value)}` === location?.pathname)
         if (category) {
-            setCategoryCode(category.code)
             setCategoryInfo(category)
             dispatch(actions.setCurCategoryCode(category.code))
         }
@@ -56,7 +54,7 @@ const LeasePage = () => {
                     <Province />
                 </div>
                 <div className='pc:w-[67%] laptop:w-[67%] flex flex-col gap-5  mb-[50px] phone:w-full tablet:w-full'>
-                    <ListPost categoryCode={categoryCode} />
+                    <ListPost categoryCode={curCategoryCode} />
                     <Pagination
                         count={count}
                         data={posts}

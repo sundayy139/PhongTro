@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { path } from './utils/path';
 import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword, Favourite } from './container/Public/index';
-import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsPost, StatisticsUser, Dashboard } from './container/System/index';
+import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsPost, StatisticsUser, Dashboard, PaymentSuccess, Payment, PayHistory } from './container/System/index';
 import { Auth, IsAdmin } from './middleware/authMiddleware'
 import { useDispatch, useSelector } from 'react-redux';
 import *  as actions from './store/actions'
@@ -59,6 +59,9 @@ function App() {
           <Route path={path.MANAGE_POST} element={<ManagePost />} />
           <Route path={path.MANAGE_PROFILE} element={<ManageProfile />} />
           <Route path={path.CHANGE_PASSWORD} element={<ChangePassword />} />
+          <Route path={path.PAYMENT} element={<Payment />} />
+          <Route path={path.PAYMENT_RETURN} element={<PaymentSuccess />} />
+          <Route path={path.PAYMENT_HISTORY} element={<PayHistory />} />
           <Route path={path.MANAGE_USERS} element={<IsAdmin><ManageUser /></IsAdmin>} />
           <Route path={path.MANAGE_BLOG} element={<IsAdmin><ManageBlog /></IsAdmin>} />
           <Route path={path.CREATE_BLOG} element={<IsAdmin><CreateBlog /></IsAdmin>} />
