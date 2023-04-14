@@ -3,7 +3,7 @@ import * as apis from '../../services/index'
 import DataTable from "react-data-table-component";
 import { Helmet } from 'react-helmet'
 import logo from '../../assets/image/homestay.png';
-import { getNumberFromString, removeVietnameseTones } from '../../utils/fn';
+import { formatMoney, getNumberFromString, removeVietnameseTones } from '../../utils/fn';
 import icons from '../../utils/icons'
 import * as actions from '../../store/actions';
 import { BreadCrumb, UpdateUser } from '../../components/System';
@@ -151,27 +151,32 @@ const ManageUser = () => {
             name: "Tên",
             selector: (row) => row.name,
             sortable: true,
-            minWidth: '250px',
+            minWidth: '200px',
+        },
+        {
+            name: "Số tiền đã nạp",
+            selector: (row) => row.paymentData.totalAmount === null ? 0 : formatMoney(row.paymentData.totalAmount + ''),
+            sortable: true,
         },
         {
             name: "Số điện thoại",
-            selector: (row) => row.phone,
+            selector: (row) => <div className='cursor-pointer text-blue-400 hover:underline'><a href={`tel:${row.phone}`}>{row.phone}</a></div>,
             sortable: true,
         },
         {
             name: "Zalo",
-            selector: (row) => row.zalo,
+            selector: (row) => <div className='cursor-pointer text-blue-400 hover:underline' onClick={() => window.open(`https://zalo.me/${row.zalo}`)} >{row.zalo}</div>,
             sortable: true,
         },
         {
             name: "Email",
-            selector: (row) => row.email,
+            selector: (row) => <div className='cursor-pointer text-blue-400 hover:underline'><a href={`mailTo:${row.email}`}>{row.email}</a></div>,
             sortable: true,
             minWidth: '250px',
         },
         {
             name: "Facebook",
-            selector: (row) => row.fbUrl,
+            selector: (row) => <div className='cursor-pointer text-blue-400 hover:underline' onClick={() => window.open(row.fbUrl)} >{row.fbUrl}</div>,
             sortable: true,
             minWidth: '250px',
         },

@@ -13,7 +13,7 @@ import { path } from '../../utils/path'
 
 const { BsTelephone, BsSuitHeart, BsSuitHeartFill } = icons
 
-const ListPostItem = ({ images, price, acreage, description, id, address, user, title, createdAt }) => {
+const ListPostItem = ({ images, price, acreage, description, id, address, user, title, createdAt, order }) => {
     const [isHoverHeart, setIsHoverHeart] = useState(false)
     const { favouritePost } = useSelector(state => state.post)
     const { isLoggedIn } = useSelector(state => state.auth)
@@ -53,11 +53,20 @@ const ListPostItem = ({ images, price, acreage, description, id, address, user, 
     }
 
     return (
-        <div className='w-full flex items-center px-5 py-[15px] pc:border-t pc:border-t-[#E13427] laptop:border-t laptop:border-t-[#E13427]
-        phone:flex-col phone:gap-3 phone:bg-white phone:shadow-sm  tablet:flex-col tablet:gap-3 tablet:bg-white tablet:shadow-sm '>
+        <div className={` ${order === 3
+            ? `pc:border-t pc:border-t-[#E13427] w-full laptop:border-t laptop:border-t-[#E13427] bg-[#fff9f3]
+                phone:flex-col phone:gap-3 phone:shadow-sm tablet:flex-col tablet:gap-3 tablet:shadow-sm`
+            : order === 2
+                ? `pc:border-t pc:border-t-[#ea2e9d] w-full laptop:border-t laptop:border-t-[#ea2e9d]
+                phone:flex-col phone:gap-3 phone:bg-white phone:shadow-sm  tablet:flex-col tablet:gap-3 tablet:bg-white tablet:shadow-sm`
+                : `pc:border-t pc:border-t-[#3763e0] w-full laptop:border-t laptop:border-t-[#3763e0]
+                    phone:gap-3 phone:bg-white phone:shadow-sm tablet:gap-3 tablet:bg-white tablet:shadow-sm`} 
+                    w-full flex items-center px-5 py-[15px]`} >
             <div
-                className='pc:w-[200px] pc:h-[200px] pc:flex-none laptop:w-[200px] laptop:h-[200px] laptop:flex-none relative cursor-pointer phone:w-full phone:h-[300px] tablet:w-full tablet:h-[300px] '
-            >
+                className={`${order === 3
+                    ? `pc:w-[240px] pc:h-[240px] pc:flex-none laptop:w-[240px] laptop:h-[240px] laptop:flex-none relative cursor-pointer phone:w-full phone:h-[300px] tablet:w-full tablet:h-[300px]`
+                    : `pc:w-[170px] pc:h-[170px] flex-none laptop:w-[170px] laptop:h-[160px] relative cursor-pointer phone:w-[150px] phone:h-[150px] tablet:w-[150px] tablet:h-[150px]`
+                    }`}>
                 <img
                     src={images && images[0]}
                     alt='image'
@@ -82,15 +91,18 @@ const ListPostItem = ({ images, price, acreage, description, id, address, user, 
                     </span>
                 </span>
             </div>
-            <div className='pc:flex-auto pc:max-w-[calc(100%-216px)] pc:h-[200px] pc:ml-4 laptop:flex-auto laptop:max-w-[calc(100%-256px)] laptop:h-[240px] laptop:ml-4 flex flex-col pc:justify-between laptop:justify-between phone:gap-4 phone:w-full tablet:gap-4 tablet:w-full  items-start'>
+            <div className={`${order === 3
+                ? `pc:flex-auto pc:h-[240px] pc:ml-4 pc:max-w-[calc(100%-256px)] w-full laptop:flex-auto laptop:h-[240px] laptop:max-w-[calc(100%-256px)] laptop:ml-4 flex flex-col pc:justify-between laptop:justify-between phone:gap-4 phone:w-full tablet:gap-4 tablet:w-full items-start`
+                : `flex-auto pc:max-w-[calc(100%-186px)] pc:h-[170px] pc:ml-4 laptop:max-w-[calc(100%-186px)] laptop:h-[170px] laptop:ml-4 flex flex-col justify-between phone:w-full phone:h-[150px] tablet:w-full items-start`
+                }`}>
                 <Link
                     to={`/chi-tiet/${id}`}
-                    className='text-[#E13427] font-bold text-sm uppercase hover:underline cursor-pointer'
+                    className={`${order === 3 ? 'text-[#E13427]' : order === 2 ? 'text-[#ea2e9d]' : 'text-[#3763e0]'} font-bold line-clamp-3 text-sm uppercase hover:underline cursor-pointer`}
                 >
                     {title}
                 </Link>
                 <div className='w-full pc:flex pc:items-center pc:justify-between laptop:flex laptop:items-center laptop:justify-between '>
-                    <div className='flex items-center gap-4 justify-between phone:flex-col tablet:flex-col'>
+                    <div className='flex pc:gap-4 pc:items-center laptop:items-center laptop:gap-4 justify-between phone:flex-col tablet:flex-col phone:items-start tablet:items-start'>
                         <div className='flex gap-4 items-center'>
                             <span className='text-[17px] text-[#16c784] font-semibold whitespace-nowrap'>
                                 {
@@ -112,10 +124,10 @@ const ListPostItem = ({ images, price, acreage, description, id, address, user, 
                         {moment(createdAt).locale('vi').fromNow()}
                     </span>
                 </div>
-                <p className='text-[12px] w-full line-clamp-3 phone:hidden tablet:hidden' >
+                <p className={`${order === 3 ? `line-clamp-3 ` : `line-clamp-2`} text-[12px] w-full phone:hidden tablet:hidden`} >
                     {description}
                 </p>
-                <div className='w-full flex items-center justify-between h-[30px]'>
+                <div className={`${order !== 3 && 'phone:hidden tablet:hidden'} w-full flex items-center justify-between h-[30px]`}>
                     <span className='flex items-center gap-2 text-sm text-gray-400 h-full phone:hidden tablet:hidden'>
                         <img src={avatar} className='w-[30px] h-full object-cover rounded-full' />
                         <span>

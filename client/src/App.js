@@ -18,7 +18,6 @@ function App() {
     dispatch(actions.getAcreages());
     dispatch(actions.getPrices());
     dispatch(actions.getProvinces());
-    dispatch(actions.getPostFavourite());
   }, [])
 
   useEffect(() => {
@@ -29,7 +28,7 @@ function App() {
     setTimeout(() => {
       isLoggedIn && dispatch(actions.getCurrentUser())
     }, [1000])
-  }, [isLoggedIn])
+  }, [isLoggedIn, flag])
 
   return (
     <div className='App bg-primary w-full h-full' >

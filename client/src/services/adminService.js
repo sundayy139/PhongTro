@@ -208,3 +208,33 @@ export const apiGetPostByMonth = (query) => {
         }
     })
 }
+
+export const apiGetPaymentSuccess = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/payment/pay-success",
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+export const apiGetPaymentByMonth = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/payment/pay-by-month",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}

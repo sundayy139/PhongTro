@@ -65,6 +65,7 @@ const ListPost = ({ categoryCode, isHideSort, favouritePost }) => {
                         <ListPostItem
                             key={item.id}
                             id={item?.id}
+                            order={item.order}
                             images={JSON.parse(item?.imagesData?.images)}
                             acreage={item?.acreageNumber}
                             price={item?.priceNumber}

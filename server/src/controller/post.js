@@ -118,7 +118,6 @@ export const getFavouritePost = async (req, res) => {
     }
 }
 
-
 export const getPostsUser = async (req, res) => {
     try {
         const { id } = req.user

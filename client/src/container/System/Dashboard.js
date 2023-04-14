@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { BreadCrumb, DoughnutChart, LineChart } from '../../components/System';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNumberFromString } from '../../utils/fn';
+import { formatMoney, getNumberFromString } from '../../utils/fn';
 import * as apis from '../../services/index'
 import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
@@ -11,6 +11,7 @@ import { BottomBar } from '../../components/Public';
 import notepad from '../../assets/icon/notepad.png';
 import user from '../../assets/icon/user.png';
 import tick from '../../assets/icon/verified.png';
+import money from '../../assets/icon/money.png';
 
 
 const title = 'Tổng quan - Phòng trọ';
@@ -44,6 +45,7 @@ const Dashboard = () => {
         { title: 'Tổng quan' }
     ];
     const dispatch = useDispatch()
+    const [totalPayment, setTotalPayment] = useState()
     const [count, setCount] = useState('')
     const [label, setLabel] = useState('')
     const [count1, setCount1] = useState('')
@@ -56,6 +58,8 @@ const Dashboard = () => {
     const [postSuccessCurrentMonth, setPostSuccessCurrentMonth] = useState(null)
     const [postSuccessLastMonth, setPostSuccessLastMonth] = useState(null)
     const [totalPostSuccess, setTotalPostSuccess] = useState(null)
+    const [paymentCurrentMonth, setPaymentCurrentMonth] = useState(null)
+    const [paymentLastMonth, setPaymentLastMonth] = useState(null)
     const [chartData, setChartData] = useState([]);
     const [chartData1, setChartData1] = useState([]);
     const { allPostsUser, usersData } = useSelector(state => state.admin)
@@ -152,6 +156,34 @@ const Dashboard = () => {
         };
         setChartData(chartData)
     }, [count])
+
+    useEffect(() => {
+        const fetchPaymentSuccess = async () => {
+            const res = await apis.apiGetPaymentSuccess()
+            if (res?.data?.err === 0) {
+                let results = res.data.payments
+                let total = 0
+
+                results.forEach(item => {
+                    total += +item.amount
+                })
+
+                setTotalPayment(total)
+            }
+        }
+
+        const fetchPaymentCurentMonth = async () => {
+            const res = await apis.apiGetPaymentByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
+            // if (res?.data?.err === 0) {
+            //    setPaymentCurrentMonth()
+            // }
+            console.log(res)
+        }
+
+
+        fetchPaymentCurentMonth()
+        fetchPaymentSuccess()
+    }, [])
 
     const columns = [
         {
@@ -278,69 +310,93 @@ const Dashboard = () => {
             />
             <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Tổng quan</h1>
             <div className='pc:py-5 pc:gap-6 laptop:gap-6 laptop:py-5 w-full phone:gap-4 phone:py-4 phone:flex-col tablet:gap-4 tablet:py-4 tablet:flex-col flex bg-white rounded-[5px] phone:px-2 tablet:px-2'>
-                <div className='flex pc:w-1/3 pc:flex-none pc:flex-col laptop:w-1/3 laptop:flex-none laptop:flex-col gap-5 justify-between'>
-                    <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
-                        <div className='flex justify-between items-center'>
-                            <h3 className='text-sm'>Tổng người dùng</h3>
-                            <img src={user} className='w-6 h-6 object-contain' />
-                        </div>
-                        <i className='text-2xl text-center'>
-                            {usersData?.length}
-                        </i>
-                        <div className='flex items-center justify-between text-sm'>
-                            <i>
-                                {
-                                    userCurrentMonth && userLastMonth && userCurrentMonth > userLastMonth
-                                        ?
-                                        `Tăng ${Math.round(userCurrentMonth / userLastMonth)}%`
-                                        : `Giảm ${Math.round(userLastMonth / userCurrentMonth)}%`
-                                }
+                <div className='flex pc:w-1/2 h-auto pc:flex-none pc:flex-col laptop:w-1/2 laptop:flex-none laptop:flex-col gap-5 justify-between phone:flex-wrap'>
+                    <div className='flex w-full h-[48%] items-center justify-between'>
+                        <div className='bg-primary w-[48%] h-full py-5 px-4 rounded-[5px] flex flex-col gap-5 justify-between'>
+                            <div className='flex justify-between items-center'>
+                                <h3 className='text-sm'>Tổng người dùng</h3>
+                                <img src={user} className='w-6 h-6 object-contain' />
+                            </div>
+                            <i className='text-2xl text-center'>
+                                {usersData?.length}
                             </i>
-                            <span>So với tháng trước</span>
+                            <div className='flex items-center justify-between text-sm'>
+                                <i>
+                                    {
+                                        userCurrentMonth && userLastMonth && userCurrentMonth > userLastMonth
+                                            ?
+                                            `Tăng ${Math.round(userCurrentMonth / userLastMonth)}%`
+                                            : `Giảm ${Math.round(userLastMonth / userCurrentMonth)}%`
+                                    }
+                                </i>
+                                <span>So với tháng trước</span>
+                            </div>
+                        </div>
+                        <div className='bg-primary w-[48%] h-full py-5 px-4 rounded-[5px] flex flex-col gap-5 justify-between'>
+                            <div className='flex justify-between items-center'>
+                                <h3 className='text-sm'>Tổng thu nhập</h3>
+                                <img src={money} className='w-6 h-6 object-contain' />
+                            </div>
+                            <i className='text-2xl text-center'>
+                                {`${formatMoney(totalPayment + '')} VNĐ`}
+                            </i>
+                            <div className='flex items-center justify-between text-sm'>
+                                <i>
+                                    {
+                                        postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
+                                            ?
+                                            `Tăng ${Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%`
+                                            : `Giảm ${Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%`
+                                    }
+                                </i>
+                                <span>So với tháng trước</span>
+                            </div>
                         </div>
                     </div>
-                    <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
-                        <div className='flex justify-between items-center'>
-                            <h3 className='text-sm'>Tổng tin đăng</h3>
-                            <img src={notepad} className='w-6 h-6 object-contain' />
-                        </div>
-                        <i className='text-2xl text-center'>
-                            {allPostsUser?.length}
-                        </i>
-                        <div className='flex items-center justify-between text-sm'>
-                            <i>
-                                {
-                                    postCurrentMonth && postLastMonth && postCurrentMonth > postLastMonth
-                                        ?
-                                        `Tăng ${Math.round(postCurrentMonth / postLastMonth)}%`
-                                        : `Giảm ${Math.round(postLastMonth / postCurrentMonth)}%`
-                                }
+                    <div className='flex w-full h-[48%] items-center justify-between'>
+                        <div className='bg-primary w-[48%] h-full py-5 px-4 rounded-[5px] flex flex-col gap-5 justify-between'>
+                            <div className='flex justify-between items-center'>
+                                <h3 className='text-sm'>Tổng tin đăng</h3>
+                                <img src={notepad} className='w-6 h-6 object-contain' />
+                            </div>
+                            <i className='text-2xl text-center'>
+                                {allPostsUser?.length}
                             </i>
-                            <span>So với tháng trước</span>
+                            <div className='flex items-center justify-between text-sm'>
+                                <i>
+                                    {
+                                        postCurrentMonth && postLastMonth && postCurrentMonth > postLastMonth
+                                            ?
+                                            `Tăng ${Math.round(postCurrentMonth / postLastMonth)}%`
+                                            : `Giảm ${Math.round(postLastMonth / postCurrentMonth)}%`
+                                    }
+                                </i>
+                                <span>So với tháng trước</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className='bg-primary py-5 px-4 rounded-[5px] flex flex-col gap-5'>
-                        <div className='flex justify-between items-center'>
-                            <h3 className='text-sm'>Tổng tin hoàn thành</h3>
-                            <img src={tick} className='w-6 h-6 object-contain' />
-                        </div>
-                        <i className='text-2xl text-center'>
-                            {totalPostSuccess?.length}
-                        </i>
-                        <div className='flex items-center justify-between text-sm'>
-                            <i>
-                                {
-                                    postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
-                                        ?
-                                        `Tăng ${Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%`
-                                        : `Giảm ${Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%`
-                                }
+                        <div className='bg-primary w-[48%] h-full py-5 px-4 rounded-[5px] flex flex-col gap-5 justify-between'>
+                            <div className='flex justify-between items-center'>
+                                <h3 className='text-sm'>Tổng tin hoàn thành</h3>
+                                <img src={tick} className='w-6 h-6 object-contain' />
+                            </div>
+                            <i className='text-2xl text-center'>
+                                {totalPostSuccess?.length}
                             </i>
-                            <span>So với tháng trước</span>
+                            <div className='flex items-center justify-between text-sm'>
+                                <i>
+                                    {
+                                        postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
+                                            ?
+                                            `Tăng ${Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%`
+                                            : `Giảm ${Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%`
+                                    }
+                                </i>
+                                <span>So với tháng trước</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className='flex-auto h-auto bg-primary rounded-[5px] px-4 py-5'>
+                <div className='flex-auto h-auto bg-primary  rounded-[5px] px-4 py-5'>
                     {
                         Object.entries(chartData1)?.length > 0 && (
                             <LineChart

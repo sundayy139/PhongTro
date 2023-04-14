@@ -2,7 +2,7 @@ import db from "../models/index";
 require('dotenv').config();
 import dateFormat, { masks } from "dateformat";
 import { sortObject } from "../utils/fn";
-import e from "express";
+const sequelize = require("sequelize");
 
 export const createPaymentUrlService = (req) => {
     return new Promise(async (resolve, reject) => {
@@ -205,3 +205,55 @@ export const paymentHistoryService = (id) => {
         }
     })
 }
+
+export const getPaymentSuccessService = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const payments = await db.Payment.findAll({
+                where: {
+                    statusCode: 'S8'
+                }
+            })
+            resolve({
+                err: 0,
+                msg: 'Thành công',
+                payments
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+
+export const getPaymentByMonthService = (status, month, year) => {
+    return new Promise(async (resolve, reject) => {
+        const queries = {}
+        if (status) queries.statusCode = status
+        try {
+            if (!month && !year) {
+                resolve({
+                    err: 1,
+                    msg: "Có lỗi gì đó rồi",
+                })
+            } else {
+                const payments = await db.Payment.findAll({
+                    where: sequelize.and(
+                        sequelize.where(sequelize.fn('date_part', 'year', sequelize.col('createdAt')), year),
+                        sequelize.where(sequelize.fn('date_part', 'month', sequelize.col('createdAt')), month),
+                        queries
+                    ),
+                });
+
+                resolve({
+                    err: payments ? 0 : 2,
+                    msg: payments ? "Thành công" : "Không lấy được thanh toán",
+                    payments
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
