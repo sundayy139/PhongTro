@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import icons from '../../utils/icons'
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { formatVietnameseToString } from '../../utils/fn'
 import phongtro from '../../assets/icon/home.png'
 import nhanguyencan from '../../assets/icon/villa.png'
@@ -18,12 +18,34 @@ const SidebarItem = ({ content, title, double, type }) => {
     const location = useLocation()
     const dispatch = useDispatch()
 
+    const [paramsSearch] = useSearchParams()
+
+    let entries = paramsSearch.entries()
+
+    const append = (entries, type, code) => {
+        let params = []
+        paramsSearch.append(type, code)
+        for (let entry of entries) {
+            params.push(entry)
+        }
+
+        let searchParamsQuery = {}
+        params.forEach(i => {
+            if (Object.keys(searchParamsQuery)?.some(item => item === i[0] && item !== type)) {
+                searchParamsQuery[i[0]] = [...searchParamsQuery[i[0]], i[1]]
+            } else {
+                searchParamsQuery = { ...searchParamsQuery, [i[0]]: [i[1]] }
+            }
+        })
+
+        return searchParamsQuery
+    }
+
+
     const handleFilter = (code) => {
         navigate({
-            pathname: location?.pathname !== `/${path.SEARCH}` ? location?.pathname : `/`,
-            search: createSearchParams({
-                [type]: code,
-            }).toString()
+            pathname: location?.pathname,
+            search: createSearchParams(append(entries, type, code)).toString()
         })
     }
 

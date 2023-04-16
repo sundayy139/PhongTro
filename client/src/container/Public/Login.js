@@ -28,7 +28,6 @@ const Login = () => {
         isLoggedIn && navigate('/')
     }, [isLoggedIn])
 
-
     const handleLogin = () => {
         dispatch(actions.login(payload))
     }

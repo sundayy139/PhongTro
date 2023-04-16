@@ -3,13 +3,15 @@ import { useLocation } from 'react-router-dom'
 import { AddressMenu, ListPost, Pagination, NewPost, Sidebar, BottomBar } from '../../components/Public/index'
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as apis from '../../services'
+import * as actions from '../../store/actions'
 
 const title = 'Tìm kiếm - Phòng trọ';
 
 const SearchDetail = () => {
     const location = useLocation()
+    const dispatch = useDispatch()
     const [data, setData] = useState()
     const [data1, setData1] = useState()
     const [data2, setData2] = useState()
@@ -98,6 +100,10 @@ const SearchDetail = () => {
     useEffect(() => {
         paramsObj?.provinceCode && paramsObj?.districtCode && paramsObj?.wardCode && setData(null)
     }, [paramsObj])
+
+    useEffect(() => {
+        dispatch(actions.getNewPosts())
+    }, [])
 
     return (
         <div className='w-full flex flex-col gap-4'>

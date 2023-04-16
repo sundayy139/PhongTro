@@ -8,7 +8,7 @@ import { BlogItem } from './index'
 const List = ({ isRelease }) => {
     const [paramsSearch] = useSearchParams()
     const dispatch = useDispatch()
-    const { blogs } = useSelector(state => state.blog)
+    const { blogs, isLoading } = useSelector(state => state.blog)
 
     useEffect(() => {
         dispatch(actions.getBlogs())
@@ -46,20 +46,24 @@ const List = ({ isRelease }) => {
                             key={item.id}
                             image={item.image}
                             title={item.title}
-                            descMarkdown={item.descMarkdown}
                             descHTML={item.descHTML}
                         />
                     ))
-                        : (
-                            <div className='w-full h-full p-10 border-t border-gray-300'>
-                                <div className='w-1/2 m-auto'>
-                                    <img
-                                        src={notFound}
-                                        className='w-full h-full object-contain'
-                                    />
+                        : !isLoading
+                            ? (
+                                <div className='w-full h-full p-10 border-t border-gray-300'>
+                                    <div className='w-1/2 m-auto'>
+                                        <img
+                                            src={notFound}
+                                            className='w-full h-full object-contain'
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        )
+                            ) : (
+                                <BlogItem
+                                    isLoading={isLoading}
+                                />
+                            )
                 }
             </div>
         </div >

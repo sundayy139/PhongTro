@@ -10,10 +10,11 @@ const title = 'Blog - Phòng trọ';
 
 const Blog = () => {
     const { newPosts } = useSelector(state => state.post)
-    const { blogs, count } = useSelector(state => state.blog)
+    const { blogs, count, isLoading } = useSelector(state => state.blog)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(actions.getBlogs())
+        dispatch(actions.getNewPosts())
     }, [])
 
     return (

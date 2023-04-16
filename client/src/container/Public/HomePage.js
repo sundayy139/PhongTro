@@ -41,6 +41,7 @@ const HomePage = () => {
     useEffect(() => {
         dispatch(actions.getNewPosts())
     }, [])
+
     return (
         <div className='w-full flex flex-col gap-10 relative'>
             <BottomBar />

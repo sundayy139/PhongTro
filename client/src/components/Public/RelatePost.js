@@ -6,7 +6,7 @@ import notFound from '../../assets/image/not-found.png'
 
 const ReleasePost = () => {
     const dispatch = useDispatch();
-    const { relatePosts, posts } = useSelector(state => state.post)
+    const { relatePosts, posts, isLoadingRelatePosts } = useSelector(state => state.post)
     useEffect(() => {
         dispatch(actions.getPostsReleaseLimit({ categoryCode: posts[0]?.categoryCode, districtCode: posts[0]?.districtPostData.code, provinceCode: posts[0]?.provincePostData.code }))
     }, [posts])
@@ -33,14 +33,9 @@ const ReleasePost = () => {
                         />
                     ))
                         : (
-                            <div className='w-full h-full p-10 border-t border-gray-300'>
-                                <div className='w-1/2 m-auto'>
-                                    <img
-                                        src={notFound}
-                                        className='w-full h-full object-contain'
-                                    />
-                                </div>
-                            </div>
+                            <RelatePostItem
+                                isLoading={isLoadingRelatePosts}
+                            />
                         )
                 }
             </div>

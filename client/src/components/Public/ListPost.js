@@ -9,7 +9,7 @@ import moment from 'moment'
 const ListPost = ({ categoryCode, isHideSort, favouritePost }) => {
     const dispatch = useDispatch();
     const [paramsSearch, setParamsSearch] = useSearchParams()
-    const { posts } = useSelector(state => state.post)
+    const { posts, isLoadingPosts } = useSelector(state => state.post)
     const [sort, setSort] = useState(0)
     useEffect(() => {
         let params = []
@@ -61,7 +61,7 @@ const ListPost = ({ categoryCode, isHideSort, favouritePost }) => {
             </div>
             <div className='flex flex-col w-full phone:gap-2 phone:bg-[#f0f0f0] tablet:gap-2 tablet:bg-[#f0f0f0]'>
                 {
-                    posts && posts?.length > 0 ? posts.map(item => (
+                    posts && posts?.length > 0 ? posts?.map(item => (
                         <ListPostItem
                             key={item.id}
                             id={item?.id}
@@ -76,16 +76,21 @@ const ListPost = ({ categoryCode, isHideSort, favouritePost }) => {
                             createdAt={item?.createdAt}
                         />
                     ))
-                        : (
-                            <div className='w-full h-full p-10 border-t border-gray-300'>
-                                <div className='w-1/2 m-auto'>
-                                    <img
-                                        src={notFound}
-                                        className='w-full h-full object-contain'
-                                    />
+                        : !isLoadingPosts
+                            ? (
+                                <div className='w-full h-full p-10 border-t border-gray-300'>
+                                    <div className='w-1/2 m-auto'>
+                                        <img
+                                            src={notFound}
+                                            className='w-full h-full object-contain'
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        )
+                            ) : (
+                                <ListPostItem
+                                    isLoading={isLoadingPosts}
+                                />
+                            )
                 }
             </div>
         </div >

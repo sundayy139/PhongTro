@@ -21,8 +21,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    dispatch(actions.getPostFavourite());
-  }, [flag])
+    isLoggedIn && dispatch(actions.getPostFavourite());
+  }, [flag, isLoggedIn])
 
   useEffect(() => {
     setTimeout(() => {

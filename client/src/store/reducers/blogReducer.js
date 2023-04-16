@@ -4,6 +4,7 @@ const initialState = {
     blogs: null,
     count: '',
     msg: '',
+    isLoading: true
 }
 
 const postReducer = (state = initialState, action) => {
@@ -13,7 +14,8 @@ const postReducer = (state = initialState, action) => {
                 ...state,
                 blogs: action.blogs || [],
                 msg: action.msg || '',
-                count: action.count || 0
+                count: action.count || 0,
+                isLoading: action.blogs ? false : true
             }
         default:
             return state;
