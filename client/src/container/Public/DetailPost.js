@@ -22,7 +22,7 @@ const DetailPost = () => {
     const [detailPost, setDetailPost] = useState(null)
     const [title, setTile] = useState('')
     const [labels, setLabels] = useState()
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState()
     const { newPosts } = useSelector(state => state.post)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -36,7 +36,6 @@ const DetailPost = () => {
             }
             setIsLoading(false)
         }
-
         fetchDetailPost(params.postId)
     }, [params])
 

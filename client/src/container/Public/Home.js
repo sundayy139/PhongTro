@@ -3,19 +3,14 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Contact, Header, Intro, ScrollToTop, Search, TopBar } from '../../components/Public/index';
 import { Helmet } from 'react-helmet'
 import { path } from '../../utils/path'
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../store/actions'
 
 const title = 'Trang chủ - Phòng trọ';
 
 const Home = () => {
     const location = useLocation()
-    const dispatch = useDispatch()
 
     return (
-        <div className=' bg-primary relative overflow-y-auto'
-            onClick={() => dispatch(actions.setIsShowMenuManage(false))}
-        >
+        <div className=' bg-primary relative overflow-y-auto' >
             <ScrollToTop />
             <Helmet>
                 <title>{title}</title>

@@ -28,11 +28,6 @@ export const setCurCategoryCode = (curCategoryCode) => ({
     curCategoryCode
 })
 
-export const setIsShowMenuManage = (flag) => ({
-    type: actionsType.SET_IS_SHOW_MENU_MANAGE,
-    flag
-})
-
 export const getPrices = () => async (dispatch) => {
     try {
         const res = await apis.apiGetPrices()

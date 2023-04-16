@@ -18,28 +18,24 @@ const TopBar = () => {
     const dispatch = useDispatch();
     const location = useLocation()
     const { isLoggedIn } = useSelector(state => state.auth)
-    const { isShowMenuManage } = useSelector(state => state.app)
     const { currentUserData } = useSelector(state => state.user)
     const { favouritePost } = useSelector(state => state.post)
     const [count, setCount] = useState()
     const [isShowMenuRes, setIsShowMenuRes] = useState(false)
+    const [isShowMenu, setIsShowMenu] = useState(false)
     const ref = useRef()
+    const menuRef = useRef()
 
     const goLogin = useCallback(() => {
         navigate(path.LOGIN)
     })
-
-    useEffect(() => {
-
-    }, [isShowMenuManage])
-
 
     const goRegister = useCallback(() => {
         navigate(path.REGISTER)
     })
 
     const logout = useCallback(() => {
-        dispatch(actions.setIsShowMenuManage(false))
+        setIsShowMenu(false)
         dispatch(actions.logout())
         navigate('/')
     })
@@ -59,6 +55,19 @@ const TopBar = () => {
             navigate(path.LOGIN)
         }
     }
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef?.current && !menuRef?.current?.contains(event.target)) {
+                setIsShowMenu(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [menuRef]);
 
     return (
         <div
@@ -122,63 +131,73 @@ const TopBar = () => {
                                 </span>
                                 <span>Yêu thích</span>
                             </div>
-                            <div className='relative'>
+                            <div
+                                className='relative'
+                                ref={menuRef}
+                            >
                                 <Button
                                     text={'Quản lý tài khoản'}
                                     textStyle={'text-white text-sm font-semibold py-[10px]'}
                                     bgColor={'bg-secondary1'}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        dispatch(actions.setIsShowMenuManage(!isShowMenuManage))
-                                    }}
+                                    onClick={() => setIsShowMenu(!isShowMenu)}
                                     hover={'hover:shadow-md'}
                                     icAfter={<MdOutlineKeyboardArrowDown />}
                                 />
                                 {
-                                    isShowMenuManage && currentUserData?.role === 'user'
-                                        ? (
-                                            <div className='absolute left-0 top-full min-w-[200px] bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'>
-                                                {menuManage?.map(item => (
-                                                    <Link
-                                                        key={item.id}
-                                                        to={item?.path}
-                                                        className='py-[10px] w-auto text-primary flex gap-[10px] items-center border-b border-b-gray-200 whitespace-nowrap hover:text-orange '
-                                                    >
-                                                        <img src={item.image} className='w-4 h-4 object-contain' />
-                                                        {item?.text}
-                                                    </Link>
-                                                ))}
-                                                <span
-                                                    className='py-[10px] text-primary flex gap-[10px] items-center cursor-pointer hover:text-orange '
-                                                    onClick={logout}
-                                                >
-                                                    <img src={logoutIcon} className='w-4 h-4 object-contain' />
-                                                    Đăng xuất
-                                                </span>
-                                            </div>
-                                        ) : isShowMenuManage && currentUserData?.role === 'admin'
-                                            ? (
-                                                <div className='absolute left-0 min-w-[200px] top-full bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'>
-                                                    {menuAdmin?.map(item => (
-                                                        <Link
-                                                            key={item.id}
-                                                            to={item?.path}
-                                                            className='py-[10px] w-full text-primary flex gap-[10px] items-center border-b border-b-gray-200 whitespace-nowrap hover:text-orange flex-auto'
-                                                        >
-                                                            <img src={item.image} className='w-4 h-4 object-contain' />
-                                                            {item?.text}
-                                                        </Link>
-                                                    ))}
-                                                    <span
-                                                        className='py-[10px] text-primary flex gap-[10px] items-center cursor-pointer hover:text-orange '
-                                                        onClick={logout}
-                                                    >
-                                                        <img src={logoutIcon} className='w-4 h-4 object-contain' />
-                                                        Đăng xuất
-                                                    </span>
-                                                </div>
-                                            )
-                                            : (null)
+                                    isShowMenu && (
+                                        <div className='absolute left-0 top-full min-w-[200px] bg-white text-sm shadow-md rounded-md px-4 flex flex-col py-2 z-[999]'
+                                        >
+                                            {
+                                                currentUserData?.role === 'user'
+                                                    ? (
+                                                        <>
+                                                            {
+                                                                menuManage?.map(item => (
+                                                                    <Link
+                                                                        key={item.id}
+                                                                        to={item?.path}
+                                                                        className='py-[10px] w-auto text-primary flex gap-[10px] items-center border-b border-b-gray-200 whitespace-nowrap hover:text-orange '
+                                                                    >
+                                                                        <img src={item.image} className='w-4 h-4 object-contain' />
+                                                                        {item?.text}
+                                                                    </Link>
+                                                                ))}
+                                                            <span
+                                                                className='py-[10px] text-primary flex gap-[10px] items-center cursor-pointer hover:text-orange '
+                                                                onClick={logout}
+                                                            >
+                                                                <img src={logoutIcon} className='w-4 h-4 object-contain' />
+                                                                Đăng xuất
+                                                            </span>
+                                                        </>
+                                                    )
+                                                    : currentUserData?.role === 'admin'
+                                                        ? (
+                                                            <>
+                                                                {
+                                                                    menuAdmin?.map(item => (
+                                                                        <Link
+                                                                            key={item.id}
+                                                                            to={item?.path}
+                                                                            className='py-[10px] w-full text-primary flex gap-[10px] items-center border-b border-b-gray-200 whitespace-nowrap hover:text-orange flex-auto'
+                                                                        >
+                                                                            <img src={item.image} className='w-4 h-4 object-contain' />
+                                                                            {item?.text}
+                                                                        </Link>
+                                                                    ))}
+                                                                <span
+                                                                    className='py-[10px] text-primary flex gap-[10px] items-center cursor-pointer hover:text-orange '
+                                                                    onClick={logout}
+                                                                >
+                                                                    <img src={logoutIcon} className='w-4 h-4 object-contain' />
+                                                                    Đăng xuất
+                                                                </span>
+                                                            </>
+                                                        )
+                                                        : (null)
+                                            }
+                                        </div>
+                                    )
                                 }
                             </div>
                         </div>
