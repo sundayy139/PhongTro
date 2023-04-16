@@ -8,7 +8,9 @@ import { BottomBar } from '../../components/Public'
 import { Helmet } from 'react-helmet'
 import { BreadCrumb, Button } from '../../components/System'
 import moment from 'moment';
-import { path } from '../../utils/path';
+import { formatMoney } from '../../utils/fn';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../store/actions'
 
 
 const title = 'Thanh toán thành công - Phòng trọ';
@@ -21,10 +23,12 @@ const PaymentSuccess = () => {
         { title: 'Trạng thái thanh toán' },
     ];
 
+    const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
     const [paymentInfo, setPaymentInfo] = useState()
     const [errCode, setErrCode] = useState()
+    const { flag } = useSelector(state => state.app)
 
     useEffect(() => {
         const fetchVnpayReturn = async () => {
@@ -33,6 +37,7 @@ const PaymentSuccess = () => {
             if (res?.data?.code == '00') {
                 setPaymentInfo(res.data.payment)
             }
+            dispatch(actions.setFlag(!flag))
         }
         fetchVnpayReturn()
     }, [])
@@ -79,7 +84,7 @@ const PaymentSuccess = () => {
                                                         Số tiền:
                                                     </td>
                                                     <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3">
-                                                        {`${paymentInfo?.amount.toLocaleString('vi-VN')} VNĐ`}
+                                                        {`${formatMoney(paymentInfo?.amount + '')} VNĐ`}
                                                     </td>
                                                 </tr>
                                                 <tr className="bg-white">
@@ -147,7 +152,7 @@ const PaymentSuccess = () => {
             }
             <div className='w-1/2 mx-auto phone:hidden tablet:hidden'>
                 <Button
-                    text={'Về trang chủ'}
+                    text={'Về trang quản lý'}
                     textStyle={'text-[17px] text-white'}
                     bgColor={'bg-[#007bff]'}
                     fullWidth
