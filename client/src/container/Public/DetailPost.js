@@ -1,31 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createSearchParams, useNavigate, useParams } from 'react-router-dom'
-import { Button, Map, NewPost, SidebarItem, Skeleton, Slick } from '../../components/Public/index';
+import { Button, InputForm, Map, NewPost, SidebarItem, Skeleton, Slick } from '../../components/Public/index';
 import * as apis from '../../services';
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
 import 'moment/locale/vi';
 import icons from '../../utils/icons'
 import moment from 'moment';
-import { getNumberFromString } from '../../utils/fn';
+import { getNumberFromString, validate } from '../../utils/fn';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/image/avatar-person.png';
 import zalo from '../../assets/icon/zalo-icon.png';
 import * as actions from '../../store/actions'
 import { path } from '../../utils/path';
 import ReleasePost from '../../components/Public/RelatePost';
-
+import Swal from 'sweetalert2';
+import { io } from 'socket.io-client'
 const { BsFlagFill, MdLocationOn, BsClock, GiPriceTag, TbVectorOff, HiOutlineHashtag, BsDot, BsTelephone } = icons
+
+const socket = io(process.env.REACT_APP_SERVER_URL)
 
 const DetailPost = () => {
     const params = useParams()
     const [detailPost, setDetailPost] = useState(null)
     const [title, setTile] = useState('')
     const [labels, setLabels] = useState()
+    const [isOpenReport, setIsOpenReport] = useState(false)
     const [isLoading, setIsLoading] = useState()
+    const [invalidFileds, setInvalidFileds] = useState([])
+    const [payload, setPayload] = useState({
+        content: ''
+    })
     const { newPosts } = useSelector(state => state.post)
+    const { isLoggedIn } = useSelector(state => state.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const reportRef = useRef()
 
     useEffect(() => {
         const fetchDetailPost = async (postId) => {
@@ -83,6 +93,58 @@ const DetailPost = () => {
         }, { state: { titleSearch } })
         dispatch(actions.setSearchTitle(titleSearch))
     }
+
+    const handleCreateReport = async () => {
+        const invalid = validate(payload, setInvalidFileds)
+        if (isLoggedIn) {
+            if (invalid === 0) {
+                const res = await apis.apiCreateReport({ postId: params.postId, content: payload.content })
+                if (res?.data?.err === 0) {
+                    setPayload({
+                        content: ''
+                    })
+                    setIsOpenReport(false)
+                    Swal.fire({
+                        position: 'center',
+                        title: 'Yeahh..!',
+                        text: res?.data?.msg,
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    })
+
+                    // Gửi tb tới server khi report được tạo
+                    socket.emit('newReportCreated', { postId: params.postId })
+
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        title: 'Opps..!',
+                        text: res?.data?.msg,
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    })
+                }
+            }
+        } else {
+            navigate(`/${path.LOGIN}`)
+        }
+    }
+
+    // close repost when clicked ouside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (reportRef?.current && !reportRef?.current?.contains(event.target)) {
+                setIsOpenReport(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [reportRef]);
 
     return (
         <>
@@ -452,7 +514,10 @@ const DetailPost = () => {
                                             </i>
                                             ". Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn có phản hồi với tin đăng này (báo xấu, tin đã cho thuê, không liên lạc được,...), vui lòng thông báo để chúng tôi có thể xử lý.
                                         </p>
-                                        <div className='pc:w-[150px] laptop:w-[150px] phone:w-full tablet:w-full pb-4'>
+                                        <div
+                                            className='pc:w-[150px] laptop:w-[150px] phone:w-full tablet:w-full pb-4 relative'
+                                            ref={reportRef}
+                                        >
                                             <Button
                                                 text={'Gửi phản hồi'}
                                                 fullWidth
@@ -460,8 +525,38 @@ const DetailPost = () => {
                                                 bgColor={'bg-white p-2 border border-[#007aff]'}
                                                 icBefore={<BsFlagFill size={20} color='#007aff' />}
                                                 hover={'hover:underline'}
-                                                onClick={() => navigate(`/${path.LIEN_HE}`)}
+                                                onClick={() => setIsOpenReport(!isOpenReport)}
                                             />
+                                            {
+                                                isOpenReport && (
+                                                    <div className='absolute pc:w-[250px] laptop:w-[250px] pc:left-[110%] pc:top-0 laptop:left-[110%] laptop:top-0 phone:top-full phone:w-full tablet:top-full tablet:w-full bg-primary px-4 py-4 rounded-[8px] z-[999]'>
+                                                        <textarea
+                                                            onFocus={() => setInvalidFileds([])}
+                                                            rows={2}
+                                                            required
+                                                            type='text'
+                                                            placeholder='Nhập lý do báo cáo'
+                                                            id='content'
+                                                            className='outline-none text-sm border w-full border-gray-300 p-2 rounded-[5px] phone:text-[#007aff] phone:bg-[#e7f0fe] tablet:text-[#007aff] tablet:bg-[#e7f0fe]'
+                                                            value={payload.content}
+                                                            onChange={(e) => setPayload({ content: e.target.value })}
+                                                        />
+                                                        <small className='text-[10px] text-red-500'>
+                                                            {
+                                                                invalidFileds?.some(item => item.name === 'content') && invalidFileds?.find(item => item.name === 'content')?.message
+                                                            }
+                                                        </small>
+                                                        <Button
+                                                            text={'Gửi'}
+                                                            fullWidth
+                                                            textStyle={'text-sm text-[#007aff] font-semibold'}
+                                                            bgColor={'bg-white p-2 border border-[#007aff]'}
+                                                            hover={'hover:bg-[#007aff] hover:text-white hover:border-[white]'}
+                                                            onClick={handleCreateReport}
+                                                        />
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -498,8 +593,8 @@ const DetailPost = () => {
                                     {detailPost?.userData?.name}
                                 </h4>
                                 <span className='flex items-center text-sm'>
-                                    <BsDot size={24} color={detailPost?.userData?.statusCode === 'S4' ? '#14c683' : '#e13427'} />
-                                    <span>{detailPost?.userData?.statusCode === 'S4' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</span>
+                                    <BsDot size={24} color={detailPost?.userData?.statusCode === 'S5' ? '#14c683' : '#e13427'} />
+                                    <span>{detailPost?.userData?.statusCode === 'S5' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</span>
                                 </span>
                                 <div className='flex flex-col gap-2 w-full'>
                                     <Button

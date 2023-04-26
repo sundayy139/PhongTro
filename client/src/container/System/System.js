@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import { Outlet } from 'react-router-dom'
 import { HeaderSys, Sidebar } from '../../components/System/index'
 import { TopBar } from '../../components/Public/index'
 
+
 const System = () => {
     const title = 'Quản lý - Phòng trọ';
-
     return (
         <div className='w-screen h-screen bg-primary overflow-hidden relative '>
             <Helmet>

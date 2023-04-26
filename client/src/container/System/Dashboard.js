@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { BreadCrumb, DoughnutChart, LineChart } from '../../components/System';
+import { BarChart, BreadCrumb, DoughnutChart, LineChart } from '../../components/System';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatMoney, getNumberFromString } from '../../utils/fn';
 import * as apis from '../../services/index'
@@ -12,6 +12,9 @@ import notepad from '../../assets/icon/notepad.png';
 import user from '../../assets/icon/user.png';
 import tick from '../../assets/icon/verified.png';
 import money from '../../assets/icon/money.png';
+import icons from '../../utils/icons'
+
+const { BsArrowUp, BsArrowDown } = icons
 
 
 const title = 'Tổng quan - Phòng trọ';
@@ -173,15 +176,26 @@ const Dashboard = () => {
         }
 
         const fetchPaymentCurentMonth = async () => {
-            const res = await apis.apiGetPaymentByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
-            // if (res?.data?.err === 0) {
-            //    setPaymentCurrentMonth()
-            // }
-            console.log(res)
+            const res = await apis.apiGetPaymentByMonth({ status: 'S8', year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
+            if (res?.data?.err === 0) {
+                let total = 0
+                res.data.payments.forEach(item => total += +item.amount)
+                setPaymentCurrentMonth(total != 0 ? total : 1)
+            }
+        }
+
+        const fetchPaymentLastMonth = async () => {
+            const res = await apis.apiGetPaymentByMonth({ status: 'S8', year: new Date().getFullYear(), month: new Date().getMonth() })
+            if (res?.data?.err === 0) {
+                let total = 0
+                res.data.payments.forEach(item => total += +item.amount)
+                setPaymentLastMonth(total != 0 ? total : 1)
+            }
         }
 
 
         fetchPaymentCurentMonth()
+        fetchPaymentLastMonth()
         fetchPaymentSuccess()
     }, [])
 
@@ -320,15 +334,21 @@ const Dashboard = () => {
                             <i className='text-2xl text-center'>
                                 {usersData?.length}
                             </i>
-                            <div className='flex items-center justify-between text-sm'>
-                                <i>
-                                    {
-                                        userCurrentMonth && userLastMonth && userCurrentMonth > userLastMonth
-                                            ?
-                                            `Tăng ${Math.round(userCurrentMonth / userLastMonth)}%`
-                                            : `Giảm ${Math.round(userLastMonth / userCurrentMonth)}%`
-                                    }
-                                </i>
+                            <div className='flex items-center justify-between text-xs'>
+                                {
+                                    userCurrentMonth && userLastMonth && userCurrentMonth > userLastMonth
+                                        ? (
+                                            <i className='flex items-center gap-[2px] text-green-500'>
+                                                {Math.round(userCurrentMonth / userLastMonth)}%
+                                                <BsArrowUp />
+                                            </i>
+                                        ) : (
+                                            <i className='flex items-center gap-[2px] text-red-500'>
+                                                {Math.round(userLastMonth / userCurrentMonth)}%
+                                                <BsArrowDown />
+                                            </i>
+                                        )
+                                }
                                 <span>So với tháng trước</span>
                             </div>
                         </div>
@@ -340,15 +360,21 @@ const Dashboard = () => {
                             <i className='text-2xl text-center'>
                                 {`${formatMoney(totalPayment + '')} VNĐ`}
                             </i>
-                            <div className='flex items-center justify-between text-sm'>
-                                <i>
-                                    {
-                                        postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
-                                            ?
-                                            `Tăng ${Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%`
-                                            : `Giảm ${Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%`
-                                    }
-                                </i>
+                            <div className='flex items-center justify-between text-xs'>
+                                {
+                                    paymentCurrentMonth && paymentLastMonth && paymentCurrentMonth > paymentLastMonth
+                                        ? (
+                                            <i className='flex items-center gap-[2px] text-green-500'>
+                                                {Math.round(paymentCurrentMonth / paymentLastMonth)}%
+                                                <BsArrowUp />
+                                            </i>
+                                        ) : (
+                                            <i className='flex items-center gap-[2px] text-red-500'>
+                                                {Math.round(paymentLastMonth / paymentCurrentMonth)}%
+                                                <BsArrowDown />
+                                            </i>
+                                        )
+                                }
                                 <span>So với tháng trước</span>
                             </div>
                         </div>
@@ -362,15 +388,21 @@ const Dashboard = () => {
                             <i className='text-2xl text-center'>
                                 {allPostsUser?.length}
                             </i>
-                            <div className='flex items-center justify-between text-sm'>
-                                <i>
-                                    {
-                                        postCurrentMonth && postLastMonth && postCurrentMonth > postLastMonth
-                                            ?
-                                            `Tăng ${Math.round(postCurrentMonth / postLastMonth)}%`
-                                            : `Giảm ${Math.round(postLastMonth / postCurrentMonth)}%`
-                                    }
-                                </i>
+                            <div className='flex items-center justify-between text-xs'>
+                                {
+                                    postCurrentMonth && postLastMonth && postCurrentMonth > postLastMonth
+                                        ? (
+                                            <i className='flex items-center gap-[2px] text-green-500'>
+                                                {Math.round(postCurrentMonth / postLastMonth)}%
+                                                <BsArrowUp />
+                                            </i>
+                                        ) : (
+                                            <i className='flex items-center gap-[2px] text-red-500'>
+                                                {Math.round(postLastMonth / postCurrentMonth)}%
+                                                <BsArrowDown />
+                                            </i>
+                                        )
+                                }
                                 <span>So với tháng trước</span>
                             </div>
                         </div>
@@ -382,15 +414,21 @@ const Dashboard = () => {
                             <i className='text-2xl text-center'>
                                 {totalPostSuccess?.length}
                             </i>
-                            <div className='flex items-center justify-between text-sm'>
-                                <i>
-                                    {
-                                        postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
-                                            ?
-                                            `Tăng ${Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%`
-                                            : `Giảm ${Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%`
-                                    }
-                                </i>
+                            <div className='flex items-center justify-between text-xs'>
+                                {
+                                    postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
+                                        ? (
+                                            <i className='flex items-center gap-[2px] text-green-500'>
+                                                {Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%
+                                                <BsArrowUp />
+                                            </i>
+                                        ) : (
+                                            <i className='flex items-center gap-[2px] text-red-500'>
+                                                {Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%
+                                                <BsArrowDown />
+                                            </i>
+                                        )
+                                }
                                 <span>So với tháng trước</span>
                             </div>
                         </div>
@@ -399,7 +437,7 @@ const Dashboard = () => {
                 <div className='flex-auto h-auto bg-primary  rounded-[5px] px-4 py-5'>
                     {
                         Object.entries(chartData1)?.length > 0 && (
-                            <LineChart
+                            <BarChart
                                 text='Biểu đồ số người dùng và bài đăng mới theo tháng'
                                 data={chartData1}
                             />

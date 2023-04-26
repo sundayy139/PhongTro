@@ -4,9 +4,20 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import initRoutes from "./src/routes";
 import connect from './src/config/connectDB';
+import { createServer } from "http";
+import { Server } from "socket.io";
 
-
+const port = process.env.PORT || 8080
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: process.env.CLIENT_URL,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE']
+    }
+});
+
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE']
@@ -19,9 +30,20 @@ initRoutes(app)
 connect()
 
 
+io.on("connection", (socket) => {
+    socket.on('disconnect', () => {
+    })
 
-const port = process.env.PORT || 8080
+    socket.on('newReportCreated', (data) => {
+        socket.broadcast.emit('newReport', data);
+    })
 
-app.listen(port, () => {
+    socket.on('newPostCreated', (data) => {
+        socket.broadcast.emit('newPost', data);
+    })
+});
+
+
+httpServer.listen(port, () => {
     console.log("Server is running on port " + port)
 })

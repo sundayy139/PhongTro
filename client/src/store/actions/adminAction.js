@@ -17,7 +17,7 @@ export const getUsersAdmin = () => async (dispatch) => {
         }
     } catch (error) {
         dispatch({
-            type: actionsType.GET_PRIGET_USERS_ADMINCES,
+            type: actionsType.GET_USERS_ADMIN,
             users: null
         })
     }
@@ -65,4 +65,14 @@ export const setDataBlogEdit = (dataEdit) => ({
 export const clearDataBlogEdit = () => ({
     type: actionsType.CLEAR_DATA_BLOG_EDIT,
     dataEdit: null,
+})
+
+export const setNotification = (notify) => ({
+    type: actionsType.SET_NOTIFICATION,
+    notify: notify,
+})
+
+export const clearNotification = () => ({
+    type: actionsType.CLEAR_NOTIFICATION,
+    notify: null,
 })

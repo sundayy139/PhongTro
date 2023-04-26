@@ -37,7 +37,7 @@ const User = () => {
                                 </span>
                                 <span className='flex items-center'>Số dư:
                                     <span className='font-semibold ml-[2px]'>
-                                        {`${formatMoney(currentUserData?.balance + '')} VNĐ`}
+                                        {currentUserData?.balance !== 0 ? `${formatMoney(currentUserData?.balance + '')} VNĐ` : '0 VNĐ'}
                                     </span>
                                 </span>
                             </div>

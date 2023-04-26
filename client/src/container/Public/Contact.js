@@ -116,7 +116,7 @@ const Contact = () => {
                                 required
                                 type='text'
                                 id='content'
-                                className='outline-none bg-[#e8f0fe] rounded-md tex-[16px] p-[10px] '
+                                className='outline-none bg-[#e8f0fe] rounded-md text-[16px] p-[10px] '
                                 value={payload.content}
                                 onChange={(e) => setPayload(prev => ({ ...prev, content: e.target.value }))}
                             />

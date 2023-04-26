@@ -19,7 +19,10 @@ import {
     BsFillInfoCircleFill,
     BsBookHalf,
     BsCalendarMonth,
-    BsCalendarDay
+    BsCalendarDay,
+    BsArrowUp,
+    BsArrowDown,
+    BsBell
 }
     from 'react-icons/bs';
 import { GrNext } from 'react-icons/gr';
@@ -83,7 +86,10 @@ const icons = {
     MdDashboard,
     TiTimes,
     RxHamburgerMenu,
-    BiArrowBack
+    BiArrowBack,
+    BsArrowUp,
+    BsArrowDown,
+    BsBell
 }
 
 export default icons

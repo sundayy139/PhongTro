@@ -5,7 +5,7 @@ export const apiCreateFeedback = (payload) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/feedback/create",
+                url: "/api/v1/contact/create",
                 data: payload
             })
             resolve(res)

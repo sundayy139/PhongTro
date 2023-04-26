@@ -156,13 +156,13 @@ const ManagePost = () => {
                     >
                         <BsFillPenFill size={15} color="white" />
                     </button>
-                    <button
+                    {/* <button
                         title='Xóa bài đăng'
                         className='bg-red-500 p-2 rounded-[5px]'
                         onClick={() => handleDeletePost(row)}
                     >
                         <BsTrashFill size={15} color="white" />
-                    </button>
+                    </button> */}
                     {
                         row.statusCode === 'S2' && (
                             <button

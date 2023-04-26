@@ -13,10 +13,10 @@ import logo from '../../assets/image/homestay.png';
 import * as actions from '../../store/actions'
 import { Map } from '../../components/Public';
 import { useNavigate } from 'react-router-dom';
-
+import { io } from 'socket.io-client'
 
 const { BsTrashFill, BiArrowBack } = icons
-
+const socket = io(process.env.REACT_APP_SERVER_URL)
 
 const CreatePost = ({ isEdit, setIsShow }) => {
     const { prices, acreages, categories } = useSelector(state => state.app)
@@ -123,6 +123,10 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
+
+                    // Gửi tb tới server khi post được tạo
+                    socket.emit('newPostCreated', { title: finalPayload.title })
+
                 } else {
                     Swal.fire({
                         position: 'center',

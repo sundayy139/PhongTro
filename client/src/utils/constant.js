@@ -17,6 +17,7 @@ import tick from '../assets/icon/verified.png'
 import dollar from '../assets/icon/dollar.png'
 import card from '../assets/icon/debit-cards.png'
 import historypay from '../assets/icon/history-bank.png'
+import report from '../assets/icon/report.png'
 
 
 export const text = {
@@ -218,24 +219,27 @@ export const menuManage = [
         text: "Quản lý tin đăng",
         path: '/he-thong/quan-ly-tin-dang',
         image: notepad
-
     },
     {
         id: 3,
         text: "Nạp tiền",
         path: '/he-thong/nap-tien',
         image: card
-
     },
     {
         id: 4,
-        text: "Tin đã lưu",
-        path: '/tin-da-luu',
-        image: heart
-
+        text: "Lịch sử nạp tiền",
+        path: '/he-thong/lich-su-nap-tien',
+        image: historypay
     },
     {
         id: 5,
+        text: "Tin đã lưu",
+        path: '/tin-da-luu',
+        image: heart
+    },
+    {
+        id: 6,
         text: "Thông tin tài khoản",
         path: '/he-thong/sua-thong-tin',
         image: user
@@ -269,12 +273,18 @@ export const menuAdmin = [
     },
     {
         id: 5,
+        text: "Lịch sử nạp tiền",
+        path: '/he-thong/lich-su-nap-tien',
+        image: historypay
+    },
+    {
+        id: 6,
         text: "Tin đã lưu",
         path: '/tin-da-luu',
         image: heart
     },
     {
-        id: 6,
+        id: 7,
         text: "Thông tin tài khoản",
         path: '/he-thong/sua-thong-tin',
         image: user
@@ -369,42 +379,27 @@ export const menuManageSystem = [
 export const menuManageAdmin = [
     {
         id: 1,
-        text: "Quản lý tin đăng",
-        path: '/he-thong/quan-ly-tat-ca-tin-dang',
-        image: notepad
-    },
-    {
-        id: 2,
-        text: "Quản lý người dùng",
-        path: '/he-thong/quan-ly-nguoi-dung',
-        image: user
-    },
-    {
-        id: 3,
-        text: "Quản lý Blog",
-        path: '/he-thong/quan-ly-blog',
-        image: blog
-    },
-]
-
-export const menuManageStatistic = [
-    {
-        id: 1,
-        text: "Thống kê tổng quan",
+        text: "Tổng quan",
         path: '/he-thong/thong-ke/tong-quan',
         image: dashboard
     },
     {
         id: 2,
-        text: "Thống kê tin đăng",
-        path: '/he-thong/thong-ke/tin-dang',
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tat-ca-tin-dang',
         image: notepad
     },
     {
         id: 3,
-        text: "Thống kê người dùng",
-        path: '/he-thong/thong-ke/nguoi-dung',
+        text: "Quản lý người dùng",
+        path: '/he-thong/quan-ly-nguoi-dung',
         image: user
+    },
+    {
+        id: 4,
+        text: "Quản lý Blog",
+        path: '/he-thong/quan-ly-blog',
+        image: blog
     },
 ]
 
@@ -450,42 +445,39 @@ export const menuManageSidebar = [
 export const menuManageSidebarAdmin = [
     {
         id: 1,
-        text: "Người dùng",
-        path: '/he-thong/quan-ly-nguoi-dung',
-        images: user
-    },
-    {
-        id: 2,
-        text: "Tin đăng",
-        path: '/he-thong/quan-ly-tat-ca-tin-dang',
-        images: notepad
-    },
-    {
-        id: 3,
-        text: "Blog",
-        path: '/he-thong/quan-ly-blog',
-        images: blog
-    },
-]
-
-export const menuStatisticsSidebarAdmin = [
-    {
-        id: 1,
         text: "Tổng quan",
         path: '/he-thong/thong-ke/tong-quan',
         images: dashboard
     },
     {
         id: 2,
-        text: "Người dùng",
-        path: '/he-thong/thong-ke/nguoi-dung',
+        text: "Quản lý người dùng",
+        path: '/he-thong/quan-ly-nguoi-dung',
         images: user
     },
     {
         id: 3,
-        text: "Tin đăng",
-        path: '/he-thong/thong-ke/tin-dang',
+        text: "Quản lý tin đăng",
+        path: '/he-thong/quan-ly-tat-ca-tin-dang',
         images: notepad
+    },
+    {
+        id: 4,
+        text: "Quản lý báo cáo",
+        path: '/he-thong/quan-ly-bao-cao',
+        images: report
+    },
+    {
+        id: 5,
+        text: "Quản lý Blog",
+        path: '/he-thong/quan-ly-blog',
+        images: blog
+    },
+    {
+        id: 6,
+        text: "Thống kê doanh thu",
+        path: '/he-thong/thong-ke/doanh-thu',
+        images: card
     },
 ]
 

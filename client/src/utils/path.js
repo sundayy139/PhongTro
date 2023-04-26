@@ -30,11 +30,12 @@ export const path = {
     PAYMENT_RETURN: 'nap-tien/vnpay-return',
     PAYMENT_HISTORY: 'lich-su-nap-tien',
     RESET_PASSWORD: 'reset-password/:token',
-
-    MANAGE_USERS: 'quan-ly-nguoi-dung',
     MANAGE_POSTS_ADMIN: 'quan-ly-tat-ca-tin-dang',
+    MANAGE_USERS: 'quan-ly-nguoi-dung',
+    MANAGE_REPORT: 'quan-ly-bao-cao',
 
     STATISTICS_POST: 'thong-ke/tin-dang',
     STATISTICS_USER: 'thong-ke/nguoi-dung',
     DASHBOARD: 'thong-ke/tong-quan',
+    STATISTIC_TURNOVER: 'thong-ke/doanh-thu',
 }

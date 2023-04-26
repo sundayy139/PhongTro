@@ -6,6 +6,7 @@ const initialState = {
     allPostsUser: null,
     dataUserEdit: null,
     dataBlogEdit: null,
+    notifications: [],
     msg: ''
 }
 
@@ -42,6 +43,16 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataBlogEdit: null,
+            }
+        case actionsType.SET_NOTIFICATION:
+            return {
+                ...state,
+                notifications: [...state.notifications, action.notify],
+            }
+        case actionsType.CLEAR_NOTIFICATION:
+            return {
+                ...state,
+                notifications: [],
             }
         default:
             return state;

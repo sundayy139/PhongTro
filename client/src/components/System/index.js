@@ -15,3 +15,4 @@ export { default as UpdateBlog } from './UpdateBlog';
 export { default as LineChart } from './LineChart';
 export { default as DoughnutChart } from './DoughnutChart';
 export { default as RichEdittor } from './RichEdittor';
+export { default as BarChart } from './BarChart';

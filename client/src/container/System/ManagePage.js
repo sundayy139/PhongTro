@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Helmet } from 'react-helmet';
 import { BreadCrumb } from '../../components/System'
 import logo from '../../assets/image/homestay.png';
-import { menuManageAdmin, menuManageStatistic, menuManageSystem } from '../../utils/constant';
+import { menuManageAdmin, menuManageSystem } from '../../utils/constant';
 import { Link, useNavigate } from 'react-router-dom';
 import icons from '../../utils/icons';
 import { path } from '../../utils/path';
@@ -145,25 +145,6 @@ const ManagePage = () => {
                                 <div className='pc:border-t pc:border-l pc:border-r laptop:border-t laptop:border-l laptop:border-r phone:bg-white phone:rounded-[5px] tablet:bg-white tablet:rounded-[5px]'>
                                     {
                                         menuManageAdmin.map(item => (
-                                            <Link
-                                                key={item.id}
-                                                to={item.path}
-                                                className='p-4 text-sm flex items-center justify-between border-b'
-                                            >
-                                                <span className='flex items-center gap-3'>
-                                                    <img src={item.image} className='w-4 h-4' />
-                                                    <span>
-                                                        {item.text}
-                                                    </span>
-                                                </span>
-                                                <GrNext size={16} />
-                                            </Link>
-                                        ))
-                                    }
-                                </div>
-                                <div className='pc:border-t pc:border-l pc:border-r laptop:border-t laptop:border-l laptop:border-r phone:bg-white phone:rounded-[5px] tablet:bg-white tablet:rounded-[5px]'>
-                                    {
-                                        menuManageStatistic.map(item => (
                                             <Link
                                                 key={item.id}
                                                 to={item.path}

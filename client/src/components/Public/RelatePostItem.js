@@ -7,7 +7,6 @@ import 'moment/locale/vi';
 import * as apis from '../../services'
 import * as actions from '../../store/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import avatar from '../../assets/image/avatar-person.png'
 import zalo from '../../assets/icon/zalo-icon.png';
 import { path } from '../../utils/path'
 
@@ -153,7 +152,7 @@ const RelatePostItem = ({ images, price, acreage, description, id, address, user
                             </p>
                             <div className='w-full flex items-center justify-between h-[30px] phone:hidden tablet:hidden'>
                                 <span className='flex items-center gap-2 text-sm text-gray-400 h-full phone:hidden tablet:hidden'>
-                                    <img src={avatar} className='w-[30px] h-full object-cover rounded-full' />
+                                    <img src={user?.avatar} className='w-[30px] h-full object-cover rounded-full' />
                                     <span>
                                         {user?.name}
                                     </span>

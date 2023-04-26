@@ -2,17 +2,19 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { path } from './utils/path';
 import { DetailPost, Home, HomePage, Login, Register, LeasePage, SearchDetail, Contact, Blog, DetailBlog, ForgotPassword, ResetPassword, Favourite } from './container/Public/index';
-import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsPost, StatisticsUser, Dashboard, PaymentSuccess, Payment, PayHistory } from './container/System/index';
+import { CreatePost, ManageProfile, ManagePost, System, ChangePassword, ManageUser, ManagePostAdmin, ManagePage, CreateBlog, ManageBlog, StatisticsPost, StatisticsUser, Dashboard, PaymentSuccess, Payment, PayHistory, StatisticTurnover, ManageReport } from './container/System/index';
 import { Auth, IsAdmin } from './middleware/authMiddleware'
 import { useDispatch, useSelector } from 'react-redux';
 import *  as actions from './store/actions'
 
+
 function App() {
 
+  const dispatch = useDispatch()
   const { isLoggedIn } = useSelector(state => state.auth)
   const { flag } = useSelector(state => state.app)
 
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(actions.getCategories());
     dispatch(actions.getAcreages());
@@ -21,12 +23,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    isLoggedIn && dispatch(actions.getPostFavourite());
-  }, [flag, isLoggedIn])
-
-  useEffect(() => {
     setTimeout(() => {
       isLoggedIn && dispatch(actions.getCurrentUser())
+    }, [1000])
+    setTimeout(() => {
+      isLoggedIn && dispatch(actions.getPostFavourite())
     }, [1000])
   }, [isLoggedIn, flag])
 
@@ -65,8 +66,10 @@ function App() {
           <Route path={path.MANAGE_BLOG} element={<IsAdmin><ManageBlog /></IsAdmin>} />
           <Route path={path.CREATE_BLOG} element={<IsAdmin><CreateBlog /></IsAdmin>} />
           <Route path={path.MANAGE_POSTS_ADMIN} element={<IsAdmin><ManagePostAdmin /></IsAdmin>} />
+          <Route path={path.MANAGE_REPORT} element={<IsAdmin><ManageReport /></IsAdmin>} />
           <Route path={path.STATISTICS_POST} element={<IsAdmin><StatisticsPost /></IsAdmin>} />
           <Route path={path.STATISTICS_USER} element={<IsAdmin><StatisticsUser /></IsAdmin>} />
+          <Route path={path.STATISTIC_TURNOVER} element={<IsAdmin><StatisticTurnover /></IsAdmin>} />
           <Route path={path.DASHBOARD} element={<IsAdmin><Dashboard /></IsAdmin>} />
         </Route>
       </Routes>

@@ -10,6 +10,8 @@ import { BreadCrumb, UpdateUser } from '../../components/System';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { BottomBar } from '../../components/Public';
+import { path } from '../../utils/path';
+import { Link } from 'react-router-dom';
 
 
 const { BsFillPenFill, BsTrashFill } = icons
@@ -263,6 +265,14 @@ const ManageUser = () => {
                                         </option>
                                     </select>
                                 </div>
+                            }
+                            actions={
+                                <Link
+                                    to={`/he-thong/${path.STATISTICS_USER}`}
+                                    className='text-sm py-2 px-4 bg-blue-400 rounded-[5px] text-white hover:bg-orange flex items-center gap-1'
+                                >
+                                    Thống kê
+                                </Link>
                             }
                         />
                     )

@@ -95,7 +95,7 @@ const PayHistory = () => {
         },
         {
             name: "Số tiền",
-            selector: (row) => formatMoney(row.amount),
+            selector: (row) => formatMoney(row.amount + ''),
             sortable: true,
         },
         {

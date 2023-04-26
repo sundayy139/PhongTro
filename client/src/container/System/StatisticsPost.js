@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as apis from '../../services/index'
 import { Helmet } from 'react-helmet'
 import logo from '../../assets/image/homestay.png';
-import { BreadCrumb, LineChart } from '../../components/System';
+import { BarChart, BreadCrumb, LineChart } from '../../components/System';
 import { useSelector } from 'react-redux';
 import { BottomBar } from '../../components/Public';
 
@@ -14,6 +14,7 @@ const StatisticsPost = () => {
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Quản lý', link: '/he-thong' },
+        { title: 'Quản lý tin đăng ', link: '/he-thong/quan-ly-tat-ca-tin-dang' },
         { title: 'Thống kê tin đăng' }
     ];
 
@@ -306,7 +307,7 @@ const StatisticsPost = () => {
                     </div>
                     {
                         Object.entries(chartData1)?.length > 0 && (
-                            <LineChart
+                            <BarChart
                                 data={chartData1}
                             />
                         )

@@ -43,13 +43,13 @@ export const apiDeleteUserAdmin = (id) => {
     })
 }
 
-export const apiApprovePost = (postId) => {
+export const apiUpdateStatusPostAdmin = (params) => {
     return new Promise((resolve, reject) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/post/approve-post",
-                params: { postId }
+                url: "/api/v1/post/update-status-post-admin",
+                params: params
             })
             resolve(res)
         } catch (error) {
@@ -58,20 +58,6 @@ export const apiApprovePost = (postId) => {
     })
 }
 
-export const apiRefusePost = (postId) => {
-    return new Promise((resolve, reject) => {
-        try {
-            const res = axios({
-                method: "put",
-                url: "/api/v1/post/refuse-post",
-                params: { postId }
-            })
-            resolve(res)
-        } catch (error) {
-            reject(error)
-        }
-    })
-}
 
 export const apiCreateBlog = (payload) => {
     return new Promise((resolve, reject) => {
@@ -238,3 +224,79 @@ export const apiGetPaymentByMonth = (query) => {
         }
     })
 }
+
+export const apiGetTotalPaymentByMonth = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/payment/total-pay-by-month",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetTotalPaymentByDay = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/payment/total-pay-by-day",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiGetAllReport = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "get",
+                url: "/api/v1/report/all",
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiUpdateStatusReport = (query) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "put",
+                url: "/api/v1/report/update-status",
+                params: query
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const apiDeleteReportAdmin = (reportId) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const res = axios({
+                method: "delete",
+                url: "/api/v1/report/delete-report",
+                params: reportId
+            })
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+

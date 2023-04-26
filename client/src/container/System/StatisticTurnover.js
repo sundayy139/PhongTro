@@ -6,49 +6,37 @@ import { BarChart, BreadCrumb, LineChart } from '../../components/System';
 import { BottomBar } from '../../components/Public';
 
 
-const title = 'Thống kê người dùng - Phòng trọ';
+const title = 'Thống kê doanh thu - Phòng trọ';
 
-const StatisticsUser = () => {
+const StatisticTurnover = () => {
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Quản lý', link: '/he-thong' },
-        { title: 'Quản lý người dùng', link: '/he-thong/quan-ly-nguoi-dung' },
-        { title: 'Thống kê người dùng' }
+        { title: 'Thống kê doanh thu' }
     ];
 
     const [count1, setCount1] = useState('')
     const [label1, setLabel1] = useState('')
     const [count2, setCount2] = useState('')
-    const [count3, setCount3] = useState('')
     const [label2, setLabel2] = useState('')
-    const [count4, setCount4] = useState('')
     const [chartData1, setChartData1] = useState([]);
     const [chartData2, setChartData2] = useState([]);
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
 
     useEffect(() => {
-        const fetchDataNewUser = async () => {
-            const res = await apis.apiGetCountUserByMonth()
+        const fetchDataTotalPaymentByMonth = async () => {
+            const res = await apis.apiGetTotalPaymentByMonth({ status: 'S8' })
             if (res?.data?.err === 0) {
-                const data = res?.data.userCounts
+                const data = res?.data.totalPayments
                 const month = data.map(obj => obj.month)
-                const count = data.map(obj => obj.count)
-                setCount1(count)
+                const total = data.map(obj => obj.total)
+                setCount1(total)
                 setLabel1(month)
             };
         }
-        const fetchDataUserBlocked = async () => {
-            const res = await apis.apiGetCountUserByMonth({ status: 'S6' })
-            if (res?.data?.err === 0) {
-                const data = res?.data.userCounts
-                const count = data.map(obj => obj.count)
-                setCount2(count)
-            };
-        }
 
-        fetchDataNewUser();
-        fetchDataUserBlocked();
+        fetchDataTotalPaymentByMonth();
 
     }, []);
 
@@ -57,7 +45,7 @@ const StatisticsUser = () => {
             labels: label1,
             datasets: [
                 {
-                    label: 'Người dùng đăng kí mới',
+                    label: 'Tổng doanh thu',
                     data: count1,
                     fill: false,
                     borderColor: '#36a2eb',
@@ -66,44 +54,24 @@ const StatisticsUser = () => {
                     pointStyle: 'rectRot',
                     pointRadius: 5,
                 },
-                {
-                    label: 'Người dùng bị khóa',
-                    data: count2,
-                    fill: false,
-                    borderColor: '#ff6384',
-                    backgroundColor: '#ffb1c1',
-                    tension: 0.1,
-                    pointStyle: 'rectRot',
-                    pointRadius: 5,
-                },
             ],
         };
         setChartData1(chartData)
-    }, [count1, count2])
+    }, [count1])
 
     useEffect(() => {
-        const fetchDataNewUser = async () => {
-            const res = await apis.apiGetCountUserByDay({ startDate: startDate, endDate: endDate })
+        const fetchDataTotalPaymentByDay = async () => {
+            const res = await apis.apiGetTotalPaymentByDay({ startDate: startDate, endDate: endDate, status: 'S8' })
             if (res?.data?.err === 0) {
-                const data = res?.data.userCounts
+                const data = res?.data.paymentsDay
                 const date = data.map(obj => obj.date)
-                const count = data.map(obj => obj.count)
+                const count = data.map(obj => obj.total)
                 setLabel2(date)
-                setCount3(count)
-            };
-        }
-        const fetchDataUserBlocked = async () => {
-            const res = await apis.apiGetCountUserByDay({ status: 'S6', startDate: startDate, endDate: endDate })
-            if (res?.data?.err === 0) {
-                const data = res?.data.userCounts
-                const count = data.map(obj => obj.count)
-                setCount4(count)
+                setCount2(count)
             };
         }
 
-        fetchDataNewUser();
-        fetchDataUserBlocked();
-
+        fetchDataTotalPaymentByDay()
     }, [startDate, endDate]);
 
     useEffect(() => {
@@ -111,8 +79,8 @@ const StatisticsUser = () => {
             labels: label2,
             datasets: [
                 {
-                    label: 'Người dùng đăng kí mới',
-                    data: count3,
+                    label: 'Tổng doanh thu',
+                    data: count2,
                     fill: false,
                     borderColor: '#36a2eb',
                     backgroundColor: '#9ad0f5',
@@ -120,20 +88,10 @@ const StatisticsUser = () => {
                     pointStyle: 'rectRot',
                     pointRadius: 5,
                 },
-                {
-                    label: 'Người dùng bị khóa',
-                    data: count4,
-                    fill: false,
-                    borderColor: '#ff6384',
-                    backgroundColor: '#ffb1c1',
-                    tension: 0.1,
-                    pointStyle: 'rectRot',
-                    pointRadius: 5,
-                },
             ],
         };
         setChartData2(chartData)
-    }, [count3, count4])
+    }, [count2])
 
     return (
         <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-2 phone:py-4 phone:relative tablet:px-2 tablet:py-4 tablet:relative'>
@@ -145,7 +103,7 @@ const StatisticsUser = () => {
             <BreadCrumb
                 items={items}
             />
-            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Thống kê người dùng</h1>
+            <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>Thống kê doanh thu</h1>
             <div className='pc:gap-10 pc:py-10 laptop:gap-10 laptop:py-10 phone:w-full phone:mb-10 tablet:mb-10 phone:gap-8 phone:py-4 tablet:w-full tablet:gap-8 tablet:py-4 flex flex-col bg-white rounded-[5px] phone:px-2 tablet:px-2'>
                 <div className='w-full border p-5 bg-primary rounded-[5px]'>
                     {
@@ -192,4 +150,4 @@ const StatisticsUser = () => {
     )
 }
 
-export default StatisticsUser
+export default StatisticTurnover

@@ -31,11 +31,19 @@ const appConfig = {
     ]
 }
 
+const adminConfig = {
+    ...commonConfig,
+    key: 'admin',
+    whitelist: [
+        'notifications',
+    ]
+}
+
 const rootReducer = combineReducers({
     auth: persistReducer(authConfig, authReducer),
     user: userReducer,
     post: postReducer,
-    admin: adminReducer,
+    admin: persistReducer(adminConfig, adminReducer),
     blog: blogReducer,
     app: persistReducer(appConfig, appReducer),
 })

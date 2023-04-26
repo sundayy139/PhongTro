@@ -11,8 +11,10 @@ import * as apis from '../../services/index';
 import logo from '../../assets/image/homestay.png';
 import Swal from 'sweetalert2';
 import { BottomBar } from '../../components/Public';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { path } from '../../utils/path';
 
-const { BsFillPenFill, BsTrashFill, TiTick, TiTimes } = icons
+const { BsFillPenFill, BsTrashFill, TiTick, TiTimes, BsEye, BsEyeSlash } = icons
 
 const title = 'Quản lý tin - Phòng trọ';
 
@@ -52,6 +54,7 @@ const ManagePostAdmin = () => {
         { title: 'Quản lý tất cả bài đăng' }
     ];
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [search, setSearch] = useState('')
     const [isShow, setIsShow] = useState(false)
@@ -126,7 +129,7 @@ const ManagePostAdmin = () => {
             confirmButtonText: 'Yes'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await apis.apiApprovePost(row.id)
+                const res = await apis.apiUpdateStatusPostAdmin({ postId: row.id, status: 'S2' })
                 if (res?.data?.err === 0) {
                     dispatch(actions.setFlag(!flag))
                     Swal.fire(
@@ -150,7 +153,31 @@ const ManagePostAdmin = () => {
             confirmButtonText: 'Yes'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await apis.apiApprovePost(row.id)
+                const res = await apis.apiUpdateStatusPostAdmin({ postId: row.id, status: 'S3' })
+                if (res?.data?.err === 0) {
+                    dispatch(actions.setFlag(!flag))
+                    Swal.fire(
+                        'Updated!',
+                        res?.data?.msg,
+                        'success'
+                    )
+                }
+            }
+        })
+    }
+
+    const handleHidePost = async (row) => {
+        Swal.fire({
+            title: 'Ẩn bài đăng này ?',
+            text: "Xác nhận ẩn bài đăng này khỏi trang chủ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await apis.apiUpdateStatusPostAdmin({ postId: row.id, status: 'S13' })
                 if (res?.data?.err === 0) {
                     dispatch(actions.setFlag(!flag))
                     Swal.fire(
@@ -178,6 +205,18 @@ const ManagePostAdmin = () => {
                     >
                         <BsFillPenFill size={15} color="white" />
                     </button>
+
+                    {
+                        row.statusCode === 'S2' && (
+                            <button
+                                title='Ẩn bài đăng'
+                                className='bg-gray-400 p-2 rounded-[5px]'
+                                onClick={() => handleHidePost(row)}
+                            >
+                                <BsEyeSlash size={15} color="white" />
+                            </button>
+                        )
+                    }
                     <button
                         title='Xóa bài đăng'
                         className='bg-red-500 p-2 rounded-[5px]'
@@ -211,8 +250,9 @@ const ManagePostAdmin = () => {
         },
         {
             name: "Mã tin",
-            selector: (row) => `#${getNumberFromString(row.id)}`,
-
+            selector: (row) => <Link to={`/chi-tiet/${row.id}`} className='cursor-pointer hover:underline text-blue-500' target='_blank'>
+                {`#${getNumberFromString(row.id)}`}
+            </Link>
         },
         {
             name: "Ảnh đại diện",
@@ -262,11 +302,19 @@ const ManagePostAdmin = () => {
                     ? <div className='bg-green-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
                         Chưa cho thuê
                     </div>
-                    : row.statusCode === 'S4'
+                    : row.statusCode === 'S3'
                         ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
-                            Đã cho thuê
+                            Bị từ chối
                         </div>
-                        : ''
+                        : row.statusCode === 'S4'
+                            ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
+                                Đã cho thuê
+                            </div>
+                            : row.statusCode === 'S13'
+                                ? <div className='bg-red-500 text-[10px] text-white p-2 rounded-md font-medium min-w-[85px] text-center '>
+                                    Đã bị ẩn
+                                </div>
+                                : ''
             ,
         },
     ]
@@ -356,6 +404,14 @@ const ManagePostAdmin = () => {
                                         </option>
                                     </select>
                                 </div>
+                            }
+                            actions={
+                                <Link
+                                    to={`/he-thong/${path.STATISTICS_POST}`}
+                                    className='text-sm py-2 px-4 bg-blue-400 rounded-[5px] text-white hover:bg-orange flex items-center gap-1'
+                                >
+                                    Thống kê
+                                </Link>
                             }
                         />
                     )
