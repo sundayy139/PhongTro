@@ -1,10 +1,13 @@
 import React, { memo } from 'react';
+import { useDispatch } from 'react-redux';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { path } from '../../utils/path';
+import * as actions from '../../store/actions'
 
 const ProvinceButton = ({ name, image, province, provinceCode, categoryCode }) => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleSearch = () => {
         let titleSearch = name + ' ' + province
@@ -13,6 +16,7 @@ const ProvinceButton = ({ name, image, province, provinceCode, categoryCode }) =
             pathname: `/${path.SEARCH}`,
             search: createSearchParams({ provinceCode: provinceCode, categoryCode: categoryCode }).toString(),
         }, { state: { titleSearch } })
+        dispatch(actions.setSearchTitle(titleSearch))
     }
 
     return (

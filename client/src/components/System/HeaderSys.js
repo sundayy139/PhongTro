@@ -7,6 +7,7 @@ import Button from './Button'
 import * as actions from '../../store/actions'
 import { io } from 'socket.io-client'
 
+
 const { BsBell } = icons
 const socket = io(process.env.REACT_APP_SERVER_URL)
 
@@ -23,7 +24,7 @@ const HeaderSys = () => {
         })
 
         socket.on('newPost', (data) => {
-            dispatch(actions.setNotification(`Có bài đăng mới được tạp từ người dùng, vui lòng kiểm tra và xử lý.`))
+            dispatch(actions.setNotification(`Có bài đăng mới được tạo từ người dùng, vui lòng kiểm tra và xử lý.`))
         })
     }, [])
 

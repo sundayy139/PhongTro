@@ -163,12 +163,14 @@ const ManageReport = () => {
                                 <button
                                     className='bg-green-500 p-2 rounded-[5px]'
                                     onClick={() => handleConfirmSucessReport(row)}
+                                    title="Đã xử lý"
                                 >
                                     <TiTick size={15} color="white" />
                                 </button>
                                 <button
                                     className='bg-blue-500 p-2 rounded-[5px]'
                                     onClick={() => handleConfirmReport(row)}
+                                    title="Không xử lý"
                                 >
                                     <TiTimes size={15} color="white" />
                                 </button>
@@ -179,6 +181,7 @@ const ManageReport = () => {
                     <button
                         className='bg-red-500 p-2 rounded-[5px]'
                         onClick={() => handleDeleteReport(row)}
+                        title="Xóa báo cáo"
                     >
                         <BsTrashFill size={15} color="white" />
                     </button>

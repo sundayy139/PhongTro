@@ -65,7 +65,7 @@ export const apiCreateNewPost = (data) => {
         try {
             const res = axios({
                 method: "post",
-                url: '/api/v1/post/create-new-post',
+                url: '/api/v1/post/create',
                 data: data
             })
             resolve(res)
@@ -80,7 +80,7 @@ export const apiGetPostsUser = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/post/get-posts-user",
+                url: "/api/v1/post/posts_user",
             })
             resolve(res)
         } catch (error) {
@@ -94,7 +94,7 @@ export const apiUpdatePost = (data) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/post/update-post",
+                url: "/api/v1/post/update",
                 data: data
             })
             resolve(res)
@@ -109,7 +109,7 @@ export const apiDeletePost = (postId) => {
         try {
             const res = axios({
                 method: "delete",
-                url: "/api/v1/post/delete-post",
+                url: "/api/v1/post/delete",
                 params: { postId }
             })
             resolve(res)
@@ -124,7 +124,7 @@ export const apiGetPostById = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/post/post-by-id",
+                url: "/api/v1/post/post_id",
                 params: query
             })
             resolve(res)
@@ -139,7 +139,7 @@ export const apiUpdateStatusPost = (postId) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/post/update-status-post",
+                url: "/api/v1/post/update_status",
                 params: { postId }
             })
             resolve(res)
@@ -169,7 +169,7 @@ export const apiSetFavouritePost = (query) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/post/favourite",
+                url: "/api/v1/post/favourite/add",
                 params: query
             })
             resolve(res)
@@ -184,7 +184,7 @@ export const apiRemoveFavouritePost = (query) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/post/remove-favourite",
+                url: "/api/v1/post/favourite/remove",
                 params: query
             })
             resolve(res)

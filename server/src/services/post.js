@@ -55,7 +55,7 @@ export const getPostsLimitService = (page, { order, ...query }, { priceNumber, a
                 where: queries,
                 raw: true,
                 nest: true,
-                order: order ? [order] : [['order', 'DESC']],
+                order: order ? [order] : [['order', 'DESC'], ['createdAt', 'DESC']],
                 offset: (page - 1) * (+process.env.LIMIT) || 0,
                 limit: +process.env.LIMIT,
                 include: [
@@ -140,7 +140,7 @@ export const getLabelPostService = (categoryCode, provinceCode) => {
                     raw: true,
                     nest: true,
                     attributes: ['labelCode'],
-                    group: ['labelCode', 'labelData.id'],
+                    group: ['labelCode', 'labelData.code'],
                     include: [
                         { model: db.Label, as: 'labelData' },
                     ],

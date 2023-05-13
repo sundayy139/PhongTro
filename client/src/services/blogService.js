@@ -5,7 +5,7 @@ export const apiGetBlogs = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/blog/get-blogs",
+                url: "/api/v1/blog/all",
                 params: query
             })
             resolve(res)
@@ -20,7 +20,7 @@ export const apiGetBlogById = (id) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/blog/get-blog-by-id",
+                url: "/api/v1/blog/blog_id",
                 params: { id }
             })
             resolve(res)

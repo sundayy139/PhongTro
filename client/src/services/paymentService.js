@@ -6,7 +6,7 @@ export const apiCreateVnpayUrl = (data) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/payment/create-payment-url",
+                url: "/api/v1/payment/create_payment_url",
                 data: data
             })
             resolve(res)
@@ -21,7 +21,7 @@ export const apiVnpayReturn = (params) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/payment/vnpay-return",
+                url: "/api/v1/payment/vnpay_return",
                 params: { params }
             })
             resolve(res)
@@ -36,7 +36,7 @@ export const apiGetPaymentHistory = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/payment/pay-history",
+                url: "/api/v1/payment/pay_history",
             })
             resolve(res)
         } catch (error) {

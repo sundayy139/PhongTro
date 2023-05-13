@@ -35,7 +35,7 @@ export const apiChangePassword = (payload) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/auth/change-password",
+                url: "/api/v1/auth/change_password",
                 data: payload
             })
             resolve(res)
@@ -50,7 +50,7 @@ export const apiForgotPassword = (payload) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/auth/forgot-password",
+                url: "/api/v1/auth/forgot_password",
                 data: payload
             })
             resolve(res)
@@ -65,7 +65,7 @@ export const apiResetPassword = (payload) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/auth/reset-password",
+                url: "/api/v1/auth/reset_password",
                 data: payload
             })
             resolve(res)

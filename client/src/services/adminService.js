@@ -5,7 +5,7 @@ export const apiGetUsersAdmin = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/user/get-users",
+                url: "/api/v1/user/all",
             })
             resolve(res)
         } catch (error) {
@@ -19,7 +19,7 @@ export const apiGetPostsAdmin = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/post/get-posts",
+                url: "/api/v1/post/all_post_admin",
             })
             resolve(res)
         } catch (error) {
@@ -33,7 +33,7 @@ export const apiDeleteUserAdmin = (id) => {
         try {
             const res = axios({
                 method: "delete",
-                url: "/api/v1/user/delete-user",
+                url: "/api/v1/user/delete",
                 params: { id }
             })
             resolve(res)
@@ -48,7 +48,7 @@ export const apiUpdateStatusPostAdmin = (params) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/post/update-status-post-admin",
+                url: "/api/v1/post/update_status_post_admin",
                 params: params
             })
             resolve(res)
@@ -64,7 +64,7 @@ export const apiCreateBlog = (payload) => {
         try {
             const res = axios({
                 method: "post",
-                url: "/api/v1/blog/create-blog",
+                url: "/api/v1/blog/create",
                 data: payload
             })
             resolve(res)
@@ -79,7 +79,7 @@ export const apiDeleteBlogAdmin = (id) => {
         try {
             const res = axios({
                 method: "delete",
-                url: "/api/v1/blog/delete-blog",
+                url: "/api/v1/blog/delete",
                 params: { id }
             })
             resolve(res)
@@ -94,7 +94,7 @@ export const apiUpdateBlogAdmin = (payload) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/blog/update-blog",
+                url: "/api/v1/blog/update",
                 data: payload
             })
             resolve(res)
@@ -109,7 +109,7 @@ export const apiGetCountUserByMonth = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/user/get-count-user-by-month",
+                url: "/api/v1/user/count_user_by_month",
                 params: query
             })
             resolve(res)
@@ -124,7 +124,7 @@ export const apiGetCountUserByDay = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/user/get-count-user-by-day",
+                url: "/api/v1/user/count_user_by_day",
                 params: query
             })
             resolve(res)
@@ -139,7 +139,7 @@ export const apiGetUserByMonth = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/user/get-user-by-month",
+                url: "/api/v1/user/user_by_month",
                 params: query
             })
             resolve(res)
@@ -154,7 +154,7 @@ export const apiGetCountPostByMonth = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/post/get-count-post-by-month",
+                url: "/api/v1/post/count_post_by_month",
                 params: query
             })
             resolve(res)
@@ -169,7 +169,7 @@ export const apiGetCountPostByDay = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/post/get-count-post-by-day",
+                url: "/api/v1/post/count_post_by_day",
                 params: query
             })
             resolve(res)
@@ -185,7 +185,7 @@ export const apiGetPostByMonth = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/post/get-post-by-month",
+                url: "/api/v1/post/post_by_month",
                 params: query
             })
             resolve(res)
@@ -200,7 +200,7 @@ export const apiGetPaymentSuccess = () => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/payment/pay-success",
+                url: "/api/v1/payment/pay_success",
             })
             resolve(res)
         } catch (error) {
@@ -215,7 +215,7 @@ export const apiGetPaymentByMonth = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/payment/pay-by-month",
+                url: "/api/v1/payment/pay_by_month",
                 params: query
             })
             resolve(res)
@@ -230,7 +230,7 @@ export const apiGetTotalPaymentByMonth = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/payment/total-pay-by-month",
+                url: "/api/v1/payment/total_pay_by_month",
                 params: query
             })
             resolve(res)
@@ -245,7 +245,7 @@ export const apiGetTotalPaymentByDay = (query) => {
         try {
             const res = axios({
                 method: "get",
-                url: "/api/v1/payment/total-pay-by-day",
+                url: "/api/v1/payment/total_pay_by_day",
                 params: query
             })
             resolve(res)
@@ -274,7 +274,7 @@ export const apiUpdateStatusReport = (query) => {
         try {
             const res = axios({
                 method: "put",
-                url: "/api/v1/report/update-status",
+                url: "/api/v1/report/update_status",
                 params: query
             })
             resolve(res)
@@ -289,7 +289,7 @@ export const apiDeleteReportAdmin = (reportId) => {
         try {
             const res = axios({
                 method: "delete",
-                url: "/api/v1/report/delete-report",
+                url: "/api/v1/report/delete_report",
                 params: reportId
             })
             resolve(res)

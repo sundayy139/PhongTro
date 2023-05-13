@@ -22,7 +22,7 @@ const Contact = () => {
     const handleSubmit = async () => {
         let invalid = validate(payload, setInvalidFileds)
         if (invalid === 0) {
-            const res = await apis.apiCreateFeedback(payload)
+            const res = await apis.apiContactMail(payload)
             if (res?.data?.err === 0) {
                 Swal.fire({
                     title: 'Yeahh..!',
