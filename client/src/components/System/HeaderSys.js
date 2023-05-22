@@ -15,6 +15,7 @@ const HeaderSys = () => {
     const dispatch = useDispatch()
     const { categories } = useSelector(state => state.app)
     const { notifications } = useSelector(state => state.admin)
+    const { currentUserData } = useSelector(state => state.user)
     const [noti, setNoti] = useState()
     const [isShow, setIsShow] = useState(false)
 
@@ -60,17 +61,21 @@ const HeaderSys = () => {
                         ))
                     }
                 </div>
-                <span
-                    className=" cursor-pointer px-2 relative"
-                    onClick={() => setIsShow(!isShow)}
-                >
-                    <BsBell size={25} />
-                    {
-                        noti?.length > 0 && (
-                            <span className='absolute top-[-10px] right-0 w-[18px] h-[18px] rounded-full text-xs p-[2px] bg-secondary2 text-center'>{noti?.length}</span>
-                        )
-                    }
-                </span>
+                {
+                    currentUserData?.role === "admin" && (
+                        <span
+                            className=" cursor-pointer px-2 relative"
+                            onClick={() => setIsShow(!isShow)}
+                        >
+                            <BsBell size={25} />
+                            {
+                                noti?.length > 0 && (
+                                    <span className='absolute top-[-10px] right-0 w-[18px] h-[18px] rounded-full text-xs p-[2px] bg-secondary2 text-center'>{noti?.length}</span>
+                                )
+                            }
+                        </span>
+                    )
+                }
                 {
                     isShow && (
                         <>

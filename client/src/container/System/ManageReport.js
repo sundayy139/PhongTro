@@ -4,8 +4,6 @@ import { Helmet } from 'react-helmet'
 import { BreadCrumb, UpdateBlog } from '../../components/System';
 import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
-import { path } from '../../utils/path';
-import { BsPlusCircle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions'
 import icons from '../../utils/icons'
@@ -248,7 +246,7 @@ const ManageReport = () => {
                 items={items}
             />
             <h1 className='font-[600] pc:text-[35px] laptop:text-[35px] phone:text-[25px] tablet:text-[25px] py-4 border-b border-gray-200'>
-                Quản lý blog
+                Quản lý báo cáo
             </h1>
             <div className='py-6 bg-white rounded-[5px] phone:mb-10 tablet:mb-10'>
                 <DataTable
@@ -270,15 +268,6 @@ const ManageReport = () => {
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
-                    }
-                    actions={
-                        <Link
-                            to={`/he-thong/${path.CREATE_BLOG}`}
-                            className='text-sm py-2 px-4 bg-blue-400 rounded-[5px] text-white hover:bg-orange flex items-center gap-1'
-                        >
-                            <BsPlusCircle size={15} />
-                            Tạo mới
-                        </Link>
                     }
                 />
                 {
