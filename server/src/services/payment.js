@@ -194,7 +194,8 @@ export const paymentHistoryService = (id) => {
                 const history = await db.Payment.findAll({
                     where: {
                         userId: id
-                    }
+                    },
+                    order: [['createdAt', 'DESC']]
                 })
                 resolve({
                     err: 0,

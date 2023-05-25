@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatVietnameseToString, getNumberFromString } from '../../utils/fn'
@@ -19,6 +19,21 @@ const HeaderSys = () => {
     const [noti, setNoti] = useState()
     const [isShow, setIsShow] = useState(false)
 
+    const notiRef = useRef()
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (notiRef?.current && !notiRef?.current?.contains(event.target)) {
+                setIsShow(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [notiRef]);
+
     useEffect(() => {
         socket.on('newReport', (data) => {
             dispatch(actions.setNotification(`Có một báo cáo mới từ người dùng về bài viết #${getNumberFromString(data.postId)}, vui lòng kiểm tra và xử lý.`))
@@ -35,12 +50,12 @@ const HeaderSys = () => {
 
     return (
         <div className='w-full bg-secondary1 px-4  shadow-md relative'>
-            <div className='w-full h-full flex items-center text-white text-sm justify-between'>
+            <div ref={notiRef} className='w-full h-full flex items-center text-white text-sm justify-between'>
                 <div className=' flex items-center  gap-3'>
                     <Link
                         to={"/"}
                         className='w-[224px] text-lg font-bold pl-4'>
-                        Phongtro123.com
+                        PhongtroSundayy
                     </Link>
                     <Link
                         to={"/"}

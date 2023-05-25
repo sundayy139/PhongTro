@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import logo from '../../assets/image/logo-phongtro.svg'
+import logo from '../../assets/image/logo-phongtro.png'
 import { Button, User } from './index';
 import icons from '../../utils/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -81,7 +81,7 @@ const TopBar = () => {
                 <img
                     src={logo}
                     alt="logo"
-                    className='w-full h-full object-contain'
+                    className='w-full h-full object-cover'
                 />
             </Link>
             {/* Menu responsive */}

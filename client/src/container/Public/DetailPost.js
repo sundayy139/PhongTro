@@ -442,13 +442,21 @@ const DetailPost = () => {
                                                     </tr>
                                                     <tr className="bg-white">
                                                         <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777]">
+                                                            Gói tin:
+                                                        </td>
+                                                        <td className={`pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 capitalize ${detailPost?.order === 3 ? "text-[#E13427]" : detailPost?.order === 2 ? "text-[#ea2e9d]" : detailPost?.order === 1 ? "text-[#3763e0]" : ''} `}>
+                                                            {detailPost?.order === 3 ? "Tin VIPPRO" : detailPost?.order === 2 ? "Tin VIP" : detailPost?.order === 1 ? "Tin thường" : ''}
+                                                        </td>
+                                                    </tr>
+                                                    <tr className="pc:bg-[#f5f5f5] laptop:bg-[#f5f5f5]">
+                                                        <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777]">
                                                             Ngày đăng:
                                                         </td>
                                                         <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 capitalize">
                                                             {moment(moment.utc(detailPost?.createdAt)).local().format('dddd, HH:SS DD/MM/YYYY')}
                                                         </td>
                                                     </tr>
-                                                    <tr className="pc:bg-[#f5f5f5] laptop:bg-[#f5f5f5]">
+                                                    <tr className="bg-white">
                                                         <td className="pc:px-6 pc:py-3 laptop:px-6 laptop:py-3 phone:py-2 phone:text-[#777777] tablet:py-2 tablet:text-[#777777]">
                                                             Ngày hết hạn:
                                                         </td>
