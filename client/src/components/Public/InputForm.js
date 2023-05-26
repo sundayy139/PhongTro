@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import icons from '../../utils/icons';
 
 const {
@@ -55,4 +55,4 @@ const InputForm = ({ id, label, value, setValue, type, name, invalidFileds, setI
     )
 }
 
-export default InputForm
+export default memo(InputForm)

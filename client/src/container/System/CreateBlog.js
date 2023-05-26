@@ -19,12 +19,14 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
     const items = [
         { title: 'Trang chủ', link: '/' },
         { title: 'Quản lý', link: '/he-thong' },
+        { title: 'Quản lý blog', link: '/he-thong/quan-ly-blog' },
         { title: isEdit ? 'Chỉnh sửa blog' : 'Tạo mới blog' }
     ];
     const navigate = useNavigate()
     const [invalidFileds, setInvalidFileds] = useState([])
     const { dataBlogEdit } = useSelector(state => state.admin)
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingBtn, setIsLoadingBtn] = useState(false)
     const [payload, setPayload] = useState({
         descHTML: dataBlogEdit?.descHTML ? dataBlogEdit.descHTML : "",
         title: dataBlogEdit?.title ? dataBlogEdit.title : "",
@@ -53,6 +55,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
     const handleSubmit = async () => {
         let invalid = validate(payload, setInvalidFileds)
         if (invalid === 0) {
+            setIsLoadingBtn(true)
             if (dataBlogEdit && isEdit) {
                 let finalPayload = {
                     ...payload,
@@ -73,6 +76,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                             setIsShow(false)
                         }
                     })
+                    setIsLoadingBtn(false)
                 } else {
                     Swal.fire({
                         position: 'center',
@@ -82,6 +86,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
+                    setIsLoadingBtn(false)
                 }
             } else {
                 const res = await apis.apiCreateBlog(payload)
@@ -99,6 +104,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
+                    setIsLoadingBtn(false)
                 } else {
                     Swal.fire({
                         position: 'center',
@@ -108,6 +114,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
+                    setIsLoadingBtn(false)
                 }
             }
         }
@@ -208,18 +215,18 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                             <Button
                                 text={'Cập nhật'}
                                 textStyle={'text-[17px] text-white'}
-                                bgColor={'bg-[#28a745]'}
+                                bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                 fullWidth
-                                hover={'hover:bg-[#218838]'}
+                                hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                 onClick={handleSubmit}
                             />
                         ) : (
                             <Button
                                 text={'Xác nhận'}
                                 textStyle={'text-[17px] text-white'}
-                                bgColor={'bg-[#28a745]'}
+                                bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                 fullWidth
-                                hover={'hover:bg-[#218838]'}
+                                hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                 onClick={handleSubmit}
                             />
                         )
@@ -240,19 +247,19 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                             <Button
                                 text={'Cập nhật'}
                                 textStyle={'text-[17px] text-white'}
-                                bgColor={'bg-[#28a745]'}
+                                bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                 fullWidth
                                 iconBefore
-                                hover={'hover:bg-[#218838]'}
+                                hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                 onClick={handleSubmit}
                             />
                         ) : (
                             <Button
                                 text={'Xác nhận'}
                                 textStyle={'text-[17px] text-white'}
-                                bgColor={'bg-[#28a745]'}
+                                bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                 fullWidth
-                                hover={'hover:bg-[#218838]'}
+                                hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                 onClick={handleSubmit}
                             />
                         )

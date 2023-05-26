@@ -24,6 +24,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
     const navigate = useNavigate()
     const [invalidFileds, setInvalidFileds] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingBtn, setIsLoadingBtn] = useState(false)
     const [title, setTitle] = useState([])
     const [userData, setUserData] = useState(null)
     const { currentUserData } = useSelector(state => state.user)
@@ -65,6 +66,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
     const handleSubmit = async () => {
         let invalid = validate(payload, setInvalidFileds)
         if (invalid === 0) {
+            setIsLoadingBtn(true)
             const res = await apis.apiUpdateUserProfile(payload)
             if (res?.data?.err === 0) {
                 dispatch(actions.getCurrentUser())
@@ -78,6 +80,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                 })
                 isEdit && setIsShow(false)
                 isEdit && dispatch(actions.getUsersAdmin())
+                setIsLoadingBtn(false)
             } else {
                 Swal.fire({
                     position: 'center',
@@ -87,6 +90,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK'
                 })
+                setIsLoadingBtn(false)
             }
         }
     }
@@ -278,9 +282,9 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                     <Button
                         text={'Lưu & cập nhật'}
                         textStyle={'text-[17px] text-white'}
-                        bgColor={'bg-[#007bff]'}
+                        bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#007bff]'}`}
                         fullWidth
-                        hover={'hover:bg-[#0069d9]'}
+                        hover={`${isLoadingBtn ? '' : 'hover:bg-[#0069d9]'}`}
                         onClick={handleSubmit}
                     />
                 </div>
@@ -297,9 +301,9 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                     <Button
                         text={'Lưu & cập nhật'}
                         textStyle={'text-[17px] text-white'}
-                        bgColor={'bg-[#007bff]'}
+                        bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#007bff]'}`}
                         fullWidth
-                        hover={'hover:bg-[#0069d9]'}
+                        hover={`${isLoadingBtn ? '' : 'hover:bg-[#0069d9]'}`}
                         onClick={handleSubmit}
                     />
                 </div>

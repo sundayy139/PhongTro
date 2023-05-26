@@ -10,6 +10,7 @@ router.get('/vnpay_return', paymentController.paymentReturn);
 router.get('/pay_history', paymentController.paymentHistory);
 router.use(verifyAdmin)
 router.get('/pay_success', paymentController.getPaymentSuccess);
+router.get('/total_pay', paymentController.getTotalPayment);
 router.get('/pay_by_month', paymentController.getPaymentByMonth);
 router.get('/total_pay_by_month', paymentController.getTotalPaymentByMonth);
 router.get('/total_pay_by_day', paymentController.getTotalPaymentByDay);

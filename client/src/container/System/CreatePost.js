@@ -46,6 +46,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
     const [imagesPreview, setImagesPreview] = useState([])
     const [title, setTitle] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingBtn, setIsLoadingBtn] = useState(false)
     const dispatch = useDispatch()
     const { flag } = useSelector(state => state.app)
 
@@ -70,6 +71,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
         let invalid = validate(finalPayload, setInvalidFileds)
 
         if (invalid === 0) {
+            setIsLoadingBtn(true)
             if (dataEdit && isEdit) {
                 finalPayload.postId = dataEdit.id
                 const res = await apis.apiUpdatePost(finalPayload)
@@ -87,6 +89,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                             setIsShow(false)
                         }
                     })
+                    setIsLoadingBtn(false)
                 } else {
                     Swal.fire({
                         position: 'center',
@@ -96,6 +99,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
+                    setIsLoadingBtn(false)
                 }
             } else {
                 const res = await apis.apiCreateNewPost(finalPayload)
@@ -123,7 +127,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
-
+                    setIsLoadingBtn(false)
                     // Gửi tb tới server khi post được tạo
                     socket.emit('newPostCreated', { title: finalPayload.title })
 
@@ -136,6 +140,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                         showConfirmButton: false,
                         timer: 2000
                     })
+                    setIsLoadingBtn(false)
                 }
             }
         }
@@ -332,18 +337,18 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                                 <Button
                                     text={'Cập nhật'}
                                     textStyle={'text-[17px] text-white'}
-                                    bgColor={'bg-[#28a745]'}
+                                    bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                     fullWidth
-                                    hover={'hover:bg-[#218838]'}
+                                    hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                     onClick={handleSubmit}
                                 />
                             ) : (
                                 <Button
                                     text={'Xác nhận'}
                                     textStyle={'text-[17px] text-white'}
-                                    bgColor={'bg-[#28a745]'}
+                                    bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                     fullWidth
-                                    hover={'hover:bg-[#218838]'}
+                                    hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                     onClick={handleSubmit}
                                 />
                             )
@@ -365,19 +370,19 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                             <Button
                                 text={'Cập nhật'}
                                 textStyle={'text-[17px] text-white'}
-                                bgColor={'bg-[#28a745]'}
+                                bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                 fullWidth
                                 iconBefore
-                                hover={'hover:bg-[#218838]'}
+                                hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                 onClick={handleSubmit}
                             />
                         ) : (
                             <Button
                                 text={'Xác nhận'}
                                 textStyle={'text-[17px] text-white'}
-                                bgColor={'bg-[#28a745]'}
+                                bgColor={`${isLoadingBtn ? 'bg-primary' : 'bg-[#28a745]'}`}
                                 fullWidth
-                                hover={'hover:bg-[#218838]'}
+                                hover={`${isLoadingBtn ? '' : 'hover:bg-[#218838]'}`}
                                 onClick={handleSubmit}
                             />
                         )

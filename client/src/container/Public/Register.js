@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, InputForm } from '../../components/Public/index';
 import * as apis from '../../services';
-import { isVietnamesePhoneNumber, validate, validateEmail } from '../../utils/fn';
+import { validate } from '../../utils/fn';
 import { Helmet } from 'react-helmet'
 import Swal from 'sweetalert2'
 
@@ -12,6 +12,7 @@ const title = 'Đăng ký - Phòng trọ';
 const Register = () => {
     const navigate = useNavigate();
     const [invalidFileds, setInvalidFileds] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const [payload, setPayload] = useState({
         name: '',
         phone: '',
@@ -23,6 +24,7 @@ const Register = () => {
     const handleRegister = async () => {
         let invalid = validate(payload, setInvalidFileds)
         if (invalid === 0) {
+            setIsLoading(true)
             const response = await apis.apiRegister(payload)
             if (response?.data?.err === 0) {
                 Swal.fire({
@@ -34,7 +36,8 @@ const Register = () => {
                     timer: 2000
                 })
                 navigate('/dang-nhap')
-                // await apis.apiRegisterMail(payload)
+                await apis.apiRegisterMail(payload)
+                setIsLoading(false)
             } else {
                 Swal.fire({
                     position: 'center',
@@ -44,6 +47,7 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 2000
                 })
+                setIsLoading(false)
             }
         }
     }
@@ -97,11 +101,11 @@ const Register = () => {
                 />
                 <Button
                     text={'Tạo tài khoản'}
-                    bgColor={'bg-secondary1'}
+                    bgColor={`${isLoading ? 'bg-primary' : 'bg-secondary1'}`}
                     textStyle={'text-white font-semibold py-[10px]'}
                     fullWidth
                     onClick={handleRegister}
-                    hover={'hover:bg-orange'}
+                    hover={`${isLoading ? '' : 'hover:bg-orange'}`}
                 />
             </div>
             <div className='flex flex-col text-sm text mb-[20px] mt-[30px]'>

@@ -162,34 +162,23 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchPaymentSuccess = async () => {
-            const res = await apis.apiGetPaymentSuccess()
+            const res = await apis.apiGetTotalPayment()
             if (res?.data?.err === 0) {
-                let results = res.data.payments
-                let total = 0
-
-                results.forEach(item => {
-                    total += +item.amount
-                })
-
-                setTotalPayment(total)
+                setTotalPayment(res.data.payments)
             }
         }
 
         const fetchPaymentCurentMonth = async () => {
-            const res = await apis.apiGetPaymentByMonth({ status: 'S8', year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
+            const res = await apis.apiGetPaymentByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 })
             if (res?.data?.err === 0) {
-                let total = 0
-                res.data.payments.forEach(item => total += +item.amount)
-                setPaymentCurrentMonth(total != 0 ? total : 1)
+                setPaymentCurrentMonth(res.data.payments != 0 ? res.data.payments : 1)
             }
         }
 
         const fetchPaymentLastMonth = async () => {
-            const res = await apis.apiGetPaymentByMonth({ status: 'S8', year: new Date().getFullYear(), month: new Date().getMonth() })
+            const res = await apis.apiGetPaymentByMonth({ year: new Date().getFullYear(), month: new Date().getMonth() })
             if (res?.data?.err === 0) {
-                let total = 0
-                res.data.payments.forEach(item => total += +item.amount)
-                setPaymentLastMonth(total != 0 ? total : 1)
+                setPaymentLastMonth(res.data.payments != 0 ? res.data.payments : 1)
             }
         }
 
@@ -339,12 +328,12 @@ const Dashboard = () => {
                                     userCurrentMonth && userLastMonth && userCurrentMonth > userLastMonth
                                         ? (
                                             <i className='flex items-center gap-[2px] text-green-500'>
-                                                {Math.round(userCurrentMonth / userLastMonth)}%
+                                                {Math.round(userCurrentMonth / userLastMonth) * 100}%
                                                 <BsArrowUp />
                                             </i>
                                         ) : (
                                             <i className='flex items-center gap-[2px] text-red-500'>
-                                                {Math.round(userLastMonth / userCurrentMonth)}%
+                                                {Math.round(userLastMonth / userCurrentMonth) * 100}%
                                                 <BsArrowDown />
                                             </i>
                                         )
@@ -365,12 +354,12 @@ const Dashboard = () => {
                                     paymentCurrentMonth && paymentLastMonth && paymentCurrentMonth > paymentLastMonth
                                         ? (
                                             <i className='flex items-center gap-[2px] text-green-500'>
-                                                {Math.round(paymentCurrentMonth / paymentLastMonth)}%
+                                                {Math.round(paymentCurrentMonth / paymentLastMonth) * 100}%
                                                 <BsArrowUp />
                                             </i>
                                         ) : (
                                             <i className='flex items-center gap-[2px] text-red-500'>
-                                                {Math.round(paymentLastMonth / paymentCurrentMonth)}%
+                                                {Math.round(paymentLastMonth / paymentCurrentMonth) * 100}%
                                                 <BsArrowDown />
                                             </i>
                                         )
@@ -393,12 +382,12 @@ const Dashboard = () => {
                                     postCurrentMonth && postLastMonth && postCurrentMonth > postLastMonth
                                         ? (
                                             <i className='flex items-center gap-[2px] text-green-500'>
-                                                {Math.round(postCurrentMonth / postLastMonth)}%
+                                                {Math.round(postCurrentMonth / postLastMonth) * 100}%
                                                 <BsArrowUp />
                                             </i>
                                         ) : (
                                             <i className='flex items-center gap-[2px] text-red-500'>
-                                                {Math.round(postLastMonth / postCurrentMonth)}%
+                                                {Math.round(postLastMonth / postCurrentMonth) * 100}%
                                                 <BsArrowDown />
                                             </i>
                                         )
@@ -419,12 +408,12 @@ const Dashboard = () => {
                                     postSuccessCurrentMonth && postSuccessLastMonth && postSuccessCurrentMonth > postSuccessLastMonth
                                         ? (
                                             <i className='flex items-center gap-[2px] text-green-500'>
-                                                {Math.round(postSuccessCurrentMonth / postSuccessLastMonth)}%
+                                                {Math.round(postSuccessCurrentMonth / postSuccessLastMonth) * 100}%
                                                 <BsArrowUp />
                                             </i>
                                         ) : (
                                             <i className='flex items-center gap-[2px] text-red-500'>
-                                                {Math.round(postSuccessLastMonth / postSuccessCurrentMonth)}%
+                                                {Math.round(postSuccessLastMonth / postSuccessCurrentMonth) * 100}%
                                                 <BsArrowDown />
                                             </i>
                                         )

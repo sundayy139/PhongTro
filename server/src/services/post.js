@@ -815,7 +815,6 @@ export const updateStatusPostAdminService = (postId, status) => {
     })
 }
 
-
 // GET COUNT POST BY MONTH ADMIN
 export const getCountPostByMonthService = (status, categoryCode) => {
     return new Promise(async (resolve, reject) => {
