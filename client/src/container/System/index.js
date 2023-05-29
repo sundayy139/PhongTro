@@ -16,3 +16,4 @@ export { default as Payment } from './Payment';
 export { default as PaymentSuccess } from './PaymentSuccess';
 export { default as PayHistory } from './PayHistory';
 export { default as StatisticTurnover } from './StatisticTurnover';
+export { default as PriceList } from './PriceList';

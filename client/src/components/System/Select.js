@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, setInvalidFileds, disabled }) => {
+const Select = ({ label, options, value, setValue, type, invalidFileds, setInvalidFileds, disabled }) => {
 
     const handleTextErr = () => {
         let invalidName = invalidFileds?.find(item => item.name === type)
@@ -11,14 +11,14 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
 
     return (
         <div className='flex flex-col gap-2 w-full text-sm'>
-            <label htmlFor='select-address' className='font-semibold'>
+            <label htmlFor={type} className='font-semibold'>
                 {label}
             </label>
             <select
                 disabled={disabled ? true : false}
                 value={value || ''}
                 onChange={(e) => setValue(e.target.value)}
-                id='select-address'
+                id={type}
                 className='outline-none border border-gray-300 p-2 rounded-[5px] phone:font-semibold phone:text-[#007aff] phone:bg-[#e7f0fe] tablet:font-semibold tablet:text-[#007aff] tablet:bg-[#e7f0fe]'
                 onFocus={() => setInvalidFileds([])}
             >
@@ -79,4 +79,4 @@ const SelectAddress = ({ label, options, value, setValue, type, invalidFileds, s
     )
 }
 
-export default memo(SelectAddress)
+export default memo(Select)

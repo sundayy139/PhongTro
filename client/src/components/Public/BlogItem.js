@@ -28,6 +28,7 @@ const BlogItem = ({ image, title, descHTML, id, isLoading }) => {
                             <img
                                 src={image}
                                 className='w-full h-full object-cover rounded-[5px]'
+                                alt=''
                             />
                         </Link>
                         <div className='flex-auto ml-4 flex flex-col justify-between pc:h-[140px] laptop:h-[140px] phone:h-[70px] tablet:h-[70px]'>

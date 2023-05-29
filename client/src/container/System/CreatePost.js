@@ -65,7 +65,6 @@ const CreatePost = ({ isEdit, setIsShow }) => {
             province: arrProvinceString[arrProvinceString?.length - 1].includes('Thành phố')
                 ? arrProvinceString[arrProvinceString?.length - 1].replace('Thành phố ', '')
                 : arrProvinceString[arrProvinceString?.length - 1].replace('Tỉnh ', ''),
-            pricePerDay: +payload.type === 1 ? 2000 : +payload.type === 2 ? 10000 : +payload.type === 3 ? 20000 : ''
         }
 
         let invalid = validate(finalPayload, setInvalidFileds)
@@ -316,6 +315,7 @@ const CreatePost = ({ isEdit, setIsShow }) => {
                                                 <img
                                                     src={item}
                                                     className="w-full h-full object-contain"
+                                                    alt=''
                                                 />
                                                 <span
                                                     className='absolute top-0 right-0 p-2 bg-secondary rounded-full cursor-pointer hover:opacity-80'

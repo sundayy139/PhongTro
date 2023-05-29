@@ -188,6 +188,8 @@ const Dashboard = () => {
         fetchPaymentSuccess()
     }, [])
 
+    console.log(totalPayment)
+
     const columns = [
         {
             name: "Mã người dùng",

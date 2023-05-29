@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createSearchParams, useNavigate, useParams } from 'react-router-dom'
-import { Button, InputForm, Map, NewPost, SidebarItem, Skeleton, Slick } from '../../components/Public/index';
+import { Button, Map, NewPost, SidebarItem, Skeleton, Slick } from '../../components/Public/index';
 import * as apis from '../../services';
 import logo from '../../assets/image/homestay.png';
 import { Helmet } from 'react-helmet'
@@ -595,6 +595,7 @@ const DetailPost = () => {
                                     <img
                                         className='w-full h-full object-contain rounded-full'
                                         src={avatar || detailPost?.userData?.avatar}
+                                        alt=''
                                     />
                                 </div>
                                 <h4 className='text-[21px] text-[#000] font-semibold'>
@@ -620,7 +621,7 @@ const DetailPost = () => {
                                         textStyle={'text-lg font-semibold'}
                                         bgColor={'bg-white py-1 border border-[#333333]'}
                                         hover={'hover:underline'}
-                                        icBefore={<img src={zalo} className='w-[25px] h-[25px] object-contain rounded-full' />}
+                                        icBefore={<img src={zalo} className='w-[25px] h-[25px] object-contain rounded-full' alt='' />}
                                         onClick={() => window.open(`https://zalo.me/${detailPost?.userData?.phone}`)}
                                     />
                                 </div>

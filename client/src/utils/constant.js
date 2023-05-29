@@ -13,7 +13,6 @@ import userBb from '../assets/icon/user-black.png'
 import dashboard from '../assets/icon/dashboard.png'
 import blog from '../assets/icon/blog.png'
 import profile from '../assets/icon/notification.png'
-import tick from '../assets/icon/verified.png'
 import dollar from '../assets/icon/dollar.png'
 import card from '../assets/icon/debit-cards.png'
 import historypay from '../assets/icon/history-bank.png'
@@ -397,9 +396,27 @@ export const menuManageAdmin = [
     },
     {
         id: 4,
+        text: "Quản lý Báo cáo",
+        path: '/he-thong/quan-ly-bao-cao',
+        image: report
+    },
+    {
+        id: 5,
         text: "Quản lý Blog",
         path: '/he-thong/quan-ly-blog',
         image: blog
+    },
+    {
+        id: 6,
+        text: "Thống kê doanh thu",
+        path: '/he-thong/thong-ke/doanh-thu',
+        image: card
+    },
+    {
+        id: 7,
+        text: "Bảng giá",
+        path: '/he-thong/bang-gia',
+        image: historypay
     },
 ]
 
@@ -439,7 +456,7 @@ export const menuManageSidebar = [
         text: "Liên hệ",
         path: '/lien-he',
         images: chat
-    }
+    },
 ]
 
 export const menuManageSidebarAdmin = [
@@ -478,6 +495,12 @@ export const menuManageSidebarAdmin = [
         text: "Thống kê doanh thu",
         path: '/he-thong/thong-ke/doanh-thu',
         images: card
+    },
+    {
+        id: 7,
+        text: "Bảng giá",
+        path: '/he-thong/bang-gia',
+        images: historypay
     },
 ]
 

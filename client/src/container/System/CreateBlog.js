@@ -173,6 +173,7 @@ const CreateBlog = ({ isEdit, setIsShow }) => {
                                                     <img
                                                         src={payload.image}
                                                         className='w-full h-full rounded-[5px] object-cover'
+                                                        alt=''
                                                     />
                                                 )
                                             }

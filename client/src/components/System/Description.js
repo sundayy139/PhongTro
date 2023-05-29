@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Select, InputDisable, InputForm } from './index'
+import * as apis from '../../services'
 
 const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds, isEdit }) => {
     const { categories } = useSelector(state => state.app)
@@ -10,6 +11,7 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds, isE
     const [categoryCode, setCategoryCode] = useState(payload?.categoryCode)
     const [targetCode, setTargetCode] = useState(payload?.target)
     const [typeCode, setTypeCode] = useState(payload?.type)
+    const [priceList, setPriceList] = useState([])
 
     useEffect(() => {
         setPayload((prev) => ({
@@ -36,11 +38,16 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds, isE
         { id: 3, code: 'Nữ', value: 'Nữ' },
     ]
 
-    const types = [
-        { id: 1, value: 'Tin thường (2.000đ/ngày)', code: 1 },
-        { id: 2, value: 'Tin VIP (10.000đ/ngày)', code: 2 },
-        { id: 3, value: 'Tin PROVIP (20.000đ/ngày)', code: 3 },
-    ]
+    useEffect(() => {
+        const fetchPriceList = async () => {
+            const res = await apis.apiGetPriceList()
+            if (res?.data?.err === 0) {
+                setPriceList(res?.data?.listPrice)
+            }
+        }
+
+        fetchPriceList()
+    }, [])
 
     return (
         <div className='flex flex-col w-full pc:gap-9 laptop:gap-9 phone:gap-4 phone:px-2 phone:py-4 phone:bg-white phone:rounded-[5px] tablet:gap-4'>
@@ -122,16 +129,38 @@ const Description = ({ payload, setPayload, invalidFileds, setInvalidFileds, isE
                     invalidFileds={invalidFileds}
                     setInvalidFileds={setInvalidFileds}
                 />
-                <Select
-                    disabled={isEdit ? true : false}
-                    label={"Loại tin"}
-                    options={types}
-                    type={'type'}
-                    value={typeCode}
-                    setValue={setTypeCode}
-                    invalidFileds={invalidFileds}
-                    setInvalidFileds={setInvalidFileds}
-                />
+                <div className='flex flex-col gap-2 w-full text-sm'>
+                    <label htmlFor='select-address' className='font-semibold'>
+                        Loại tin
+                    </label>
+                    <select
+                        value={typeCode || ''}
+                        disabled={isEdit ? true : false}
+                        className='outline-none border border-gray-300 p-2 rounded-[5px] phone:font-semibold phone:text-[#007aff] phone:bg-[#e7f0fe] tablet:font-semibold tablet:text-[#007aff] tablet:bg-[#e7f0fe]'
+                        onChange={(e) => setTypeCode(e.target.value)}
+                    >
+                        <option
+                            value=''
+                        >
+                            --Chọn loại tin--
+                        </option>
+                        {
+                            priceList?.map(item => (
+                                <option
+                                    key={item?.id}
+                                    value={item?.id}
+                                >
+                                    {`${item.title} (${item?.price} đồng/ngày)`}
+                                </option>
+                            ))
+                        }
+                    </select>
+                    <small className='text-[10px] text-red-500'>
+                        {
+                            invalidFileds?.some(item => item.name === 'type') && invalidFileds?.find(item => item.name === 'type')?.message
+                        }
+                    </small>
+                </div>
                 <InputForm
                     disabled={isEdit ? true : false}
                     label={"Số ngày hiển thị tin"}

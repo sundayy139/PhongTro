@@ -10,6 +10,7 @@ import userRouter from './user'
 import blogRouter from './blog'
 import paymentRouter from './payment'
 import reportRouter from './report'
+import listPriceRouter from './listPrice'
 
 const initRoutes = (app) => {
     app.use('/api/v1/auth', authRouter)
@@ -24,6 +25,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/blog', blogRouter)
     app.use('/api/v1/payment', paymentRouter)
     app.use('/api/v1/report', reportRouter)
+    app.use('/api/v1/price_list', listPriceRouter)
 
     return app.use('/', (req, res) => {
         res.send('server on ...!')

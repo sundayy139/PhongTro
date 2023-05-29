@@ -253,6 +253,7 @@ const ManageProfile = ({ isEdit, setIsShow }) => {
                                     <img
                                         src={payload.avatar || avatar}
                                         className='w-full h-full object-cover'
+                                        alt=''
                                     />
                                 )
                             }

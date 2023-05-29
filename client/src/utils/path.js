@@ -33,6 +33,7 @@ export const path = {
     MANAGE_POSTS_ADMIN: 'quan-ly-tat-ca-tin-dang',
     MANAGE_USERS: 'quan-ly-nguoi-dung',
     MANAGE_REPORT: 'quan-ly-bao-cao',
+    PRICE_LIST: 'bang-gia',
 
     STATISTICS_POST: 'thong-ke/tin-dang',
     STATISTICS_USER: 'thong-ke/nguoi-dung',

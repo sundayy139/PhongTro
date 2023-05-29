@@ -233,9 +233,9 @@ export const getTotalPaymentService = () => {
             const posts = await db.Post.findAll();
             if (posts && posts.length > 0) {
                 let payments = posts.reduce((total, obj) => {
-                    let order = obj.order === 3 ? 20000 : obj.order === 2 ? 10000 : 2000;
+                    let priceOrder = obj.priceOrder
                     let totalDay = + moment(obj.expiredAt).diff(moment(obj.createdAt), 'days');
-                    let result = order * totalDay;
+                    let result = priceOrder * totalDay;
                     return total + result;
                 }, 0);
 
@@ -319,12 +319,11 @@ export const getTotalPaymentByMonthService = (categoryCode) => {
             const posts = await db.Post.findAll({
                 raw: true,
                 where: queries,
-                attributes: ['createdAt', 'expiredAt', 'order']
+                attributes: ['createdAt', 'expiredAt', 'order', 'priceOrder']
             });
 
             // Lấy ra tất cả bài đăng theo ngày kèm giá tiền và số ngày
             posts.forEach(post => {
-                post.unitPrice = post.order === 3 ? 20000 : post.order === 2 ? 10000 : 2000;
                 post.totalDay = + moment(post.expiredAt).diff(moment(post.createdAt), 'days');
             })
 
@@ -338,11 +337,11 @@ export const getTotalPaymentByMonthService = (categoryCode) => {
 
                 const existingObj = totalsByMonthYear.find(item => item.month === key);
                 if (existingObj) {
-                    existingObj.total += obj.unitPrice * obj.totalDay;
+                    existingObj.total += obj.priceOrder * obj.totalDay;
                 } else {
                     totalsByMonthYear.push({
                         month: key,
-                        total: obj.unitPrice * obj.totalDay
+                        total: obj.priceOrder * obj.totalDay
                     });
                 }
             });
@@ -365,8 +364,6 @@ export const getTotalPaymentByMonthService = (categoryCode) => {
         }
     })
 }
-
-
 
 // GET TOTAL PAYMENT BY DAY ADMIN
 export const getTotalPaymentByDayService = (categoryCode, startDate, endDate) => {
@@ -392,12 +389,11 @@ export const getTotalPaymentByDayService = (categoryCode, startDate, endDate) =>
             const posts = await db.Post.findAll({
                 raw: true,
                 where: queries,
-                attributes: ['createdAt', 'expiredAt', 'order']
+                attributes: ['createdAt', 'expiredAt', 'order', 'priceOrder']
             });
 
             // Lấy ra tất cả bài đăng theo ngày kèm giá tiền và số ngày
             posts.forEach(post => {
-                post.unitPrice = post.order === 3 ? 20000 : post.order === 2 ? 10000 : 2000;
                 post.totalDay = + moment(post.expiredAt).diff(moment(post.createdAt), 'days');
             })
 
@@ -410,11 +406,11 @@ export const getTotalPaymentByDayService = (categoryCode, startDate, endDate) =>
 
                 const existingObj = totalsByDay.find(item => item.date === key);
                 if (existingObj) {
-                    existingObj.total += obj.unitPrice * obj.totalDay;
+                    existingObj.total += obj.priceOrder * obj.totalDay;
                 } else {
                     totalsByDay.push({
                         date: key,
-                        total: obj.unitPrice * obj.totalDay
+                        total: obj.priceOrder * obj.totalDay
                     });
                 }
             });

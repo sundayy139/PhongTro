@@ -43,7 +43,7 @@ const ManagePage = () => {
             }
         })
 
-    })
+    }, [dispatch, navigate])
 
     return (
         <div className='pc:px-8 pc:py-4 laptop:px-8 laptop:py-4 phone:px-[10px] tablet:px-[10px] relative'>
@@ -60,7 +60,7 @@ const ManagePage = () => {
             <div className='phone:py-4 phone:mb-10 tablet:mb-10 tablet:py-4'>
                 <div className='pc:hidden laptop:hidden flex flex-col gap-4 mb-4 '>
                     <div className='flex gap-5 items-center'>
-                        <img src={currentUserData?.avatar} className='w-[45px] h-[45px] object-cover rounded-full' />
+                        <img src={currentUserData?.avatar} className='w-[45px] h-[45px] object-cover rounded-full' alt='' />
                         <strong className='text-[28px]'>{currentUserData?.name}</strong>
                     </div>
                     <div className='flex gap-3'>
@@ -103,7 +103,7 @@ const ManagePage = () => {
                                                 className='p-4 text-sm flex items-center justify-between border-b'
                                             >
                                                 <span className='flex items-center gap-3'>
-                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <img src={item.image} className='w-4 h-4' alt='' />
                                                     <span>
                                                         {item.text}
                                                     </span>
@@ -123,7 +123,7 @@ const ManagePage = () => {
                                                 className='p-4 text-sm flex items-center justify-between border-b'
                                             >
                                                 <span className='flex items-center gap-3'>
-                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <img src={item.image} className='w-4 h-4' alt='' />
                                                     <span>
                                                         {item.text}
                                                     </span>
@@ -151,7 +151,7 @@ const ManagePage = () => {
                                                 className='p-4 text-sm flex items-center justify-between border-b'
                                             >
                                                 <span className='flex items-center gap-3'>
-                                                    <img src={item.image} className='w-4 h-4' />
+                                                    <img src={item.image} className='w-4 h-4' alt='' />
                                                     <span>
                                                         {item.text}
                                                     </span>
@@ -169,7 +169,7 @@ const ManagePage = () => {
                         onClick={logout}
                     >
                         <span className='flex items-center gap-3'>
-                            <img src={logoutIcon} className='w-4 h-4' />
+                            <img src={logoutIcon} className='w-4 h-4' alt='' />
                             <span>
                                 Đăng xuất
                             </span>
